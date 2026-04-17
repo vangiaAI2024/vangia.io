@@ -2,8 +2,10 @@ name: Sync JSONBin to Firebase
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # Triggers every 5 minutes (GitHub's minimum)
-  workflow_dispatch: # This enables the "Run manually" button we talked about
+    # Triggers an automated update every 5 minutes (GitHub minimum)
+    - cron: '*/5 * * * *' 
+  workflow_dispatch: 
+    # Enables the "Run workflow" button for manual on-demand execution
 
 jobs:
   sync:
@@ -12,11 +14,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           
       - name: Run Sync Script
         run: |
-          # 1. Install required database and network libraries
+          # 1. Install required network and database libraries
           npm install axios firebase-admin
           
           # 2. Create the execution script dynamically
@@ -24,27 +26,33 @@ jobs:
           const axios = require('axios');
           const admin = require('firebase-admin');
           
-          // Initialize Firebase using the secret JSON string from GitHub
+          // Parse the secret service account from GitHub environment
           const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+          
+          // Initialize connection to your Singapore Firebase Server
           admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
-            databaseURL: "https://firebaseio.com" // 👈 REPLACE THIS
+            databaseURL: "https://firebasedatabase.app"
           });
           
           async function run() {
             try {
-              console.log("Fetching from JSONBin...");
-              const res = await axios.get("https://jsonbin.io", { // 👈 REPLACE THIS
+              console.log("📡 Fetching latest scores from JSONBin.io...");
+              
+              // Mapped directly to your Scoreboard Bin ID
+              const res = await axios.get("https://jsonbin.io", {
                 headers: { "X-Access-Key": process.env.JSONBIN_KEY }
               });
               
-              console.log("Pushing to Firebase...");
+              console.log("💾 Pushing data state over to Firebase Realtime Database...");
+              
+              // This strictly overwrites the 'leaderboard' path on your tree
               await admin.database().ref("leaderboard").set(res.data.record);
               
               console.log("✅ Sync completed successfully!");
               process.exit(0);
             } catch (e) {
-              console.error("❌ Error during sync:", e.message);
+              console.error("❌ Error during execution state:", e.message);
               process.exit(1);
             }
           }

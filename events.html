@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RMIT Master of Artificial Intelligence - AI Arm Race in Digital Banking</title>
     
-    <!-- 1. Load Firebase directly via CDN (No installation needed) -->
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
-
     <style>
         body { 
             background-color: #0d1117; 
@@ -55,26 +51,9 @@
         tr:hover {
             background-color: #21262d;
         }
-        .health-high { 
-            color: #7ee787; 
-            font-weight: bold; 
-        }
-        .health-mid { 
-            color: #dbab09; 
-            font-weight: bold; 
-        }
-        .health-low { 
-            color: #ff7b72; 
-            font-weight: bold; 
-        }
-        .breach-badge {
-            background-color: #30363d;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            margin-right: 3px;
-            color: #ff7b72;
-        }
+        .health-high { color: #7ee787; font-weight: bold; }
+        .health-mid { color: #dbab09; font-weight: bold; }
+        .health-low { color: #ff7b72; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -90,27 +69,27 @@
             <tr>
                 <th>Unit (Pair)</th>
                 <th>🛡️ System Health</th>
-                <th>Files Breached</th>
                 <th>Last Activity</th>
             </tr>
         </thead>
         <tbody id="board-body">
-            <tr><td colspan="4" style="text-align:center;">📡 Establishing Secure Uplink...</td></tr>
+            <tr><td colspan="3" style="text-align:center;">📡 Establishing Secure Uplink...</td></tr>
         </tbody>
     </table>
 
-    <script>
-        // 2. Point directly to your Singapore Database endpoint
+    <script type="module">
+        import { initializeApp } from "https://gstatic.com";
+        import { getDatabase, ref, onValue } from "https://gstatic.com";
+
         const firebaseConfig = {
-            databaseURL: "https://mai-workshop-rmit2026-default-rtdb.asia-southeast1.firebasedatabase.app/"
+            databaseURL: "https://firebasedatabase.app"
         };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        // 3. Listen to the database tree natively for live changes
-        database.ref('leaderboard').on('value', (snapshot) => {
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const leaderboardRef = ref(db, 'leaderboard');
+        
+        onValue(leaderboardRef, (snapshot) => {
             const data = snapshot.val();
             
             const statusEl = document.getElementById('conn-status');
@@ -122,69 +101,43 @@
                 document.getElementById('sync-time').innerText = new Date().toLocaleTimeString();
             } else {
                 const tbody = document.getElementById('board-body');
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">⚠️ Database is empty. Waiting for first sync...</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">⚠️ Database is empty. Waiting for first sync...</td></tr>`;
             }
+        }, (error) => {
+            console.error("Firebase Read Error:", error);
+            document.getElementById('conn-status').innerText = "ERROR";
         });
 
-        // 4. Map the incoming Firebase JSON scores directly to the HTML Table
         function updateTable(data) {
             const tbody = document.getElementById('board-body');
-            tbody.innerHTML = ""; // Clear old rows
+            tbody.innerHTML = ""; 
 
-            // Convert raw dictionary to array
             let pairs = Object.entries(data);
 
-            // Calculate current health and map to objects
             let rows = pairs.map(([pairName, stats]) => {
-                let filesBreachedCount = 0;
-                let filesArray = [];
-                
-                if (stats.files_breached) {
-                    if (Array.isArray(stats.files_breached)) {
-                        filesArray = stats.files_breached;
-                    } else if (typeof stats.files_breached === 'object') {
-                        // In case JSONBin pushes it as a dict/object instead of an array
-                        filesArray = Object.values(stats.files_breached);
-                    }
-                    filesBreachedCount = filesArray.length;
-                }
-                
-                // Base health starts at 100, each breach subtracts 10 points
-                let currentHealth = 100 - (filesBreachedCount * 10);
-                if (currentHealth < 0) currentHealth = 0; // Prevent negative scores
+                // ⚠️ ASSUMPTION: Your new system directly pushes a key called "health" (e.g., 100, 90, 80)
+                let currentHealth = stats.health !== undefined ? stats.health : 100;
 
                 return {
                     name: pairName,
                     health: currentHealth,
-                    files: filesArray,
                     last: stats.last_active || 'Never'
                 };
             });
 
-            // Sort by Health (lowest health at the top to show teams under heaviest attack)
+            // Sort: Lowest Health First (Most critical at top)
             rows.sort((a, b) => a.health - b.health);
 
             rows.forEach((row) => {
                 const tr = document.createElement('tr');
                 
-                // Format the breached files as small badges
-                let filesHtml = '-';
-                if (row.files.length > 0) {
-                    filesHtml = row.files.map(f => `<span class="breach-badge">#${f}</span>`).join(' ');
-                }
-
-                // Determine color class based on health percentage
                 let healthClass = "health-high";
-                if (row.health <= 30) {
-                    healthClass = "health-low";
-                } else if (row.health <= 70) {
-                    healthClass = "health-mid";
-                }
+                if (row.health <= 30) healthClass = "health-low";
+                else if (row.health <= 70) healthClass = "health-mid";
 
                 tr.innerHTML = `
                     <td style="font-weight:bold;">${row.name}</td>
                     <td class="${healthClass}">${row.health}%</td>
-                    <td>${filesHtml}</td>
                     <td style="color:#8b949e; font-size:0.9em;">${row.last}</td>
                 `;
                 tbody.appendChild(tr);

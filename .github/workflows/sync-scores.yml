@@ -8,37 +8,70 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch and Push Data State
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Run Python Sync Script
         run: |
-          echo "📡 Step 1: Pulling scores from JSONBin.io..."
+          # 1. Install standard requests library
+          pip install requests
           
-          # We pull the data and save it directly to a file called payload.json
-          curl -s -X GET "https://api.jsonbin.io" \
-               -H "X-Access-Key: ${{ secrets.JSONBIN_KEY }}" \
-               -o payload.json
-               
-          # Safety check to see if the file grabbed is blank
-          if [ ! -s payload.json ]; then
-            echo "❌ CRITICAL FAILURE: JSONBin returned an empty file or denied access."
-            exit 1
-          fi
-          
-          # 2. DEBUG: Verify the URL matches your console exactly
-          echo "🔍 DEBUG: Checking if this domain actually exists..."
-          host mai-workshop-rmit2026-default-rtdb.asia-southeast1.firebasedatabase.app || echo "⚠️ WARNING: Domain lookup failed!"
-          
-          echo "💾 Step 2: Pushing to Singapore Firebase..."
-          
-          # 🔧 THE ULTIMATE FIX: Wrapping the entire URL in strict single quotes!
-          # This prevents the terminal from misinterpreting '?' or '=' as broken hostnames.
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X PUT \
-               'https://firebasedatabase.app' \
-               -H "Content-Type: application/json" \
-               -d @payload.json)
+          # 2. Execute the bridge in pure Python
+          python -c "
+          import os
+          import json
+          import requests
 
-          if [ "$RESPONSE" == "200" ]; then
-            echo "✅ SUCCESS! Data tree updated in Singapore."
-          else
-            echo "❌ CRITICAL FAILURE: Firebase rejected the write. Status Code: $RESPONSE"
-            exit 1
-          fi
+          try:
+              # Guardrails to verify both secrets exist in GitHub Settings
+              if not os.environ.get('FIREBASE_DB_SECRET'):
+                  raise Exception('MISSING SECRET: FIREBASE_DB_SECRET is not in GitHub Settings!')
+              if not os.environ.get('JSONBIN_KEY'):
+                  raise Exception('MISSING SECRET: JSONBIN_KEY is not in GitHub Settings!')
+
+              # A. Fetch the latest array from JSONBin (v3 Standards)
+              print('📡 Fetching scores from JSONBin.io...')
+              
+              jsonbin_url = 'https://api.jsonbin.io'
+              jsonbin_headers = {
+                  'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
+                  'X-Bin-Meta': 'false',
+                  'Content-Type': 'application/json'
+              }
+              
+              res = requests.get(jsonbin_url, headers=jsonbin_headers)
+              
+              if res.status_code != 200:
+                  print(f'❌ JSONBin Server Error. Code: {res.status_code}')
+                  print(f'❌ Raw Server Response:\\n{res.text[:500]}')
+                  exit(1)
+              
+              payload_data = res.json()
+
+              # B. Push natively to your Singapore server endpoint using the Secret Variable
+              print('💾 Pushing data state to Firebase...')
+              
+              # Stripping variable here removes accidental spacing
+              db_secret = os.environ.get('FIREBASE_DB_SECRET').strip()
+              
+              # 🔥 THE FIX: Separated by a clear question mark mapped into the string
+              # This tells the server that the domain path has officially ended and a variable is starting
+              db_url = f'https://firebasedatabase.app{db_secret}'
+              
+              put_res = requests.put(db_url, json=payload_data)
+              
+              if put_res.status_code == 200:
+                  print('✅ Sync completed successfully!')
+              else:
+                  print(f'❌ Firebase rejected write. Code: {put_res.status_code}. Response: {put_res.text}')
+                  exit(1)
+
+          except Exception as e:
+              print(f'❌ CRITICAL FAILURE: {e}')
+              exit(1)
+          "
+        env:
+          FIREBASE_DB_SECRET: ${{ secrets.FIREBASE_DB_SECRET }}
+          JSONBIN_KEY: ${{ secrets.JSONBIN_KEY }}

@@ -1,28 +1,27 @@
-// Live Score Dashboard JavaScript
+// Live Score Dashboard JavaScript - RMIT MAI Attack Level System
 document.addEventListener('DOMContentLoaded', function() {
-    // Score management for 16 teams
-    let teamScores = Array(17).fill(0); // Index 1-16 for teams
+    // Attack level management for 18 tasks (each task pair starts at 100)
+    let taskAttackLevels = Array(19).fill(100); // Index 1-18 for tasks
     let currentPeriod = 1;
     let timerInterval;
     let seconds = 0;
     let minutes = 0;
     let isTimerRunning = false;
 
-    // Team roles: alternate defender/attacker
-    const teamRoles = {};
-    for (let i = 1; i <= 16; i++) {
-        teamRoles[i] = i % 2 === 1 ? 'defender' : 'attacker';
-    }
-
     // DOM elements
     const scoreDisplays = {};
     const statusIndicators = {};
     const teamNames = {};
 
-    for (let i = 1; i <= 16; i++) {
-        scoreDisplays[i] = document.getElementById(`team${i}Score`);
-        statusIndicators[i] = document.getElementById(`team${i}Status`);
-        teamNames[i] = document.getElementById(`team${i}Name`);
+    for (let i = 1; i <= 18; i++) {
+        scoreDisplays[i] = document.getElementById(`task${i}Score`);
+        statusIndicators[i] = document.getElementById(`task${i}Status`);
+        // Get defender and attacker name elements for editable team names
+        const container = document.querySelector(`[id="task${i}Status"]`).closest('.task-container');
+        teamNames[i] = {
+            defender: container.querySelector('.defender-name'),
+            attacker: container.querySelector('.attacker-name')
+        };
     }
 
     const currentPeriodDisplay = document.getElementById('currentPeriod');
@@ -68,29 +67,38 @@ document.addEventListener('DOMContentLoaded', function() {
         logAction('Timer reset');
     }
 
-    // Score functions
-    function updateScore(team, change) {
-        teamScores[team] += change;
-        teamScores[team] = Math.max(0, teamScores[team]); // Prevent negative scores
-        scoreDisplays[team].textContent = teamScores[team];
-        updateStatusIndicator(team);
-        logAction(`${teamNames[team].textContent} ${change > 0 ? '+' : '-'}${Math.abs(change)} point${Math.abs(change) !== 1 ? 's' : ''} (${teamScores[team]})`);
+    // Attack Level functions
+    function updateAttackLevel(task, change) {
+        // Apply the change to attack level
+        taskAttackLevels[task] += change;
+        
+        // Clamp between 0 and 100
+        taskAttackLevels[task] = Math.max(0, Math.min(100, taskAttackLevels[task]));
+        
+        scoreDisplays[task].textContent = taskAttackLevels[task];
+        updateStatusIndicator(task);
+        
+        const action = change > 0 ? 'Block' : 'Attack';
+        const absDifference = Math.abs(change);
+        logAction(`Task ${task} - ${action} action: Level now ${taskAttackLevels[task]}`);
     }
 
-    function updateStatusIndicator(team) {
-        const score = teamScores[team];
-        const role = teamRoles[team];
-        const indicator = statusIndicators[team];
+    function updateStatusIndicator(task) {
+        const level = taskAttackLevels[task];
+        const indicator = statusIndicators[task];
 
         // Remove existing classes
-        indicator.classList.remove('defender-winning', 'attacker-losing', 'neutral');
+        indicator.classList.remove('high-defense', 'mid-defense', 'low-defense', 'critical');
 
-        if (role === 'defender' && score > 0) {
-            indicator.classList.add('defender-winning');
-        } else if (role === 'attacker' && score < 0) {
-            indicator.classList.add('attacker-losing');
+        // Color code based on attack level (100 = safe, 0 = compromised)
+        if (level >= 75) {
+            indicator.classList.add('high-defense'); // Green - well defended
+        } else if (level >= 50) {
+            indicator.classList.add('mid-defense'); // Yellow - moderate defense
+        } else if (level >= 25) {
+            indicator.classList.add('low-defense'); // Orange - weak defense
         } else {
-            indicator.classList.add('neutral');
+            indicator.classList.add('critical'); // Red - critical
         }
     }
 
@@ -123,37 +131,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Quick actions
     function resetScores() {
-        for (let i = 1; i <= 16; i++) {
-            teamScores[i] = 0;
-            scoreDisplays[i].textContent = '0';
+        for (let i = 1; i <= 18; i++) {
+            taskAttackLevels[i] = 100; // Reset all tasks to 100
+            scoreDisplays[i].textContent = '100';
             updateStatusIndicator(i);
         }
-        logAction('All scores reset to 0');
+        logAction('All task attack levels reset to 100');
     }
 
     function swapTeams() {
-        // Swap names and roles for all teams
-        for (let i = 1; i <= 16; i += 2) {
-            const teamA = i;
-            const teamB = i + 1;
-
-            // Swap names
-            const tempName = teamNames[teamA].textContent;
-            teamNames[teamA].textContent = teamNames[teamB].textContent;
-            teamNames[teamB].textContent = tempName;
-
-            // Swap scores
-            const tempScore = teamScores[teamA];
-            teamScores[teamA] = teamScores[teamB];
-            teamScores[teamB] = tempScore;
-            scoreDisplays[teamA].textContent = teamScores[teamA];
-            scoreDisplays[teamB].textContent = teamScores[teamB];
-
-            // Update status indicators
-            updateStatusIndicator(teamA);
-            updateStatusIndicator(teamB);
+        // Swap defender and attacker names for all tasks
+        for (let i = 1; i <= 18; i++) {
+            const defenderName = teamNames[i].defender.textContent;
+            const attackerName = teamNames[i].attacker.textContent;
+            
+            teamNames[i].defender.textContent = attackerName;
+            teamNames[i].attacker.textContent = defenderName;
         }
-        logAction('All team pairs swapped');
+        logAction('All defender/attacker teams swapped');
     }
 
     function newCompetition() {
@@ -163,12 +158,33 @@ document.addEventListener('DOMContentLoaded', function() {
         currentPeriodDisplay.textContent = '1';
 
         // Reset team names to defaults
-        const defaultNames = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi'];
-        for (let i = 1; i <= 16; i++) {
-            teamNames[i].textContent = `Team ${defaultNames[i-1]}`;
+        const defaultTeams = [
+            { defender: 'Team Alpha (D)', attacker: 'Team Beta (A)' },
+            { defender: 'Team Gamma (D)', attacker: 'Team Delta (A)' },
+            { defender: 'Team Epsilon (D)', attacker: 'Team Zeta (A)' },
+            { defender: 'Team Eta (D)', attacker: 'Team Theta (A)' },
+            { defender: 'Team Iota (D)', attacker: 'Team Kappa (A)' },
+            { defender: 'Team Lambda (D)', attacker: 'Team Mu (A)' },
+            { defender: 'Team Nu (D)', attacker: 'Team Xi (A)' },
+            { defender: 'Team Omicron (D)', attacker: 'Team Pi (A)' },
+            { defender: 'Team Rho (D)', attacker: 'Team Sigma (A)' },
+            { defender: 'Team Tau (D)', attacker: 'Team Upsilon (A)' },
+            { defender: 'Team Phi (D)', attacker: 'Team Chi (A)' },
+            { defender: 'Team Psi (D)', attacker: 'Team Omega (A)' },
+            { defender: 'Team 25 (D)', attacker: 'Team 26 (A)' },
+            { defender: 'Team 27 (D)', attacker: 'Team 28 (A)' },
+            { defender: 'Team 29 (D)', attacker: 'Team 30 (A)' },
+            { defender: 'Team 31 (D)', attacker: 'Team 32 (A)' },
+            { defender: 'Team 33 (D)', attacker: 'Team 34 (A)' },
+            { defender: 'Team 35 (D)', attacker: 'Team 36 (A)' }
+        ];
+
+        for (let i = 1; i <= 18; i++) {
+            teamNames[i].defender.textContent = defaultTeams[i-1].defender;
+            teamNames[i].attacker.textContent = defaultTeams[i-1].attacker;
         }
 
-        logAction('New RMIT MAI competition started');
+        logAction('New RMIT MAI competition started - All tasks reset to Level 100');
     }
 
     // Event listeners
@@ -176,12 +192,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('pauseTimer').addEventListener('click', pauseTimer);
     document.getElementById('resetTimer').addEventListener('click', resetTimer);
 
-    // Score buttons
-    document.querySelectorAll('.score-btn').forEach(btn => {
+    // Attack/Block buttons
+    document.querySelectorAll('.attack-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            const team = parseInt(this.dataset.team);
-            const change = this.classList.contains('increment') ? 1 : -1;
-            updateScore(team, change);
+            const task = parseInt(this.dataset.task);
+            updateAttackLevel(task, -5); // Attack reduces by 5
+        });
+    });
+
+    document.querySelectorAll('.block-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const task = parseInt(this.dataset.task);
+            updateAttackLevel(task, 5); // Block increases by 5
         });
     });
 
@@ -192,32 +214,35 @@ document.addEventListener('DOMContentLoaded', function() {
     // Quick action buttons
     document.getElementById('resetScores').addEventListener('click', resetScores);
     document.getElementById('swapTeams').addEventListener('click', swapTeams);
-    document.getElementById('newGame').addEventListener('click', newGame);
+    document.getElementById('newGame').addEventListener('click', newCompetition);
 
-    // Team name editing
-    for (let i = 1; i <= 16; i++) {
-        teamNames[i].addEventListener('input', function() {
-            logAction(`Team ${i} renamed to "${this.textContent}"`);
+    // Team name editing - log when names are changed
+    for (let i = 1; i <= 18; i++) {
+        teamNames[i].defender.addEventListener('blur', function() {
+            logAction(`Task ${i} Defender renamed to "${this.textContent}"`);
+        });
+        teamNames[i].attacker.addEventListener('blur', function() {
+            logAction(`Task ${i} Attacker renamed to "${this.textContent}"`);
         });
     }
 
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
-        // Team 1: Q for +1, A for -1
+        // Task 1: Q for +5, A for -5
         if (e.key.toLowerCase() === 'q') {
             e.preventDefault();
-            updateScore(1, 1);
+            updateAttackLevel(1, 5);
         } else if (e.key.toLowerCase() === 'a') {
             e.preventDefault();
-            updateScore(1, -1);
+            updateAttackLevel(1, -5);
         }
-        // Team 2: E for +1, D for -1
-        else if (e.key.toLowerCase() === 'e') {
+        // Task 2: W for +5, S for -5
+        else if (e.key.toLowerCase() === 'w') {
             e.preventDefault();
-            updateScore(2, 1);
-        } else if (e.key.toLowerCase() === 'd') {
+            updateAttackLevel(2, 5);
+        } else if (e.key.toLowerCase() === 's') {
             e.preventDefault();
-            updateScore(2, -1);
+            updateAttackLevel(2, -5);
         }
         // Space for timer start/pause
         else if (e.code === 'Space') {
@@ -237,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize
     updateTimerDisplay();
-    for (let i = 1; i <= 16; i++) {
+    for (let i = 1; i <= 18; i++) {
         updateStatusIndicator(i);
     }
     logAction('RMIT MAI Scoring System initialized - Ready for competition!');

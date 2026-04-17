@@ -346,6 +346,164 @@
     box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4);
 }
 
+/* Team Names Section */
+.team-names {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.defender-name, .attacker-name {
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: text;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.defender-name:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: #10b981;
+}
+
+.attacker-name:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+.defender-name:focus, .attacker-name:focus {
+    outline: none;
+    border-color: #1e3a8a;
+    background: rgba(30, 58, 138, 0.05);
+}
+
+/* Attack Level Section */
+.attack-level {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.level-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.score-display {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #1e3a8a;
+    margin: 10px 0;
+    font-family: 'Courier New', monospace;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Status Indicator for Attack Levels */
+.status-indicator {
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.status-indicator.high-defense {
+    background: linear-gradient(90deg, #10b981, #34d399);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.status-indicator.mid-defense {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.status-indicator.low-defense {
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+}
+
+.status-indicator.critical {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+/* Keep old status indicator styles for compatibility */
+.status-indicator.defender-winning {
+    background: linear-gradient(90deg, #10b981, #34d399);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.status-indicator.attacker-losing {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+.status-indicator.neutral {
+    background: #e5e7eb;
+}
+
+/* Action Controls */
+.action-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.attack-btn, .block-btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.attack-btn {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.attack-btn:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.attack-btn:active {
+    transform: translateY(0);
+}
+
+.block-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.block-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.block-btn:active {
+    transform: translateY(0);
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .tasks-grid {

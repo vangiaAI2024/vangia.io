@@ -5,18 +5,14 @@ on:
     - cron: '*/5 * * * *' # Runs every 5 minutes
   workflow_dispatch: # Allows manual run
 
-# 🔧 FIX 1: This forces GitHub to use the newer Node version, silencing the warning
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6 # 👈 Updated from @v4 to @v6 for Node 24 support
         with:
-          node-version: '22'
+          node-version: '24' # 👈 Updated from '22' to '24'
           
       - name: Run Sync Script
         run: |
@@ -28,7 +24,7 @@ jobs:
           
           async function run() {
             try {
-              // 🔧 FIX 2: Safety Check - Verify Secrets exist before crashing
+              // Safety Check - Verify Secrets exist before crashing
               if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
                 throw new Error("MISSING SECRET: 'FIREBASE_SECRET' is empty. Check GitHub Settings!");
               }
@@ -47,7 +43,7 @@ jobs:
           
               console.log("📡 Fetching latest scores from JSONBin.io...");
               
-              // ⚠️ ENSURE THIS ID IS CORRECT (Your Scoreboard Bin ID)
+              // Target your Scoreboard Bin ID
               const res = await axios.get("https://jsonbin.io", {
                 headers: { "X-Access-Key": process.env.JSONBIN_KEY }
               });

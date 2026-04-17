@@ -29,18 +29,16 @@ jobs:
           
           echo "💾 Step 2: Pushing to Singapore Firebase..."
           
-          # 🔧 FIX: Added '-4' to force IPv4 (Fixes 'Could not resolve host' bugs)
-          # ⚠️ DOUBLE CHECK: Is your project ID exactly 'mai-workshop-rmit2026'?
-          RESPONSE=$(curl -s -4 -o /dev/null -w "%{http_code}" -X PUT \
-               "https://firebasedatabase.app" \
+          # 🔧 THE ULTIMATE FIX: Wrapping the entire URL in strict single quotes!
+          # This prevents the terminal from misinterpreting '?' or '=' as broken hostnames.
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X PUT \
+               'https://firebasedatabase.app' \
                -H "Content-Type: application/json" \
                -d @payload.json)
 
           if [ "$RESPONSE" == "200" ]; then
-            echo "✅ SUCCESS! Data tree updated."
+            echo "✅ SUCCESS! Data tree updated in Singapore."
           else
             echo "❌ CRITICAL FAILURE: Firebase rejected the write. Status Code: $RESPONSE"
-            # If 401/404: Your URL or Secret is wrong.
-            # If 000: The domain is still wrong.
             exit 1
           fi

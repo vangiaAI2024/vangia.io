@@ -23,19 +23,15 @@ jobs:
           import json
 
           try:
-              # 1. Secret Guardrails
               if not os.environ.get('FIREBASE_DB_SECRET'):
                   raise Exception('MISSING SECRET: FIREBASE_DB_SECRET')
               if not os.environ.get('JSONBIN_KEY'):
                   raise Exception('MISSING SECRET: JSONBIN_KEY')
 
-              # 2. Fetch from JSONBin (Strict v3 Standards)
               print('📡 Fetching scores from JSONBin.io...')
               
               jsonbin_url = 'https://jsonbin.io'
               
-              # X-Bin-Meta: false forces the server to return ONLY your raw data dictionary
-              # This prevents 'record' wrapper errors and HTML responses
               jsonbin_headers = {
                   'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
                   'X-Bin-Meta': 'false',
@@ -44,20 +40,32 @@ jobs:
               
               res = requests.get(jsonbin_url, headers=jsonbin_headers)
               
-              # Debugging Block: Catch HTML/404 errors instantly
-              if res.status_code != 200:
-                  print(f'❌ JSONBin Server Error. Code: {res.status_code}')
-                  print(f'❌ Raw Response (First 500 chars):\n{res.text[:500]}')
+              # 🚨 CRITICAL CHECK 1: Read the server's status code
+              print(f'👉 API Response Status: {res.status_code}')
+              
+              if res.status_code == 401 or res.status_code == 403:
+                  print('❌ Server block! Your JSONBIN_KEY does not have access permissions.')
+                  exit(1)
+              elif res.status_code == 404:
+                  print('❌ Bin not found! The ID 69e1d354856a68218942b374 is incorrect or deleted.')
+                  exit(1)
+              elif res.status_code != 200:
+                  print(f'❌ Server Error. Response text was truncated.')
+                  exit(1)
+              
+              # 🚨 CRITICAL CHECK 2: Safeguard JSON decoding against incoming HTML
+              content_type = res.headers.get('Content-Type', '')
+              if 'application/json' not in content_type:
+                  print('❌ Error: Server returned an HTML web page instead of JSON data.')
+                  print('💡 Fix: Generate a fresh Access Key on JSONBin and paste it in your GitHub Secrets.')
                   exit(1)
               
               try:
-                  # With X-Bin-Meta: false, the response IS the payload. No ['record'] needed.
                   payload_data = res.json()
               except Exception as json_err:
-                  print(f'❌ JSON Decode Failure! Raw text received:\n{res.text[:500]}')
+                  print('❌ JSON Decode Failure! The data could not be parsed.')
                   raise json_err
 
-              # 3. Push to Firebase (Singapore Endpoint + Legacy Auth)
               print('💾 Pushing data state to Firebase...')
               
               db_secret = os.environ.get('FIREBASE_DB_SECRET').strip()
@@ -68,7 +76,7 @@ jobs:
               if put_res.status_code == 200:
                   print('✅ Sync completed successfully!')
               else:
-                  print(f'❌ Firebase rejected write. Code: {put_res.status_code}. Response: {put_res.text}')
+                  print(f'❌ Firebase rejected write. Code: {put_res.status_code}.')
                   exit(1)
 
           except Exception as e:

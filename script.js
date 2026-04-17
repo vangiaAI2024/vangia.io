@@ -13,9 +13,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const dropdown = document.querySelector('.dropdown');
     const submenu = document.querySelector('.submenu');
 
+    // Click functionality
     dropdown.addEventListener('click', function(e) {
-        e.preventDefault();
-        submenu.classList.toggle('show');
+        // Only prevent default if clicking on the dropdown trigger itself, not on links
+        if (e.target.tagName !== 'A') {
+            e.preventDefault();
+            submenu.classList.toggle('show');
+        }
+    });
+
+    // Hover functionality as backup
+    dropdown.addEventListener('mouseenter', function() {
+        submenu.classList.add('show');
+    });
+
+    dropdown.addEventListener('mouseleave', function() {
+        submenu.classList.remove('show');
     });
 
     // Close dropdown when clicking outside

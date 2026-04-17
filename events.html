@@ -45,244 +45,260 @@
         </div>
 
         <div class="score-container">
-            <div class="tournament-grid">
-                <div class="team-slot" data-team="1">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team1Name">Team Alpha</h3>
-                        <div class="role-indicator" id="team1Role">Defender</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team1Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team1Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="1">+</button>
-                        <button class="score-btn decrement" data-team="1">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="2">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team2Name">Team Beta</h3>
-                        <div class="role-indicator" id="team2Role">Attacker</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team2Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team2Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="2">+</button>
-                        <button class="score-btn decrement" data-team="2">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="3">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team3Name">Team Gamma</h3>
-                        <div class="role-indicator" id="team3Role">Defender</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team3Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team3Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="3">+</button>
-                        <button class="score-btn decrement" data-team="3">-</button>
+            <div class="tasks-grid">
+                <!-- Task 1 -->
+                <div class="task-container">
+                    <div class="task-title">Task 1</div>
+                    <div class="matchup">
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team1Name">Team Alpha</h3>
+                                <div class="role-indicator" data-role="defender">Defender</div>
+                            </div>
+                            <div class="score-display"><span id="team1Score">0</span></div>
+                            <div class="status-indicator" id="team1Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="1">+</button>
+                                <button class="score-btn decrement" data-team="1">-</button>
+                            </div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team2Name">Team Beta</h3>
+                                <div class="role-indicator" data-role="attacker">Attacker</div>
+                            </div>
+                            <div class="score-display"><span id="team2Score">0</span></div>
+                            <div class="status-indicator" id="team2Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="2">+</button>
+                                <button class="score-btn decrement" data-team="2">-</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="team-slot" data-team="4">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team4Name">Team Delta</h3>
-                        <div class="role-indicator" id="team4Role">Attacker</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team4Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team4Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="4">+</button>
-                        <button class="score-btn decrement" data-team="4">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="5">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team5Name">Team Epsilon</h3>
-                        <div class="role-indicator" id="team5Role">Defender</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team5Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team5Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="5">+</button>
-                        <button class="score-btn decrement" data-team="5">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="6">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team6Name">Team Zeta</h3>
-                        <div class="role-indicator" id="team6Role">Attacker</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team6Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team6Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="6">+</button>
-                        <button class="score-btn decrement" data-team="6">-</button>
+                <!-- Task 2 -->
+                <div class="task-container">
+                    <div class="task-title">Task 2</div>
+                    <div class="matchup">
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team3Name">Team Gamma</h3>
+                                <div class="role-indicator" data-role="defender">Defender</div>
+                            </div>
+                            <div class="score-display"><span id="team3Score">0</span></div>
+                            <div class="status-indicator" id="team3Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="3">+</button>
+                                <button class="score-btn decrement" data-team="3">-</button>
+                            </div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team4Name">Team Delta</h3>
+                                <div class="role-indicator" data-role="attacker">Attacker</div>
+                            </div>
+                            <div class="score-display"><span id="team4Score">0</span></div>
+                            <div class="status-indicator" id="team4Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="4">+</button>
+                                <button class="score-btn decrement" data-team="4">-</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="team-slot" data-team="7">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team7Name">Team Eta</h3>
-                        <div class="role-indicator" id="team7Role">Defender</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team7Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team7Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="7">+</button>
-                        <button class="score-btn decrement" data-team="7">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="8">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team8Name">Team Theta</h3>
-                        <div class="role-indicator" id="team8Role">Attacker</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team8Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team8Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="8">+</button>
-                        <button class="score-btn decrement" data-team="8">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="9">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team9Name">Team Iota</h3>
-                        <div class="role-indicator" id="team9Role">Defender</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team9Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team9Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="9">+</button>
-                        <button class="score-btn decrement" data-team="9">-</button>
+                <!-- Task 3 -->
+                <div class="task-container">
+                    <div class="task-title">Task 3</div>
+                    <div class="matchup">
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team5Name">Team Epsilon</h3>
+                                <div class="role-indicator" data-role="defender">Defender</div>
+                            </div>
+                            <div class="score-display"><span id="team5Score">0</span></div>
+                            <div class="status-indicator" id="team5Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="5">+</button>
+                                <button class="score-btn decrement" data-team="5">-</button>
+                            </div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team6Name">Team Zeta</h3>
+                                <div class="role-indicator" data-role="attacker">Attacker</div>
+                            </div>
+                            <div class="score-display"><span id="team6Score">0</span></div>
+                            <div class="status-indicator" id="team6Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="6">+</button>
+                                <button class="score-btn decrement" data-team="6">-</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="team-slot" data-team="10">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team10Name">Team Kappa</h3>
-                        <div class="role-indicator" id="team10Role">Attacker</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team10Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team10Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="10">+</button>
-                        <button class="score-btn decrement" data-team="10">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="11">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team11Name">Team Lambda</h3>
-                        <div class="role-indicator" id="team11Role">Defender</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team11Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team11Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="11">+</button>
-                        <button class="score-btn decrement" data-team="11">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="12">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team12Name">Team Mu</h3>
-                        <div class="role-indicator" id="team12Role">Attacker</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team12Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team12Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="12">+</button>
-                        <button class="score-btn decrement" data-team="12">-</button>
+                <!-- Task 4 -->
+                <div class="task-container">
+                    <div class="task-title">Task 4</div>
+                    <div class="matchup">
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team7Name">Team Eta</h3>
+                                <div class="role-indicator" data-role="defender">Defender</div>
+                            </div>
+                            <div class="score-display"><span id="team7Score">0</span></div>
+                            <div class="status-indicator" id="team7Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="7">+</button>
+                                <button class="score-btn decrement" data-team="7">-</button>
+                            </div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team8Name">Team Theta</h3>
+                                <div class="role-indicator" data-role="attacker">Attacker</div>
+                            </div>
+                            <div class="score-display"><span id="team8Score">0</span></div>
+                            <div class="status-indicator" id="team8Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="8">+</button>
+                                <button class="score-btn decrement" data-team="8">-</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="team-slot" data-team="13">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team13Name">Team Nu</h3>
-                        <div class="role-indicator" id="team13Role">Defender</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team13Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team13Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="13">+</button>
-                        <button class="score-btn decrement" data-team="13">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="14">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team14Name">Team Xi</h3>
-                        <div class="role-indicator" id="team14Role">Attacker</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team14Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team14Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="14">+</button>
-                        <button class="score-btn decrement" data-team="14">-</button>
-                    </div>
-                </div>
-
-                <div class="team-slot" data-team="15">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team15Name">Team Omicron</h3>
-                        <div class="role-indicator" id="team15Role">Defender</div>
-                    </div>
-                    <div class="score-display">
-                        <span id="team15Score">0</span>
-                    </div>
-                    <div class="status-indicator" id="team15Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="15">+</button>
-                        <button class="score-btn decrement" data-team="15">-</button>
+                <!-- Task 5 -->
+                <div class="task-container">
+                    <div class="task-title">Task 5</div>
+                    <div class="matchup">
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team9Name">Team Iota</h3>
+                                <div class="role-indicator" data-role="defender">Defender</div>
+                            </div>
+                            <div class="score-display"><span id="team9Score">0</span></div>
+                            <div class="status-indicator" id="team9Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="9">+</button>
+                                <button class="score-btn decrement" data-team="9">-</button>
+                            </div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team10Name">Team Kappa</h3>
+                                <div class="role-indicator" data-role="attacker">Attacker</div>
+                            </div>
+                            <div class="score-display"><span id="team10Score">0</span></div>
+                            <div class="status-indicator" id="team10Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="10">+</button>
+                                <button class="score-btn decrement" data-team="10">-</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="team-slot" data-team="16">
-                    <div class="team-header">
-                        <h3 contenteditable="true" id="team16Name">Team Pi</h3>
-                        <div class="role-indicator" id="team16Role">Attacker</div>
+                <!-- Task 6 -->
+                <div class="task-container">
+                    <div class="task-title">Task 6</div>
+                    <div class="matchup">
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team11Name">Team Lambda</h3>
+                                <div class="role-indicator" data-role="defender">Defender</div>
+                            </div>
+                            <div class="score-display"><span id="team11Score">0</span></div>
+                            <div class="status-indicator" id="team11Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="11">+</button>
+                                <button class="score-btn decrement" data-team="11">-</button>
+                            </div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team12Name">Team Mu</h3>
+                                <div class="role-indicator" data-role="attacker">Attacker</div>
+                            </div>
+                            <div class="score-display"><span id="team12Score">0</span></div>
+                            <div class="status-indicator" id="team12Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="12">+</button>
+                                <button class="score-btn decrement" data-team="12">-</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="score-display">
-                        <span id="team16Score">0</span>
+                </div>
+
+                <!-- Task 7 -->
+                <div class="task-container">
+                    <div class="task-title">Task 7</div>
+                    <div class="matchup">
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team13Name">Team Nu</h3>
+                                <div class="role-indicator" data-role="defender">Defender</div>
+                            </div>
+                            <div class="score-display"><span id="team13Score">0</span></div>
+                            <div class="status-indicator" id="team13Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="13">+</button>
+                                <button class="score-btn decrement" data-team="13">-</button>
+                            </div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team14Name">Team Xi</h3>
+                                <div class="role-indicator" data-role="attacker">Attacker</div>
+                            </div>
+                            <div class="score-display"><span id="team14Score">0</span></div>
+                            <div class="status-indicator" id="team14Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="14">+</button>
+                                <button class="score-btn decrement" data-team="14">-</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="status-indicator" id="team16Status"></div>
-                    <div class="score-controls">
-                        <button class="score-btn increment" data-team="16">+</button>
-                        <button class="score-btn decrement" data-team="16">-</button>
+                </div>
+
+                <!-- Task 8 -->
+                <div class="task-container">
+                    <div class="task-title">Task 8</div>
+                    <div class="matchup">
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team15Name">Team Omicron</h3>
+                                <div class="role-indicator" data-role="defender">Defender</div>
+                            </div>
+                            <div class="score-display"><span id="team15Score">0</span></div>
+                            <div class="status-indicator" id="team15Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="15">+</button>
+                                <button class="score-btn decrement" data-team="15">-</button>
+                            </div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3 contenteditable="true" id="team16Name">Team Pi</h3>
+                                <div class="role-indicator" data-role="attacker">Attacker</div>
+                            </div>
+                            <div class="score-display"><span id="team16Score">0</span></div>
+                            <div class="status-indicator" id="team16Status"></div>
+                            <div class="score-controls">
+                                <button class="score-btn increment" data-team="16">+</button>
+                                <button class="score-btn decrement" data-team="16">-</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

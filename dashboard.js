@@ -16,19 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // DOM elements
     const scoreDisplays = {};
-    const roleIndicators = {};
     const statusIndicators = {};
     const teamNames = {};
 
     for (let i = 1; i <= 16; i++) {
         scoreDisplays[i] = document.getElementById(`team${i}Score`);
-        roleIndicators[i] = document.getElementById(`team${i}Role`);
         statusIndicators[i] = document.getElementById(`team${i}Status`);
         teamNames[i] = document.getElementById(`team${i}Name`);
-
-        // Set initial role indicators
-        roleIndicators[i].textContent = teamRoles[i] === 'defender' ? 'Defender' : 'Attacker';
-        roleIndicators[i].setAttribute('data-role', teamRoles[i]);
     }
 
     const currentPeriodDisplay = document.getElementById('currentPeriod');

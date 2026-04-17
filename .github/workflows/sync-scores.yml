@@ -30,7 +30,7 @@ jobs:
               print('📡 Fetching scores from JSONBin.io...')
               
               # 🔥 HARDCODED FALLBACK URL (Sanitized without dynamic string injections)
-              jsonbin_url = 'https://jsonbin.io'
+              jsonbin_url = 'https://api.jsonbin.io/v3/b/'
               
               # Strip keys of any accidental spacing
               jsonbin_headers = {'X-Access-Key': os.environ.get('JSONBIN_KEY').strip()}

@@ -22,30 +22,36 @@ jobs:
           import requests
 
           try:
-              # 1. Check if the keys exist
               if not os.environ.get('FIREBASE_DB_SECRET'):
                   raise Exception('MISSING SECRET: FIREBASE_DB_SECRET')
               if not os.environ.get('JSONBIN_KEY'):
                   raise Exception('MISSING SECRET: JSONBIN_KEY')
 
-              # 2. Fetch scores from JSONBin
               print('📡 Fetching scores from JSONBin.io...')
+              
+              # 🔥 HARDCODED FALLBACK URL (Sanitized without dynamic string injections)
               jsonbin_url = 'https://jsonbin.io'
-              jsonbin_headers = {'X-Access-Key': os.environ.get('JSONBIN_KEY')}
+              
+              # Strip keys of any accidental spacing
+              jsonbin_headers = {'X-Access-Key': os.environ.get('JSONBIN_KEY').strip()}
               
               res = requests.get(jsonbin_url, headers=jsonbin_headers)
               
+              # 🔍 DEBUGGING BLOCK: If it isn't JSON, see what it actually is!
               if res.status_code != 200:
-                  raise Exception(f'JSONBin rejected access: {res.text}')
+                  print(f'❌ JSONBin Server Error. Code: {res.status_code}')
+                  print(f'❌ Raw Server Response:\n{res.text[:500]}')
+                  exit(1)
               
-              payload_data = res.json()['record']
+              try:
+                  payload_data = res.json()['record']
+              except Exception as json_err:
+                  print(f'❌ JSON Decode Error! Raw Text was:\n{res.text[:500]}')
+                  raise json_err
 
-              # 3. Push to Firebase using the 'Furl...' secret directly
               print('💾 Pushing data state to Firebase...')
               
               db_secret = os.environ.get('FIREBASE_DB_SECRET').strip()
-              
-              # We use the legacy ?auth= param which works perfectly with that string
               db_url = f'https://firebasedatabase.app{db_secret}'
               
               put_res = requests.put(db_url, json=payload_data)

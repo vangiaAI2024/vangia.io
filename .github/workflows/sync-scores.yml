@@ -33,8 +33,9 @@ jobs:
 
               # A. Fetch the latest array from JSONBin (v3 Standards)
               print('📡 Fetching scores from JSONBin.io...')
-              
-              jsonbin_url = 'https://api.jsonbin.io'
+
+              # add direct binID here because this one doesnt need to be encrypted
+              jsonbin_url = 'https://api.jsonbin.io/v3/b/69e1d354856a68218942b374'
               jsonbin_headers = {
                   'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
                   'Content-Type': 'application/json'

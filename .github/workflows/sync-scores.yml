@@ -1,0 +1,58 @@
+name: Sync JSONBin to Firebase
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # Triggers every 5 minutes (GitHub's minimum)
+  workflow_dispatch: # This enables the "Run manually" button we talked about
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Run Sync Script
+        run: |
+          # 1. Install required database and network libraries
+          npm install axios firebase-admin
+          
+          # 2. Create the execution script dynamically
+          cat <<EOF > sync.js
+          const axios = require('axios');
+          const admin = require('firebase-admin');
+          
+          // Initialize Firebase using the secret JSON string from GitHub
+          const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+          admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+            databaseURL: "https://firebaseio.com" // 👈 REPLACE THIS
+          });
+          
+          async function run() {
+            try {
+              console.log("Fetching from JSONBin...");
+              const res = await axios.get("https://jsonbin.io", { // 👈 REPLACE THIS
+                headers: { "X-Access-Key": process.env.JSONBIN_KEY }
+              });
+              
+              console.log("Pushing to Firebase...");
+              await admin.database().ref("leaderboard").set(res.data.record);
+              
+              console.log("✅ Sync completed successfully!");
+              process.exit(0);
+            } catch (e) {
+              console.error("❌ Error during sync:", e.message);
+              process.exit(1);
+            }
+          }
+          run();
+          EOF
+          
+          # 3. Execute the script
+          node sync.js
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SECRET }}
+          JSONBIN_KEY: ${{ secrets.JSONBIN_KEY }}

@@ -49,6 +49,7 @@ jobs:
                   exit(1)
               
               payload_data = res.json()
+              print(payload_data)
 
               # B. Push natively to your Singapore server endpoint using the Secret Variable
               print('💾 Pushing data state to Firebase...')

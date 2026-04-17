@@ -23,18 +23,24 @@ jobs:
             exit 1
           fi
           
-          echo "💾 Step 2: Overwriting Singapore Firebase tree branch directly..."
+          # 2. DEBUG: Verify the URL matches your console exactly
+          echo "🔍 DEBUG: Checking if this domain actually exists..."
+          host mai-workshop-rmit2026-default-rtdb.asia-southeast1.firebasedatabase.app || echo "⚠️ WARNING: Domain lookup failed!"
           
-          # Hardcoding your full address directly inside the Unix shell
-          # We place the secret exactly where the API requires it
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X PUT \
+          echo "💾 Step 2: Pushing to Singapore Firebase..."
+          
+          # 🔧 FIX: Added '-4' to force IPv4 (Fixes 'Could not resolve host' bugs)
+          # ⚠️ DOUBLE CHECK: Is your project ID exactly 'mai-workshop-rmit2026'?
+          RESPONSE=$(curl -s -4 -o /dev/null -w "%{http_code}" -X PUT \
                "https://firebasedatabase.app" \
                -H "Content-Type: application/json" \
                -d @payload.json)
 
           if [ "$RESPONSE" == "200" ]; then
-            echo "✅ SUCCESS! Data tree successfully updated."
+            echo "✅ SUCCESS! Data tree updated."
           else
-            echo "❌ CRITICAL FAILURE: Firebase API rejected the write attempt. Code: $RESPONSE"
-            exit(1)
+            echo "❌ CRITICAL FAILURE: Firebase rejected the write. Status Code: $RESPONSE"
+            # If 401/404: Your URL or Secret is wrong.
+            # If 000: The domain is still wrong.
+            exit 1
           fi

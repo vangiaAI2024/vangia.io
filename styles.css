@@ -51,7 +51,8 @@ li {
     z-index: 1;
 }
 
-.dropdown:hover .submenu {
+.dropdown:hover .submenu,
+.submenu.show {
     display: block;
 }
 

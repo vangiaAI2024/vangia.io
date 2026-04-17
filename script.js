@@ -8,4 +8,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Dropdown toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.querySelector('.dropdown');
+    const submenu = document.querySelector('.submenu');
+
+    dropdown.addEventListener('click', function(e) {
+        e.preventDefault();
+        submenu.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!dropdown.contains(e.target)) {
+            submenu.classList.remove('show');
+        }
+    });
+});
+
 // Add any additional interactivity here

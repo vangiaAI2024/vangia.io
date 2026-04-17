@@ -31,7 +31,7 @@ jobs:
               print('📡 Fetching scores from JSONBin.io...')
               
               # 🔧 FIX: Corrected hardcoded URL pointing specifically to the API subdomain
-              jsonbin_url = 'https://jsonbin.io'
+              jsonbin_url = 'https://api.jsonbin.io'
               
               jsonbin_headers = {
                   'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),

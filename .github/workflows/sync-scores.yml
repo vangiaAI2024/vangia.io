@@ -20,35 +20,44 @@ jobs:
           python -c "
           import os
           import requests
+          import json
 
           try:
+              # 1. Secret Guardrails
               if not os.environ.get('FIREBASE_DB_SECRET'):
                   raise Exception('MISSING SECRET: FIREBASE_DB_SECRET')
               if not os.environ.get('JSONBIN_KEY'):
                   raise Exception('MISSING SECRET: JSONBIN_KEY')
 
+              # 2. Fetch from JSONBin (Strict v3 Standards)
               print('📡 Fetching scores from JSONBin.io...')
               
-              # 🔥 HARDCODED FALLBACK URL (Sanitized without dynamic string injections)
-              jsonbin_url = 'https://api.jsonbin.io/v3/b/'
+              jsonbin_url = 'https://jsonbin.io'
               
-              # Strip keys of any accidental spacing
-              jsonbin_headers = {'X-Access-Key': os.environ.get('JSONBIN_KEY').strip()}
+              # X-Bin-Meta: false forces the server to return ONLY your raw data dictionary
+              # This prevents 'record' wrapper errors and HTML responses
+              jsonbin_headers = {
+                  'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
+                  'X-Bin-Meta': 'false',
+                  'Content-Type': 'application/json'
+              }
               
               res = requests.get(jsonbin_url, headers=jsonbin_headers)
               
-              # 🔍 DEBUGGING BLOCK: If it isn't JSON, see what it actually is!
+              # Debugging Block: Catch HTML/404 errors instantly
               if res.status_code != 200:
                   print(f'❌ JSONBin Server Error. Code: {res.status_code}')
-                  print(f'❌ Raw Server Response:\n{res.text[:500]}')
+                  print(f'❌ Raw Response (First 500 chars):\n{res.text[:500]}')
                   exit(1)
               
               try:
-                  payload_data = res.json()['record']
+                  # With X-Bin-Meta: false, the response IS the payload. No ['record'] needed.
+                  payload_data = res.json()
               except Exception as json_err:
-                  print(f'❌ JSON Decode Error! Raw Text was:\n{res.text[:500]}')
+                  print(f'❌ JSON Decode Failure! Raw text received:\n{res.text[:500]}')
                   raise json_err
 
+              # 3. Push to Firebase (Singapore Endpoint + Legacy Auth)
               print('💾 Pushing data state to Firebase...')
               
               db_secret = os.environ.get('FIREBASE_DB_SECRET').strip()

@@ -16,7 +16,6 @@ jobs:
           
       - name: Run Sync Script
         run: |
-          # Install required network and database libraries
           npm install axios firebase-admin
           
           cat <<EOF > sync.js
@@ -34,24 +33,37 @@ jobs:
 
               const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
               
-              // 1. Initialize Firebase without specific database URL requirements
-              admin.initializeApp({
+              // 1. Initialize Firebase App (used strictly to generate a secure access token)
+              const app = admin.initializeApp({
                 credential: admin.credential.cert(serviceAccount)
               });
               
-              const db = admin.firestore();
+              const tokenObject = await app.options.credential.getAccessToken();
+              const accessToken = tokenObject.access_token;
           
               console.log("📡 Fetching latest scores from JSONBin.io...");
               const res = await axios.get("https://jsonbin.io", {
                 headers: { "X-Access-Key": process.env.JSONBIN_KEY }
               });
               
-              console.log("💾 Pushing data state over to Firestore...");
+              console.log("💾 Pushing data directly to Firebase REST API...");
               
-              // 2. Overwrites or creates the document 'current_scores' in the 'leaderboard' collection
-              await db.collection("leaderboard").doc("current_scores").set(res.data.record);
+              // 2. Bypass Firebase SDK bugs by calling the HTTP REST API directly
+              const dbUrl = "https://firebasedatabase.app";
               
-              console.log("✅ Sync completed successfully!");
+              const pushResponse = await axios.put(dbUrl, res.data.record, {
+                headers: {
+                  'Authorization': `Bearer ${accessToken}`,
+                  'Content-Type': 'application/json'
+                }
+              });
+              
+              if (pushResponse.status === 200) {
+                 console.log("✅ Sync completed successfully!");
+              } else {
+                 console.error("❌ Firebase rejected the HTTP write request.");
+              }
+              
               process.exit(0);
             } catch (e) {
               console.error("❌ CRITICAL FAILURE:", e.message);

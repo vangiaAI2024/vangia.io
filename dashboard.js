@@ -1,5 +1,5 @@
-// Live Score Dashboard JavaScript - RMIT MAI Attack Level System
-document.addEventListener('DOMContentLoaded', function() {
+// Live Score Dashboard JavaScript - RMIT MAI Attack Level System with Firebase
+document.addEventListener('DOMContentLoaded', async function() {
     // Attack level management for 18 tasks (each task pair starts at 100)
     let taskAttackLevels = Array(19).fill(100); // Index 1-18 for tasks
     let currentPeriod = 1;
@@ -7,6 +7,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let seconds = 0;
     let minutes = 0;
     let isTimerRunning = false;
+
+    // Firebase integration
+    let db = null;
+    let scoresDocRef = null;
+
+    // Initialize Firebase if available
+    if (window.firebaseDB) {
+        db = window.firebaseDB;
+        scoresDocRef = window.firebaseDoc(db, 'scores', 'current');
+        await loadScoresFromFirebase();
+    }
 
     // DOM elements
     const scoreDisplays = {};
@@ -28,6 +39,62 @@ document.addEventListener('DOMContentLoaded', function() {
     const actionLog = document.getElementById('actionLog');
     const minutesDisplay = document.getElementById('minutes');
     const secondsDisplay = document.getElementById('seconds');
+
+    // Firebase functions
+    async function loadScoresFromFirebase() {
+        if (!db || !scoresDocRef) return;
+
+        try {
+            const docSnap = await window.firebaseGetDoc(scoresDocRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                if (data.scores && Array.isArray(data.scores)) {
+                    data.scores.forEach(pair => {
+                        if (pair.pair_id >= 1 && pair.pair_id <= 18) {
+                            taskAttackLevels[pair.pair_id] = pair.score;
+                            scoreDisplays[pair.pair_id].textContent = pair.score;
+                            updateStatusIndicator(pair.pair_id);
+                        }
+                    });
+                    logAction('Scores loaded from Firebase');
+                }
+            } else {
+                // Create initial scores document
+                await saveScoresToFirebase();
+                logAction('Initial scores document created in Firebase');
+            }
+        } catch (error) {
+            console.error('Error loading scores from Firebase:', error);
+            logAction('Error loading scores from Firebase');
+        }
+    }
+
+    async function saveScoresToFirebase() {
+        if (!db || !scoresDocRef) return;
+
+        try {
+            const scoresData = {
+                scores: []
+            };
+
+            for (let i = 1; i <= 18; i++) {
+                const defenderName = teamNames[i].defender.textContent;
+                const attackerName = teamNames[i].attacker.textContent;
+                const pairName = `${defenderName} vs ${attackerName}`;
+
+                scoresData.scores.push({
+                    pair_id: i,
+                    name: `Pair ${i}`,
+                    score: taskAttackLevels[i]
+                });
+            }
+
+            await window.firebaseSetDoc(scoresDocRef, scoresData);
+        } catch (error) {
+            console.error('Error saving scores to Firebase:', error);
+            logAction('Error saving scores to Firebase');
+        }
+    }
 
     // Timer functions
     function updateTimerDisplay() {
@@ -68,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Attack Level functions
-    function updateAttackLevel(task, change) {
+    async function updateAttackLevel(task, change) {
         // Apply the change to attack level
         taskAttackLevels[task] += change;
         
@@ -81,6 +148,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const action = change > 0 ? 'Block' : 'Attack';
         const absDifference = Math.abs(change);
         logAction(`Task ${task} - ${action} action: Level now ${taskAttackLevels[task]}`);
+
+        // Save to Firebase
+        await saveScoresToFirebase();
     }
 
     function updateStatusIndicator(task) {
@@ -130,13 +200,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Quick actions
-    function resetScores() {
+    async function resetScores() {
         for (let i = 1; i <= 18; i++) {
             taskAttackLevels[i] = 100; // Reset all tasks to 100
             scoreDisplays[i].textContent = '100';
             updateStatusIndicator(i);
         }
         logAction('All task attack levels reset to 100');
+        await saveScoresToFirebase();
     }
 
     function swapTeams() {
@@ -151,8 +222,8 @@ document.addEventListener('DOMContentLoaded', function() {
         logAction('All defender/attacker teams swapped');
     }
 
-    function newCompetition() {
-        resetScores();
+    async function newCompetition() {
+        await resetScores();
         resetTimer();
         currentPeriod = 1;
         currentPeriodDisplay.textContent = '1';
@@ -185,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         logAction('New RMIT MAI competition started - All tasks reset to Level 100');
+        await saveScoresToFirebase();
     }
 
     // Event listeners
@@ -194,16 +266,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Attack/Block buttons
     document.querySelectorAll('.attack-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', async function() {
             const task = parseInt(this.dataset.task);
-            updateAttackLevel(task, -5); // Attack reduces by 5
+            await updateAttackLevel(task, -5); // Attack reduces by 5
         });
     });
 
     document.querySelectorAll('.block-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', async function() {
             const task = parseInt(this.dataset.task);
-            updateAttackLevel(task, 5); // Block increases by 5
+            await updateAttackLevel(task, 5); // Block increases by 5
         });
     });
 
@@ -227,22 +299,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', async function(e) {
         // Task 1: Q for +5, A for -5
         if (e.key.toLowerCase() === 'q') {
             e.preventDefault();
-            updateAttackLevel(1, 5);
+            await updateAttackLevel(1, 5);
         } else if (e.key.toLowerCase() === 'a') {
             e.preventDefault();
-            updateAttackLevel(1, -5);
+            await updateAttackLevel(1, -5);
         }
         // Task 2: W for +5, S for -5
         else if (e.key.toLowerCase() === 'w') {
             e.preventDefault();
-            updateAttackLevel(2, 5);
+            await updateAttackLevel(2, 5);
         } else if (e.key.toLowerCase() === 's') {
             e.preventDefault();
-            updateAttackLevel(2, -5);
+            await updateAttackLevel(2, -5);
         }
         // Space for timer start/pause
         else if (e.code === 'Space') {
@@ -256,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // R for reset scores
         else if (e.key.toLowerCase() === 'r') {
             e.preventDefault();
-            resetScores();
+            await resetScores();
         }
     });
 

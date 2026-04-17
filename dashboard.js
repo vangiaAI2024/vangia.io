@@ -8,6 +8,27 @@ document.addEventListener('DOMContentLoaded', async function() {
     let minutes = 0;
     let isTimerRunning = false;
 
+    // DOM elements - declare first
+    const scoreDisplays = {};
+    const statusIndicators = {};
+    const teamNames = {};
+
+    for (let i = 1; i <= 18; i++) {
+        scoreDisplays[i] = document.getElementById(`task${i}Score`);
+        statusIndicators[i] = document.getElementById(`task${i}Status`);
+        // Get defender and attacker name elements for editable team names
+        const container = document.querySelector(`[id="task${i}Status"]`).closest('.task-container');
+        teamNames[i] = {
+            defender: container.querySelector('.defender-name'),
+            attacker: container.querySelector('.attacker-name')
+        };
+    }
+
+    const currentPeriodDisplay = document.getElementById('currentPeriod');
+    const actionLog = document.getElementById('actionLog');
+    const minutesDisplay = document.getElementById('minutes');
+    const secondsDisplay = document.getElementById('seconds');
+
     // Firebase integration
     let db = null;
     let scoresDocRef = null;
@@ -74,27 +95,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             });
         }
     }
-
-    // DOM elements
-    const scoreDisplays = {};
-    const statusIndicators = {};
-    const teamNames = {};
-
-    for (let i = 1; i <= 18; i++) {
-        scoreDisplays[i] = document.getElementById(`task${i}Score`);
-        statusIndicators[i] = document.getElementById(`task${i}Status`);
-        // Get defender and attacker name elements for editable team names
-        const container = document.querySelector(`[id="task${i}Status"]`).closest('.task-container');
-        teamNames[i] = {
-            defender: container.querySelector('.defender-name'),
-            attacker: container.querySelector('.attacker-name')
-        };
-    }
-
-    const currentPeriodDisplay = document.getElementById('currentPeriod');
-    const actionLog = document.getElementById('actionLog');
-    const minutesDisplay = document.getElementById('minutes');
-    const secondsDisplay = document.getElementById('seconds');
 
     // Firebase functions
     async function loadScoresFromFirebase() {

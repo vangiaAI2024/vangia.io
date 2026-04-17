@@ -14,9 +14,65 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Initialize Firebase if available
     if (window.firebaseDB) {
+        console.log('Firebase is available, initializing...');
         db = window.firebaseDB;
-        scoresDocRef = window.firebaseDoc(db, 'scores', 'current');
+        
+        // Try different possible document paths
+        const possiblePaths = [
+            ['scores', 'current'],
+            ['scores', 'scores'], 
+            ['data', 'scores'],
+            ['scores', 'data']
+        ];
+        
+        for (const [collection, docId] of possiblePaths) {
+            try {
+                scoresDocRef = window.firebaseDoc(db, collection, docId);
+                console.log(`Trying Firebase path: ${collection}/${docId}`);
+                const docSnap = await window.firebaseGetDoc(scoresDocRef);
+                if (docSnap.exists()) {
+                    console.log(`Found scores document at ${collection}/${docId}:`, docSnap.data());
+                    break;
+                } else {
+                    console.log(`No document found at ${collection}/${docId}`);
+                }
+            } catch (error) {
+                console.log(`Error checking ${collection}/${docId}:`, error);
+            }
+        }
+        
+        // If no document found, use default path
+        if (!scoresDocRef) {
+            scoresDocRef = window.firebaseDoc(db, 'scores', 'current');
+            console.log('Using default path: scores/current');
+        }
+        
         await loadScoresFromFirebase();
+        
+        // Listen for real-time updates from Firebase
+        if (window.firebaseOnSnapshot) {
+            window.firebaseOnSnapshot(scoresDocRef, (doc) => {
+                if (doc.exists()) {
+                    const data = doc.data();
+                    console.log('Firebase real-time update received:', data);
+                    if (data.scores && Array.isArray(data.scores)) {
+                        data.scores.forEach(pair => {
+                            if (pair.pair_id >= 1 && pair.pair_id <= 18) {
+                                taskAttackLevels[pair.pair_id] = pair.score;
+                                scoreDisplays[pair.pair_id].textContent = pair.score;
+                                updateStatusIndicator(pair.pair_id);
+                            }
+                        });
+                        logAction('Scores updated from Firebase (real-time)');
+                    }
+                } else {
+                    console.log('Firebase document does not exist');
+                }
+            }, (error) => {
+                console.error('Firebase real-time listener error:', error);
+                logAction('Error listening to Firebase updates');
+            });
+        }
     }
 
     // DOM elements
@@ -89,7 +145,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 });
             }
 
+            console.log('Saving scores to Firebase:', scoresData);
             await window.firebaseSetDoc(scoresDocRef, scoresData);
+            console.log('Scores saved successfully to Firebase');
         } catch (error) {
             console.error('Error saving scores to Firebase:', error);
             logAction('Error saving scores to Firebase');
@@ -222,41 +280,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         logAction('All defender/attacker teams swapped');
     }
 
-    async function newCompetition() {
-        await resetScores();
-        resetTimer();
-        currentPeriod = 1;
-        currentPeriodDisplay.textContent = '1';
-
-        // Reset team names to defaults
-        const defaultTeams = [
-            { defender: 'Team Alpha (D)', attacker: 'Team Beta (A)' },
-            { defender: 'Team Gamma (D)', attacker: 'Team Delta (A)' },
-            { defender: 'Team Epsilon (D)', attacker: 'Team Zeta (A)' },
-            { defender: 'Team Eta (D)', attacker: 'Team Theta (A)' },
-            { defender: 'Team Iota (D)', attacker: 'Team Kappa (A)' },
-            { defender: 'Team Lambda (D)', attacker: 'Team Mu (A)' },
-            { defender: 'Team Nu (D)', attacker: 'Team Xi (A)' },
-            { defender: 'Team Omicron (D)', attacker: 'Team Pi (A)' },
-            { defender: 'Team Rho (D)', attacker: 'Team Sigma (A)' },
-            { defender: 'Team Tau (D)', attacker: 'Team Upsilon (A)' },
-            { defender: 'Team Phi (D)', attacker: 'Team Chi (A)' },
-            { defender: 'Team Psi (D)', attacker: 'Team Omega (A)' },
-            { defender: 'Team 25 (D)', attacker: 'Team 26 (A)' },
-            { defender: 'Team 27 (D)', attacker: 'Team 28 (A)' },
-            { defender: 'Team 29 (D)', attacker: 'Team 30 (A)' },
-            { defender: 'Team 31 (D)', attacker: 'Team 32 (A)' },
-            { defender: 'Team 33 (D)', attacker: 'Team 34 (A)' },
-            { defender: 'Team 35 (D)', attacker: 'Team 36 (A)' }
-        ];
-
-        for (let i = 1; i <= 18; i++) {
-            teamNames[i].defender.textContent = defaultTeams[i-1].defender;
-            teamNames[i].attacker.textContent = defaultTeams[i-1].attacker;
+    async function testFirebaseConnection() {
+        if (!db) {
+            console.log('Firebase not initialized');
+            return;
         }
 
-        logAction('New RMIT MAI competition started - All tasks reset to Level 100');
-        await saveScoresToFirebase();
+        try {
+            console.log('Testing Firebase connection...');
+            const testDoc = window.firebaseDoc(db, 'test', 'connection');
+            await window.firebaseSetDoc(testDoc, { timestamp: new Date().toISOString() });
+            console.log('Firebase write test successful');
+
+            const docSnap = await window.firebaseGetDoc(testDoc);
+            if (docSnap.exists()) {
+                console.log('Firebase read test successful:', docSnap.data());
+            }
+        } catch (error) {
+            console.error('Firebase connection test failed:', error);
+        }
     }
 
     // Event listeners
@@ -287,6 +329,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('resetScores').addEventListener('click', resetScores);
     document.getElementById('swapTeams').addEventListener('click', swapTeams);
     document.getElementById('newGame').addEventListener('click', newCompetition);
+    document.getElementById('refreshFirebase').addEventListener('click', refreshFromFirebase);
+    document.getElementById('testFirebase').addEventListener('click', testFirebaseConnection);
 
     // Team name editing - log when names are changed
     for (let i = 1; i <= 18; i++) {

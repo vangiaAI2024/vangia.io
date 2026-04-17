@@ -1,79 +1,76 @@
 name: Sync JSONBin to Firebase
 
 on:
-  schedule:
-    - cron: '*/5 * * * *' 
+  # 1. 🗑️ Automated 'cron' schedule deleted to prevent automatic network drain
   workflow_dispatch: 
+    # 2. 🟢 Manual execution button retained. This yields pure on-demand pushes.
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '24'
+          python-version: '3.11'
           
-      - name: Run Sync Script
+      - name: Run Python Sync Script
         run: |
-          npm install axios firebase-admin
+          pip install requests google-auth
           
-          cat <<EOF > sync.js
-          const axios = require('axios');
-          const admin = require('firebase-admin');
-          
-          async function run() {
-            try {
-              if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
-                throw new Error("MISSING SECRET: 'FIREBASE_SECRET' is empty.");
-              }
-              if (!process.env.JSONBIN_KEY) {
-                throw new Error("MISSING SECRET: 'JSONBIN_KEY' is empty.");
-              }
+          python -c "
+          import os
+          import json
+          import requests
+          from google.oauth2 import service_account
+          from google.auth.transport import requests as google_requests
 
-              const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+          try:
+              if not os.environ.get('FIREBASE_SERVICE_ACCOUNT'):
+                  raise Exception('MISSING SECRET: FIREBASE_SECRET')
+              if not os.environ.get('JSONBIN_KEY'):
+                  raise Exception('MISSING SECRET: JSONBIN_KEY')
+
+              print('🔒 Generating secure token...')
+              service_account_info = json.loads(os.environ.get('FIREBASE_SERVICE_ACCOUNT'))
+              credentials = service_account.Credentials.from_service_account_info(
+                  service_account_info,
+                  scopes=['https://googleapis.com', 'https://googleapis.com']
+              )
               
-              // 1. Initialize Firebase App (used strictly to generate a secure access token)
-              const app = admin.initializeApp({
-                credential: admin.credential.cert(serviceAccount)
-              });
+              request = google_requests.Request()
+              credentials.refresh(request)
+              access_token = credentials.token
+
+              print('📡 Fetching scores from JSONBin.io...')
+              headers = {'X-Access-Key': os.environ.get('JSONBIN_KEY')}
+              res = requests.get('https://jsonbin.io', headers=headers)
               
-              const tokenObject = await app.options.credential.getAccessToken();
-              const accessToken = tokenObject.access_token;
-          
-              console.log("📡 Fetching latest scores from JSONBin.io...");
-              const res = await axios.get("https://jsonbin.io", {
-                headers: { "X-Access-Key": process.env.JSONBIN_KEY }
-              });
+              if res.status_code != 200:
+                  raise Exception(f'JSONBin rejected access: {res.text}')
               
-              console.log("💾 Pushing data directly to Firebase REST API...");
+              payload_data = res.json()['record']
+
+              print('💾 Pushing data state to Firebase...')
+              db_url = 'https://firebasedatabase.app'
               
-              // 2. Bypass Firebase SDK bugs by calling the HTTP REST API directly
-              const dbUrl = "https://firebasedatabase.app";
-              
-              const pushResponse = await axios.put(dbUrl, res.data.record, {
-                headers: {
-                  'Authorization': `Bearer ${accessToken}`,
+              firebase_headers = {
+                  'Authorization': f'Bearer {access_token}',
                   'Content-Type': 'application/json'
-                }
-              });
-              
-              if (pushResponse.status === 200) {
-                 console.log("✅ Sync completed successfully!");
-              } else {
-                 console.error("❌ Firebase rejected the HTTP write request.");
               }
               
-              process.exit(0);
-            } catch (e) {
-              console.error("❌ CRITICAL FAILURE:", e.message);
-              process.exit(1);
-            }
-          }
-          run();
-          EOF
-          
-          node sync.js
+              put_res = requests.put(db_url, json=payload_data, headers=firebase_headers)
+              
+              if put_res.status_code == 200:
+                  print('✅ Sync completed successfully!')
+              else:
+                  print(f'❌ Firebase rejected write. Code: {put_res.status_code}. Response: {put_res.text}')
+                  exit(1)
+
+          except Exception as e:
+              print(f'❌ CRITICAL FAILURE: {e}')
+              exit(1)
+          "
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SECRET }}
           JSONBIN_KEY: ${{ secrets.JSONBIN_KEY }}

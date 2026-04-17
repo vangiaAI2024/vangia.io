@@ -58,7 +58,7 @@ jobs:
               print('💾 Pushing data state to Firebase...')
               
               db_secret = os.environ.get('FIREBASE_DB_SECRET').strip()
-              db_url = f'https://firebasedatabase.app{db_secret}'
+              db_url = f'https://firebasedatabase.app\{{db_secret}\}'
               
               put_res = requests.put(db_url, json=payload_data)
               

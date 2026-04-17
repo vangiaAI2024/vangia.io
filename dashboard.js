@@ -29,65 +29,35 @@ document.addEventListener('DOMContentLoaded', async function() {
     const minutesDisplay = document.getElementById('minutes');
     const secondsDisplay = document.getElementById('seconds');
 
-    // Firebase integration
+    // Firebase integration (Realtime Database)
     let db = null;
-    let scoresDocRef = null;
+    let scoresRef = null;
 
     // Initialize Firebase if available
     if (window.firebaseDB) {
         console.log('Firebase is available, initializing...');
         db = window.firebaseDB;
         
-        // Try different possible document paths
-        const possiblePaths = [
-            ['scores', 'current'],
-            ['scores', 'scores'], 
-            ['data', 'scores'],
-            ['scores', 'data']
-        ];
-        
-        for (const [collection, docId] of possiblePaths) {
-            try {
-                scoresDocRef = window.firebaseDoc(db, collection, docId);
-                console.log(`Trying Firebase path: ${collection}/${docId}`);
-                const docSnap = await window.firebaseGetDoc(scoresDocRef);
-                if (docSnap.exists()) {
-                    console.log(`Found scores document at ${collection}/${docId}:`, docSnap.data());
-                    break;
-                } else {
-                    console.log(`No document found at ${collection}/${docId}`);
-                }
-            } catch (error) {
-                console.log(`Error checking ${collection}/${docId}:`, error);
-            }
-        }
-        
-        // If no document found, use default path
-        if (!scoresDocRef) {
-            scoresDocRef = window.firebaseDoc(db, 'scores', 'current');
-            console.log('Using default path: scores/current');
-        }
+        // Use the same path as GitHub Actions: /pages/scores
+        scoresRef = window.firebaseRef(db, 'pages/scores');
+        console.log('Using Firebase Realtime Database path: pages/scores');
         
         await loadScoresFromFirebase();
         
-        // Listen for real-time updates from Firebase
-        if (window.firebaseOnSnapshot) {
-            window.firebaseOnSnapshot(scoresDocRef, (doc) => {
-                if (doc.exists()) {
-                    const data = doc.data();
-                    console.log('Firebase real-time update received:', data);
-                    if (data.scores && Array.isArray(data.scores)) {
-                        data.scores.forEach(pair => {
-                            if (pair.pair_id >= 1 && pair.pair_id <= 18) {
-                                taskAttackLevels[pair.pair_id] = pair.score;
-                                scoreDisplays[pair.pair_id].textContent = pair.score;
-                                updateStatusIndicator(pair.pair_id);
-                            }
-                        });
-                        logAction('Scores updated from Firebase (real-time)');
-                    }
-                } else {
-                    console.log('Firebase document does not exist');
+        // Listen for real-time updates from Firebase Realtime Database
+        if (window.firebaseOnValue) {
+            window.firebaseOnValue(scoresRef, (snapshot) => {
+                const data = snapshot.val();
+                console.log('Firebase real-time update received:', data);
+                if (data && Array.isArray(data)) {
+                    data.forEach(pair => {
+                        if (pair.pair_id >= 1 && pair.pair_id <= 18) {
+                            taskAttackLevels[pair.pair_id] = pair.score;
+                            scoreDisplays[pair.pair_id].textContent = pair.score;
+                            updateStatusIndicator(pair.pair_id);
+                        }
+                    });
+                    logAction('Scores updated from Firebase (real-time)');
                 }
             }, (error) => {
                 console.error('Firebase real-time listener error:', error);
@@ -98,14 +68,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Firebase functions
     async function loadScoresFromFirebase() {
-        if (!db || !scoresDocRef) return;
+        if (!db || !scoresRef) return;
 
         try {
-            const docSnap = await window.firebaseGetDoc(scoresDocRef);
-            if (docSnap.exists()) {
-                const data = docSnap.data();
-                if (data.scores && Array.isArray(data.scores)) {
-                    data.scores.forEach(pair => {
+            const snapshot = await window.firebaseGet(scoresRef);
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                if (data && Array.isArray(data)) {
+                    data.forEach(pair => {
                         if (pair.pair_id >= 1 && pair.pair_id <= 18) {
                             taskAttackLevels[pair.pair_id] = pair.score;
                             scoreDisplays[pair.pair_id].textContent = pair.score;
@@ -126,19 +96,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     async function saveScoresToFirebase() {
-        if (!db || !scoresDocRef) return;
+        if (!db || !scoresRef) return;
 
         try {
-            const scoresData = {
-                scores: []
-            };
+            const scoresData = [];
 
             for (let i = 1; i <= 18; i++) {
                 const defenderName = teamNames[i].defender.textContent;
                 const attackerName = teamNames[i].attacker.textContent;
                 const pairName = `${defenderName} vs ${attackerName}`;
 
-                scoresData.scores.push({
+                scoresData.push({
                     pair_id: i,
                     name: `Pair ${i}`,
                     score: taskAttackLevels[i]
@@ -146,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
 
             console.log('Saving scores to Firebase:', scoresData);
-            await window.firebaseSetDoc(scoresDocRef, scoresData);
+            await window.firebaseSet(scoresRef, scoresData);
             console.log('Scores saved successfully to Firebase');
         } catch (error) {
             console.error('Error saving scores to Firebase:', error);

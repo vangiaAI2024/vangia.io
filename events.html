@@ -3,460 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RMIT MAI Dashboard Scoring System - Vangia.io</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="dashboard.css">
+    <title>RMIT Master of Artificial Intelligence - AI Arm Race in Digital Banking</title>
+    
+    <!-- 1. Load Firebase directly via CDN (No installation needed) -->
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+
+    <style>
+        body { 
+            background-color: #0d1117; 
+            color: #c9d1d9; 
+            font-family: 'Courier New', Courier, monospace; 
+            padding: 20px; 
+            margin: 0;
+        }
+        h1 { 
+            text-align: center; 
+            color: #58a6ff; 
+            text-transform: uppercase;
+            border-bottom: 2px solid #30363d;
+            padding-bottom: 10px;
+            font-size: 1.8em;
+        }
+        .status-bar { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            font-size: 0.9em; 
+            color: #8b949e;
+        }
+        table { 
+            width: 100%; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            border-collapse: collapse; 
+            background-color: #161b22; 
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        th, td { 
+            padding: 15px; 
+            text-align: left; 
+            border-bottom: 1px solid #30363d; 
+        }
+        th { 
+            background-color: #21262d; 
+            color: #f0f6fc;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        tr:hover {
+            background-color: #21262d;
+        }
+        .health-high { 
+            color: #7ee787; 
+            font-weight: bold; 
+        }
+        .health-mid { 
+            color: #dbab09; 
+            font-weight: bold; 
+        }
+        .health-low { 
+            color: #ff7b72; 
+            font-weight: bold; 
+        }
+        .breach-badge {
+            background-color: #30363d;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 3px;
+            color: #ff7b72;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">Vangia.io</div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li class="dropdown">
-                    <a href="#about">About</a>
-                    <ul class="submenu">
-                        <li><a href="#company">Company</a></li>
-                        <li><a href="#blog">Blog</a></li>
-                        <li><a href="#support">Support</a></li>
-                        <li><a href="events.html">Events</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </header>
 
-    <main class="dashboard">
-        <div class="dashboard-header">
-            <h1>RMIT MAI Scoring Dashboard</h1>
-            <p class="dashboard-subtitle">Master of Artificial Intelligence - Competition Scoring System</p>
-            <div class="timer-section">
-                <div class="timer-display">
-                    <span id="minutes">00</span>:<span id="seconds">00</span>
-                </div>
-                <div class="timer-controls">
-                    <button id="startTimer" class="timer-btn">Start</button>
-                    <button id="pauseTimer" class="timer-btn">Pause</button>
-                    <button id="resetTimer" class="timer-btn">Reset</button>
-                </div>
-            </div>
-        </div>
+    <h1>RMIT Master of Artificial Intelligence - AI Arm Race in Digital Banking</h1>
+    <div class="status-bar">
+        SYSTEM STATUS: <span id="conn-status" style="color:#f78166">CONNECTING...</span> | 
+        LAST UPDATE: <span id="sync-time" style="color:#58a6ff">-</span>
+    </div>
 
-        <div class="score-container">
-            <div class="tasks-grid">
-                <!-- Task 1 -->
-                <div class="task-container">
-                    <div class="task-title">Task 1</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Alpha (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Beta (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task1Score">100</span></div>
-                        <div class="status-indicator" id="task1Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="1">Attack -5</button>
-                        <button class="block-btn" data-task="1">Block +5</button>
-                    </div>
-                </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Unit (Pair)</th>
+                <th>🛡️ System Health</th>
+                <th>Files Breached</th>
+                <th>Last Activity</th>
+            </tr>
+        </thead>
+        <tbody id="board-body">
+            <tr><td colspan="4" style="text-align:center;">📡 Establishing Secure Uplink...</td></tr>
+        </tbody>
+    </table>
 
-                <!-- Task 2 -->
-                <div class="task-container">
-                    <div class="task-title">Task 2</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Gamma (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Delta (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task2Score">100</span></div>
-                        <div class="status-indicator" id="task2Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="2">Attack -5</button>
-                        <button class="block-btn" data-task="2">Block +5</button>
-                    </div>
-                </div>
+    <script>
+        // 2. Point directly to your Singapore Database endpoint
+        const firebaseConfig = {
+            databaseURL: "https://mai-workshop-rmit2026-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        };
 
-                <!-- Task 3 -->
-                <div class="task-container">
-                    <div class="task-title">Task 3</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Epsilon (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Zeta (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task3Score">100</span></div>
-                        <div class="status-indicator" id="task3Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="3">Attack -5</button>
-                        <button class="block-btn" data-task="3">Block +5</button>
-                    </div>
-                </div>
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-                <!-- Task 4 -->
-                <div class="task-container">
-                    <div class="task-title">Task 4</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Eta (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Theta (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task4Score">100</span></div>
-                        <div class="status-indicator" id="task4Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="4">Attack -5</button>
-                        <button class="block-btn" data-task="4">Block +5</button>
-                    </div>
-                </div>
+        // 3. Listen to the database tree natively for live changes
+        database.ref('leaderboard').on('value', (snapshot) => {
+            const data = snapshot.val();
+            
+            const statusEl = document.getElementById('conn-status');
+            statusEl.innerText = "ONLINE";
+            statusEl.style.color = "#2ea043";
+            
+            if (data) {
+                updateTable(data);
+                document.getElementById('sync-time').innerText = new Date().toLocaleTimeString();
+            } else {
+                const tbody = document.getElementById('board-body');
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">⚠️ Database is empty. Waiting for first sync...</td></tr>`;
+            }
+        });
 
-                <!-- Task 5 -->
-                <div class="task-container">
-                    <div class="task-title">Task 5</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Iota (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Kappa (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task5Score">100</span></div>
-                        <div class="status-indicator" id="task5Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="5">Attack -5</button>
-                        <button class="block-btn" data-task="5">Block +5</button>
-                    </div>
-                </div>
+        // 4. Map the incoming Firebase JSON scores directly to the HTML Table
+        function updateTable(data) {
+            const tbody = document.getElementById('board-body');
+            tbody.innerHTML = ""; // Clear old rows
 
-                <!-- Task 6 -->
-                <div class="task-container">
-                    <div class="task-title">Task 6</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Lambda (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Mu (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task6Score">100</span></div>
-                        <div class="status-indicator" id="task6Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="6">Attack -5</button>
-                        <button class="block-btn" data-task="6">Block +5</button>
-                    </div>
-                </div>
+            // Convert raw dictionary to array
+            let pairs = Object.entries(data);
 
-                <!-- Task 7 -->
-                <div class="task-container">
-                    <div class="task-title">Task 7</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Nu (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Xi (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task7Score">100</span></div>
-                        <div class="status-indicator" id="task7Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="7">Attack -5</button>
-                        <button class="block-btn" data-task="7">Block +5</button>
-                    </div>
-                </div>
+            // Calculate current health and map to objects
+            let rows = pairs.map(([pairName, stats]) => {
+                let filesBreachedCount = 0;
+                let filesArray = [];
+                
+                if (stats.files_breached) {
+                    if (Array.isArray(stats.files_breached)) {
+                        filesArray = stats.files_breached;
+                    } else if (typeof stats.files_breached === 'object') {
+                        // In case JSONBin pushes it as a dict/object instead of an array
+                        filesArray = Object.values(stats.files_breached);
+                    }
+                    filesBreachedCount = filesArray.length;
+                }
+                
+                // Base health starts at 100, each breach subtracts 10 points
+                let currentHealth = 100 - (filesBreachedCount * 10);
+                if (currentHealth < 0) currentHealth = 0; // Prevent negative scores
 
-                <!-- Task 8 -->
-                <div class="task-container">
-                    <div class="task-title">Task 8</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Omicron (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Pi (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task8Score">100</span></div>
-                        <div class="status-indicator" id="task8Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="8">Attack -5</button>
-                        <button class="block-btn" data-task="8">Block +5</button>
-                    </div>
-                </div>
+                return {
+                    name: pairName,
+                    health: currentHealth,
+                    files: filesArray,
+                    last: stats.last_active || 'Never'
+                };
+            });
 
-                <!-- Task 9 -->
-                <div class="task-container">
-                    <div class="task-title">Task 9</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Rho (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Sigma (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task9Score">100</span></div>
-                        <div class="status-indicator" id="task9Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="9">Attack -5</button>
-                        <button class="block-btn" data-task="9">Block +5</button>
-                    </div>
-                </div>
+            // Sort by Health (lowest health at the top to show teams under heaviest attack)
+            rows.sort((a, b) => a.health - b.health);
 
-                <!-- Task 10 -->
-                <div class="task-container">
-                    <div class="task-title">Task 10</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Tau (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Upsilon (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task10Score">100</span></div>
-                        <div class="status-indicator" id="task10Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="10">Attack -5</button>
-                        <button class="block-btn" data-task="10">Block +5</button>
-                    </div>
-                </div>
+            rows.forEach((row) => {
+                const tr = document.createElement('tr');
+                
+                // Format the breached files as small badges
+                let filesHtml = '-';
+                if (row.files.length > 0) {
+                    filesHtml = row.files.map(f => `<span class="breach-badge">#${f}</span>`).join(' ');
+                }
 
-                <!-- Task 11 -->
-                <div class="task-container">
-                    <div class="task-title">Task 11</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Phi (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Chi (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task11Score">100</span></div>
-                        <div class="status-indicator" id="task11Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="11">Attack -5</button>
-                        <button class="block-btn" data-task="11">Block +5</button>
-                    </div>
-                </div>
+                // Determine color class based on health percentage
+                let healthClass = "health-high";
+                if (row.health <= 30) {
+                    healthClass = "health-low";
+                } else if (row.health <= 70) {
+                    healthClass = "health-mid";
+                }
 
-                <!-- Task 12 -->
-                <div class="task-container">
-                    <div class="task-title">Task 12</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team Psi (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team Omega (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task12Score">100</span></div>
-                        <div class="status-indicator" id="task12Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="12">Attack -5</button>
-                        <button class="block-btn" data-task="12">Block +5</button>
-                    </div>
-                </div>
-
-                <!-- Task 13 -->
-                <div class="task-container">
-                    <div class="task-title">Task 13</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team 25 (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team 26 (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task13Score">100</span></div>
-                        <div class="status-indicator" id="task13Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="13">Attack -5</button>
-                        <button class="block-btn" data-task="13">Block +5</button>
-                    </div>
-                </div>
-
-                <!-- Task 14 -->
-                <div class="task-container">
-                    <div class="task-title">Task 14</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team 27 (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team 28 (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task14Score">100</span></div>
-                        <div class="status-indicator" id="task14Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="14">Attack -5</button>
-                        <button class="block-btn" data-task="14">Block +5</button>
-                    </div>
-                </div>
-
-                <!-- Task 15 -->
-                <div class="task-container">
-                    <div class="task-title">Task 15</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team 29 (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team 30 (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task15Score">100</span></div>
-                        <div class="status-indicator" id="task15Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="15">Attack -5</button>
-                        <button class="block-btn" data-task="15">Block +5</button>
-                    </div>
-                </div>
-
-                <!-- Task 16 -->
-                <div class="task-container">
-                    <div class="task-title">Task 16</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team 31 (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team 32 (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task16Score">100</span></div>
-                        <div class="status-indicator" id="task16Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="16">Attack -5</button>
-                        <button class="block-btn" data-task="16">Block +5</button>
-                    </div>
-                </div>
-
-                <!-- Task 17 -->
-                <div class="task-container">
-                    <div class="task-title">Task 17</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team 33 (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team 34 (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task17Score">100</span></div>
-                        <div class="status-indicator" id="task17Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="17">Attack -5</button>
-                        <button class="block-btn" data-task="17">Block +5</button>
-                    </div>
-                </div>
-
-                <!-- Task 18 -->
-                <div class="task-container">
-                    <div class="task-title">Task 18</div>
-                    <div class="team-names">
-                        <span class="defender-name" contenteditable="true">Team 35 (D)</span>
-                        <span> vs </span>
-                        <span class="attacker-name" contenteditable="true">Team 36 (A)</span>
-                    </div>
-                    <div class="attack-level">
-                        <div class="level-label">System Health</div>
-                        <div class="score-display"><span id="task18Score">100</span></div>
-                        <div class="status-indicator" id="task18Status"></div>
-                    </div>
-                    <div class="action-controls">
-                        <button class="attack-btn" data-task="18">Attack -5</button>
-                        <button class="block-btn" data-task="18">Block +5</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="game-stats">
-            <div class="stat-card">
-                <h3>Competition Round</h3>
-                <div class="period-controls">
-                    <button id="prevPeriod" class="period-btn">←</button>
-                    <span id="currentPeriod">1</span>
-                    <button id="nextPeriod" class="period-btn">→</button>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <h3>Competition Log</h3>
-                <div id="actionLog" class="action-log">
-                    <p>RMIT MAI Scoring System initialized - Ready for competition!</p>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <h3>Admin Controls</h3>
-                <div class="quick-actions">
-                    <button id="resetScores" class="action-btn">Reset Scores</button>
-                    <button id="swapTeams" class="action-btn">Swap Teams</button>
-                    <button id="newGame" class="action-btn">New Competition</button>
-                    <button id="refreshFirebase" class="action-btn">Refresh from Firebase</button>
-                    <button id="testFirebase" class="action-btn">Test Firebase</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Vangia.io. All rights reserved.</p>
-        <ul>
-            <li><a href="#privacy">Privacy</a></li>
-            <li><a href="#terms">Terms</a></li>
-        </ul>
-    </footer>
-
-    <script src="dashboard.js"></script>
+                tr.innerHTML = `
+                    <td style="font-weight:bold;">${row.name}</td>
+                    <td class="${healthClass}">${row.health}%</td>
+                    <td>${filesHtml}</td>
+                    <td style="color:#8b949e; font-size:0.9em;">${row.last}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
 </body>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-  import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBCXeDNoIQ5KcJSELeIkf8hpBxB-CXUvr8",
-    authDomain: "mai-workshop-rmit2026.firebaseapp.com",
-    projectId: "mai-workshop-rmit2026",
-    storageBucket: "mai-workshop-rmit2026.firebasestorage.app",
-    messagingSenderId: "701783956205",
-    appId: "1:701783956205:web:b0eb5d644da644eb608ae4",
-    measurementId: "G-5G0XENEN1Y"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getDatabase(app);
-
-  // Make Firebase functions available globally
-  window.firebaseDB = db;
-  window.firebaseRef = ref;
-  window.firebaseGet = get;
-  window.firebaseSet = set;
-  window.firebaseOnValue = onValue;
-</script>
 </html>

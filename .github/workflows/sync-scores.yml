@@ -2,10 +2,12 @@ name: Sync JSONBin to Firebase
 
 on:
   schedule:
-    # Triggers an automated update every 5 minutes (GitHub minimum)
-    - cron: '*/5 * * * *' 
-  workflow_dispatch: 
-    # Enables the "Run workflow" button for manual on-demand execution
+    - cron: '*/5 * * * *' # Runs every 5 minutes
+  workflow_dispatch: # Allows manual run
+
+# 🔧 FIX 1: This forces GitHub to use the newer Node version, silencing the warning
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   sync:
@@ -18,48 +20,51 @@ jobs:
           
       - name: Run Sync Script
         run: |
-          # 1. Install required network and database libraries
           npm install axios firebase-admin
           
-          # 2. Create the execution script dynamically
           cat <<EOF > sync.js
           const axios = require('axios');
           const admin = require('firebase-admin');
           
-          // Parse the secret service account from GitHub environment
-          const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-          
-          // Initialize connection to your Singapore Firebase Server
-          admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
-            databaseURL: "https://firebasedatabase.app"
-          });
-          
           async function run() {
             try {
+              // 🔧 FIX 2: Safety Check - Verify Secrets exist before crashing
+              if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
+                throw new Error("MISSING SECRET: 'FIREBASE_SECRET' is empty. Check GitHub Settings!");
+              }
+              if (!process.env.JSONBIN_KEY) {
+                throw new Error("MISSING SECRET: 'JSONBIN_KEY' is empty. Check GitHub Settings!");
+              }
+
+              // Parse Credentials
+              const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+              
+              // Initialize Firebase
+              admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount),
+                databaseURL: "https://firebasedatabase.app"
+              });
+          
               console.log("📡 Fetching latest scores from JSONBin.io...");
               
-              // Mapped directly to your Scoreboard Bin ID
+              // ⚠️ ENSURE THIS ID IS CORRECT (Your Scoreboard Bin ID)
               const res = await axios.get("https://jsonbin.io", {
                 headers: { "X-Access-Key": process.env.JSONBIN_KEY }
               });
               
-              console.log("💾 Pushing data state over to Firebase Realtime Database...");
-              
-              // This strictly overwrites the 'leaderboard' path on your tree
+              console.log("💾 Pushing data to Firebase...");
               await admin.database().ref("leaderboard").set(res.data.record);
               
               console.log("✅ Sync completed successfully!");
               process.exit(0);
             } catch (e) {
-              console.error("❌ Error during execution state:", e.message);
+              console.error("❌ CRITICAL FAILURE:", e.message);
               process.exit(1);
             }
           }
           run();
           EOF
           
-          # 3. Execute the script
           node sync.js
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SECRET }}

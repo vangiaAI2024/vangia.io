@@ -78,8 +78,8 @@
             <tr>
                 <th>Unit (Pair)</th>
                 <th>🛡️ System Health</th>
-                <th>Files Breached</th>
-                <th>Last Activity</th>
+                <th>Status</th>
+                <th>Last Updated</th>
             </tr>
         </thead>
         <tbody id="board-body">
@@ -87,10 +87,9 @@
         </tbody>
     </table>
 
-    <!-- 🔧 THE FIX: Mapped the complete strict URL directories -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://gstatic.com";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
 
         const firebaseConfig = {
             databaseURL: "https://mai-workshop-rmit2026-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -98,78 +97,77 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const leaderboardRef = ref(db, 'leaderboard');
-        
-        onValue(leaderboardRef, (snapshot) => {
-            const data = snapshot.val();
-            
-            const statusEl = document.getElementById('conn-status');
-            statusEl.innerText = "ONLINE";
-            statusEl.style.color = "#2ea043";
-            
-            if (data) {
-                updateTable(data);
-                document.getElementById('sync-time').innerText = new Date().toLocaleTimeString();
-            } else {
-                const tbody = document.getElementById('board-body');
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">⚠️ Database is empty. Waiting for first sync...</td></tr>`;
+        const scoresRef = ref(db, 'pages/scores');
+
+        const connStatusEl = document.getElementById('conn-status');
+        const syncTimeEl = document.getElementById('sync-time');
+        const tbody = document.getElementById('board-body');
+
+        function setConnection(status, color) {
+            connStatusEl.innerText = status;
+            connStatusEl.style.color = color;
+        }
+
+        function showMessage(message) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">${message}</td></tr>`;
+        }
+
+        onValue(scoresRef, (snapshot) => {
+            const payload = snapshot.val();
+            setConnection('ONLINE', '#2ea043');
+            syncTimeEl.innerText = new Date().toLocaleTimeString();
+
+            if (!payload || !payload.scores) {
+                showMessage('⚠️ No score payload found at /pages/scores. Waiting for sync...');
+                return;
             }
+
+            if (!Array.isArray(payload.scores)) {
+                showMessage('⚠️ Unexpected data format: expected an array at /pages/scores/scores.');
+                return;
+            }
+
+            updateTable(payload.scores);
         }, (error) => {
-            console.error("Firebase Read Error:", error);
-            document.getElementById('conn-status').innerText = "ERROR";
+            console.error('Firebase listener error:', error);
+            setConnection('OFFLINE', '#f78166');
+            showMessage(`❌ Firebase error: ${error?.message || error}`);
         });
 
-        function updateTable(data) {
-            const tbody = document.getElementById('board-body');
-            tbody.innerHTML = ""; 
+        function getHealthClass(value) {
+            if (value >= 75) return 'health-high';
+            if (value >= 50) return 'health-mid';
+            return 'health-low';
+        }
 
-            let pairs = Object.entries(data);
+        function getStatusLabel(value) {
+            if (value >= 75) return 'Secure';
+            if (value >= 50) return 'At Risk';
+            if (value >= 25) return 'Breached';
+            return 'Critical';
+        }
 
-            let rows = pairs.map(([pairName, stats]) => {
-                let filesBreachedCount = 0;
-                let filesArray = [];
+        function updateTable(scores) {
+            tbody.innerHTML = '';
 
-                if (stats.files_breached) {
-                    if (Array.isArray(stats.files_breached)) {
-                        filesArray = stats.files_breached;
-                    } else if (typeof stats.files_breached === 'object') {
-                        filesArray = Object.values(stats.files_breached);
-                    }
-                    filesBreachedCount = filesArray.length;
-                }
-                
-                let currentHealth = 100 - (filesBreachedCount * 10);
-                if (currentHealth < 0) currentHealth = 0;
+            const sorted = [...scores].sort((a, b) => (a.score || 0) - (b.score || 0));
+            if (sorted.length === 0) {
+                showMessage('⚠️ Score list is empty.');
+                return;
+            }
 
-                return {
-                    name: pairName,
-                    health: currentHealth,
-                    files: filesArray,
-                    last: stats.last_active || 'Never'
-                };
-            });
-
-            rows.sort((a, b) => a.health - b.health);
-
-            rows.forEach((row) => {
-                const tr = document.createElement('tr');
-                
-                let filesHtml = '-';
-                if (row.files.length > 0) {
-                    filesHtml = row.files.map(f => `<span class="breach-badge">#${f}</span>`).join(' ');
-                }
-
-                let healthClass = "health-high";
-                if (row.health <= 30) healthClass = "health-low";
-                else if (row.health <= 70) healthClass = "health-mid";
-
-                tr.innerHTML = `
-                    <td style="font-weight:bold;">${row.name}</td>
-                    <td class="${healthClass}">${row.health}%</td>
-                    <td>${filesHtml}</td>
-                    <td style="color:#8b949e; font-size:0.9em;">${row.last}</td>
+            sorted.forEach(item => {
+                const row = document.createElement('tr');
+                const name = item.name || `Pair ${item.pair_id ?? '?'}`;
+                const score = Number.isFinite(item.score) ? item.score : 0;
+                const status = getStatusLabel(score);
+                row.innerHTML = `
+                    <td style="font-weight:bold;">${name}</td>
+                    <td class="${getHealthClass(score)}">${score}%</td>
+                    <td>${status}</td>
+                    <td style="color:#8b949e; font-size:0.9em;">${item.last_active || '-'}</td>
                 `;
-                tbody.appendChild(tr);
+                tbody.appendChild(row);
             });
         }
     </script>

@@ -2,7 +2,7 @@ name: Sync JSONBin to Firebase
 
 on:
   workflow_dispatch: 
-    # Manual trigger button
+    # Manual execution trigger only
 
 jobs:
   sync:
@@ -15,60 +15,40 @@ jobs:
           
       - name: Run Python Sync Script
         run: |
-          # Install standard libraries
-          pip install requests google-auth
+          pip install requests
           
-          # Execute the bridge in pure Python
           python -c "
           import os
-          import json
           import requests
-          from google.oauth2 import service_account
-          from google.auth.transport import requests as google_requests
 
           try:
-              # 1. Safety Checks
-              if not os.environ.get('FIREBASE_SERVICE_ACCOUNT'):
-                  raise Exception('MISSING SECRET: FIREBASE_SECRET')
+              # 1. Check if the keys exist
+              if not os.environ.get('FIREBASE_DB_SECRET'):
+                  raise Exception('MISSING SECRET: FIREBASE_DB_SECRET')
               if not os.environ.get('JSONBIN_KEY'):
                   raise Exception('MISSING SECRET: JSONBIN_KEY')
 
-              print('🔒 Generating secure token...')
-              service_account_info = json.loads(os.environ.get('FIREBASE_SERVICE_ACCOUNT'))
-              
-              # 🔧 FIX: Use 'cloud-platform' scope to force a valid Access Token response
-              credentials = service_account.Credentials.from_service_account_info(
-                  service_account_info,
-                  scopes=['https://googleapis.com']
-              )
-              
-              # Refresh credentials to get the actual token string
-              request = google_requests.Request()
-              credentials.refresh(request)
-              access_token = credentials.token
-
+              # 2. Fetch scores from JSONBin
               print('📡 Fetching scores from JSONBin.io...')
-              headers = {'X-Access-Key': os.environ.get('JSONBIN_KEY')}
+              jsonbin_url = 'https://jsonbin.io'
+              jsonbin_headers = {'X-Access-Key': os.environ.get('JSONBIN_KEY')}
               
-              # ⚠️ Verify this ID is your Scoreboard Bin ID (69e1d354856a68218942b374)
-              res = requests.get('https://jsonbin.io', headers=headers)
+              res = requests.get(jsonbin_url, headers=jsonbin_headers)
               
               if res.status_code != 200:
                   raise Exception(f'JSONBin rejected access: {res.text}')
               
               payload_data = res.json()['record']
 
+              # 3. Push to Firebase using the 'Furl...' secret directly
               print('💾 Pushing data state to Firebase...')
-              # ⚠️ Verify this is your exact Singapore URL ending in /leaderboard.json
-              db_url = 'https://firebasedatabase.app'
               
-              firebase_headers = {
-                  'Authorization': f'Bearer {access_token}',
-                  'Content-Type': 'application/json'
-              }
+              db_secret = os.environ.get('FIREBASE_DB_SECRET').strip()
               
-              # Use HTTP PUT to overwrite the data tree
-              put_res = requests.put(db_url, json=payload_data, headers=firebase_headers)
+              # We use the legacy ?auth= param which works perfectly with that string
+              db_url = f'https://firebasedatabase.app{db_secret}'
+              
+              put_res = requests.put(db_url, json=payload_data)
               
               if put_res.status_code == 200:
                   print('✅ Sync completed successfully!')
@@ -81,5 +61,5 @@ jobs:
               exit(1)
           "
         env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SECRET }}
+          FIREBASE_DB_SECRET: ${{ secrets.FIREBASE_DB_SECRET }}
           JSONBIN_KEY: ${{ secrets.JSONBIN_KEY }}

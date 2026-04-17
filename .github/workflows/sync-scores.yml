@@ -49,7 +49,6 @@ jobs:
                   exit(1)
               
               payload_data = res.json()
-              print(payload_data)
 
               # B. Push natively to your Singapore server endpoint using the Secret Variable
               print('💾 Pushing data state to Firebase...')
@@ -59,7 +58,7 @@ jobs:
               
               # 🔥 THE FIX: Separated by a clear question mark mapped into the string
               # This tells the server that the domain path has officially ended and a variable is starting
-              db_url = f'https://firebasedatabase.app{db_secret}'
+              db_url = f'https://mai-workshop-rmit2026-default-rtdb.asia-southeast1.firebasedatabase.app/{db_secret}'
               
               put_res = requests.put(db_url, json=payload_data)
               

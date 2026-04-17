@@ -5,15 +5,28 @@
     box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    line-height: 1.8;
     color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+/* Section headings use Space Mono */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Mono', 'Courier New', monospace;
+    font-weight: 400;
+    letter-spacing: -0.02em;
 }
 
 header {
     background: #f4f4f4;
-    padding: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 nav {
@@ -189,8 +202,21 @@ a {
 
 .hero {
     text-align: center;
-    padding: 4rem 2rem;
-    background: #e9e9e9;
+    padding: 8rem 2rem 6rem;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.03"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.03"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.02"/><circle cx="10" cy="50" r="0.5" fill="%23ffffff" opacity="0.02"/><circle cx="90" cy="30" r="0.5" fill="%23ffffff" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
 }
 
 .hero h1 {
@@ -211,11 +237,24 @@ a {
     border-radius: 5px;
 }
 
-.features {
-    padding: 2rem;
-    display: flex;
-    flex-wrap: wrap;
+.features .feature:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.features .feature img {
+    transition: transform 0.3s ease;
+}
+
+.features .feature:hover img {
+    transform: scale(1.05);
+}
     justify-content: space-around;
+}
+
+.features {
+    padding: 6rem 2rem;
+    background-color: #ffffff;
 }
 
 .feature {

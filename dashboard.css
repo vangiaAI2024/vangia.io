@@ -1,9 +1,22 @@
 /* Dashboard Styles */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+body {
+    background-color: #ffffff !important;
+}
+
 .dashboard {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+/* Section headings use Space Mono */
+.dashboard h1, .dashboard h2, .dashboard h3, .dashboard h4, .dashboard h5, .dashboard h6 {
+    font-family: 'Space Mono', 'Courier New', monospace;
+    font-weight: 400;
+    letter-spacing: -0.02em;
 }
 
 /* Navigation override for events.html */
@@ -23,7 +36,7 @@ header nav,
 header nav ul,
 header nav li,
 header nav a {
-    font-family: Arial, sans-serif !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif !important;
 }
 
 .dashboard-header {

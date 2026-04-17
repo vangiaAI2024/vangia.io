@@ -37,7 +37,6 @@ jobs:
               jsonbin_url = 'https://api.jsonbin.io'
               jsonbin_headers = {
                   'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
-                  'X-Bin-Meta': 'false',
                   'Content-Type': 'application/json'
               }
               
@@ -48,7 +47,7 @@ jobs:
                   print(f'❌ Raw Server Response:\\n{res.text[:500]}')
                   exit(1)
               
-              payload_data = res.json()
+              payload_data = res.json()['record']
 
               # B. Push natively to your Singapore server endpoint using the Secret Variable
               print('💾 Pushing data state to Firebase...')

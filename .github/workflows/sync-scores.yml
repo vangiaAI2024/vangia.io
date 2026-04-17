@@ -2,20 +2,21 @@ name: Sync JSONBin to Firebase
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # Runs every 5 minutes
-  workflow_dispatch: # Allows manual run
+    - cron: '*/5 * * * *' 
+  workflow_dispatch: 
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js
-        uses: actions/setup-node@v6 # 👈 Updated from @v4 to @v6 for Node 24 support
+        uses: actions/setup-node@v6
         with:
-          node-version: '24' # 👈 Updated from '22' to '24'
+          node-version: '24'
           
       - name: Run Sync Script
         run: |
+          # Install required network and database libraries
           npm install axios firebase-admin
           
           cat <<EOF > sync.js
@@ -24,32 +25,31 @@ jobs:
           
           async function run() {
             try {
-              // Safety Check - Verify Secrets exist before crashing
               if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
-                throw new Error("MISSING SECRET: 'FIREBASE_SECRET' is empty. Check GitHub Settings!");
+                throw new Error("MISSING SECRET: 'FIREBASE_SECRET' is empty.");
               }
               if (!process.env.JSONBIN_KEY) {
-                throw new Error("MISSING SECRET: 'JSONBIN_KEY' is empty. Check GitHub Settings!");
+                throw new Error("MISSING SECRET: 'JSONBIN_KEY' is empty.");
               }
 
-              // Parse Credentials
               const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
               
-              // Initialize Firebase
+              // 1. Initialize Firebase without specific database URL requirements
               admin.initializeApp({
-                credential: admin.credential.cert(serviceAccount),
-                databaseURL: "https://firebasedatabase.app"
+                credential: admin.credential.cert(serviceAccount)
               });
+              
+              const db = admin.firestore();
           
               console.log("📡 Fetching latest scores from JSONBin.io...");
-              
-              // Target your Scoreboard Bin ID
               const res = await axios.get("https://jsonbin.io", {
                 headers: { "X-Access-Key": process.env.JSONBIN_KEY }
               });
               
-              console.log("💾 Pushing data to Firebase...");
-              await admin.database().ref("leaderboard").set(res.data.record);
+              console.log("💾 Pushing data state over to Firestore...");
+              
+              // 2. Overwrites or creates the document 'current_scores' in the 'leaderboard' collection
+              await db.collection("leaderboard").doc("current_scores").set(res.data.record);
               
               console.log("✅ Sync completed successfully!");
               process.exit(0);

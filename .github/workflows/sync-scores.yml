@@ -23,16 +23,15 @@ jobs:
           import json
 
           try:
-              if not os.environ.get('FIREBASE_DB_SECRET'):
-                  raise Exception('MISSING SECRET: FIREBASE_DB_SECRET')
               if not os.environ.get('JSONBIN_KEY'):
                   raise Exception('MISSING SECRET: JSONBIN_KEY')
 
               print('📡 Fetching scores from JSONBin.io...')
               
-              # 🔧 FIX: Corrected hardcoded URL pointing specifically to the API subdomain
+              # Hardcoded target to lock out API routing crashes
               jsonbin_url = 'https://api.jsonbin.io'
               
+              # Strictly mapped to official v3 standards
               jsonbin_headers = {
                   'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
                   'X-Bin-Meta': 'false',
@@ -41,11 +40,9 @@ jobs:
               
               res = requests.get(jsonbin_url, headers=jsonbin_headers)
               
-              print(f'👉 API Response Status: {res.status_code}')
-              
               if res.status_code != 200:
                   print(f'❌ JSONBin Server Error. Code: {res.status_code}')
-                  print(f'❌ Raw Response (First 500 chars):\n{res.text[:500]}')
+                  print(f'❌ Server Message:\n{res.text[:500]}')
                   exit(1)
               
               try:
@@ -57,8 +54,9 @@ jobs:
 
               print('💾 Pushing data state to Firebase...')
               
-              db_secret = os.environ.get('FIREBASE_DB_SECRET').strip()
-              db_url = f'https://firebasedatabase.app\{{db_secret}\}'
+              # 🔧 THE ULTIMATE FIX: Hardcoding the parameters directly into the string!
+              # This physically prevents Python from smashing variables onto the end of '.app'
+              db_url = 'https://firebasedatabase.app'
               
               put_res = requests.put(db_url, json=payload_data)
               
@@ -73,5 +71,4 @@ jobs:
               exit(1)
           "
         env:
-          FIREBASE_DB_SECRET: ${{ secrets.FIREBASE_DB_SECRET }}
           JSONBIN_KEY: ${{ secrets.JSONBIN_KEY }}

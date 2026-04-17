@@ -6,66 +6,175 @@
     <title>RMIT Master of Artificial Intelligence - AI Arm Race in Digital Banking</title>
     
     <style>
-        body { 
-            background-color: #ffffff; 
-            color: #333; 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif; 
-            padding: 20px; 
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+        body {
+            background-color: #ffffff;
+            color: #111827;
+            font-family: 'Space Mono', monospace;
+            padding: 20px;
             margin: 0;
             line-height: 1.8;
         }
-        h1 { 
-            text-align: center; 
-            color: #1e3a8a; 
-            text-transform: uppercase;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 10px;
-            font-size: 1.8em;
-            font-family: 'Space Mono', 'Courier New', monospace;
-            font-weight: 400;
-            letter-spacing: -0.02em;
+
+        header {
+            background-color: #ffffff;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .status-bar { 
-            text-align: center; 
-            margin-bottom: 20px; 
-            font-size: 0.9em; 
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            background-color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        li {
+            position: relative;
+            font-size: 0.98rem;
+            letter-spacing: 0.01em;
+        }
+
+        li > a {
+            color: #111827;
+            text-decoration: none;
+            padding: 6px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        li > a:hover {
+            color: #2563eb;
+        }
+
+        .dropdown::after {
+            content: "▾";
+            font-size: 0.7rem;
+            color: #6b7280;
+            transition: transform 0.2s ease;
+            margin-left: 6px;
+        }
+
+        .dropdown:hover::after {
+            transform: rotate(180deg);
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 18px 60px rgba(15, 23, 42, 0.08);
+            padding: 12px 0;
+            z-index: 1000;
+            min-width: 220px;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .submenu,
+        .submenu.show {
+            display: block;
+        }
+
+        .submenu li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .submenu li a {
+            display: block;
+            padding: 12px 18px;
+            color: #111827;
+            font-size: 0.95rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .submenu li a:hover {
+            background: #f8fafc;
+            color: #2563eb;
+        }
+
+        .status-bar {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
             color: #6b7280;
             background-color: #f9fafb;
             padding: 15px;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
         }
-        table { 
-            width: 100%; 
-            max-width: 900px; 
-            margin: 0 auto; 
-            border-collapse: collapse; 
-            background-color: #ffffff; 
+
+        table {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             border: 1px solid #e5e7eb;
         }
-        th, td { 
-            padding: 15px; 
-            text-align: left; 
-            border-bottom: 1px solid #e5e7eb; 
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
         }
-        th { 
-            background-color: #f9fafb; 
+
+        th {
+            background-color: #f9fafb;
             color: #374151;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.875rem;
             letter-spacing: 0.05em;
         }
+
         tr:hover {
             background-color: #f9fafb;
         }
+
         .health-high { color: #059669; font-weight: 600; }
         .health-mid { color: #d97706; font-weight: 600; }
         .health-low { color: #dc2626; font-weight: 600; }
-        
+
         .breach-badge {
             background-color: #fef3c7;
             padding: 2px 6px;
@@ -80,9 +189,9 @@
 <body>
     <header>
         <nav>
-            <div class="logo">
-                <img src="logo.jpeg" alt="Vangia.io" style="height: 40px; width: auto;">
-            </div>
+            <a class="logo" href="index.html">
+                <img src="logo.jpeg" alt="Vangia.io">
+            </a>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#features">Features</a></li>

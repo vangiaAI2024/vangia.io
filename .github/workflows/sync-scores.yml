@@ -1,8 +1,6 @@
 name: Sync JSONBin to Firebase
 
 on:
-  schedule:
-  - cron: '*/1 * * * *' 
   workflow_dispatch: 
     # Manual execution trigger only
 

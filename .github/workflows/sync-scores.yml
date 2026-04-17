@@ -1,66 +1,77 @@
 name: Sync JSONBin to Firebase
 
 on:
-  schedule:
-    # Triggers an automated update every 5 minutes (GitHub minimum)
-    - cron: '*/5 * * * *' 
   workflow_dispatch: 
-    # Enables the "Run workflow" button for manual on-demand execution
+    # Manual execution trigger only
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '22'
+          python-version: '3.11'
           
-      - name: Run Sync Script
+      - name: Run Python Sync Script
         run: |
-          # 1. Install required network and database libraries
-          npm install axios firebase-admin
+          # 1. Install standard requests library
+          pip install requests
           
-          # 2. Create the execution script dynamically
-          cat <<EOF > sync.js
-          const axios = require('axios');
-          const admin = require('firebase-admin');
-          
-          // Parse the secret service account from GitHub environment
-          const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-          
-          // Initialize connection to your Singapore Firebase Server
-          admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
-            databaseURL: "https://firebasedatabase.app"
-          });
-          
-          async function run() {
-            try {
-              console.log("📡 Fetching latest scores from JSONBin.io...");
+          # 2. Execute the bridge in pure Python
+          python -c "
+          import os
+          import json
+          import requests
+
+          try:
+              # Guardrails to verify both secrets exist in GitHub Settings
+              if not os.environ.get('FIREBASE_DB_SECRET'):
+                  raise Exception('MISSING SECRET: FIREBASE_DB_SECRET is not in GitHub Settings!')
+              if not os.environ.get('JSONBIN_KEY'):
+                  raise Exception('MISSING SECRET: JSONBIN_KEY is not in GitHub Settings!')
+
+              # A. Fetch the latest array from JSONBin (v3 Standards)
+              print('📡 Fetching scores from JSONBin.io...')
+
+              # add direct binID here because this one doesnt need to be encrypted
+              jsonbin_url = 'https://api.jsonbin.io/v3/b/69e1d354856a68218942b374'
+              jsonbin_headers = {
+                  'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
+                  'Content-Type': 'application/json'
+              }
               
-              // Mapped directly to your Scoreboard Bin ID
-              const res = await axios.get("https://jsonbin.io", {
-                headers: { "X-Access-Key": process.env.JSONBIN_KEY }
-              });
+              res = requests.get(jsonbin_url, headers=jsonbin_headers)
               
-              console.log("💾 Pushing data state over to Firebase Realtime Database...");
+              if res.status_code != 200:
+                  print(f'❌ JSONBin Server Error. Code: {res.status_code}')
+                  print(f'❌ Raw Server Response:\\n{res.text[:500]}')
+                  exit(1)
               
-              // This strictly overwrites the 'leaderboard' path on your tree
-              await admin.database().ref("leaderboard").set(res.data.record);
+              payload_data = res.json()['record']
+
+              # B. Push natively to your Singapore server endpoint using the Secret Variable
+              print('💾 Pushing data state to Firebase...')
               
-              console.log("✅ Sync completed successfully!");
-              process.exit(0);
-            } catch (e) {
-              console.error("❌ Error during execution state:", e.message);
-              process.exit(1);
-            }
-          }
-          run();
-          EOF
-          
-          # 3. Execute the script
-          node sync.js
+              # Stripping variable here removes accidental spacing
+              db_secret = os.environ.get('FIREBASE_DB_SECRET').strip()
+              
+              # 🔥 THE FIX: Separated by a clear question mark mapped into the string
+              # This tells the server that the domain path has officially ended and a variable is starting
+              db_url = f'https://mai-workshop-rmit2026-default-rtdb.asia-southeast1.firebasedatabase.app/pages/scores.json?auth={db_secret}'
+              
+              put_res = requests.put(db_url, json=payload_data)
+              
+              if put_res.status_code == 200:
+                  print('✅ Sync completed successfully!')
+              else:
+                  print(f'❌ Firebase rejected write. Code: {put_res.status_code}. Response: {put_res.text}')
+                  exit(1)
+
+          except Exception as e:
+              print(f'❌ CRITICAL FAILURE: {e}')
+              exit(1)
+          "
         env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SECRET }}
+          FIREBASE_DB_SECRET: ${{ secrets.FIREBASE_DB_SECRET }}
           JSONBIN_KEY: ${{ secrets.JSONBIN_KEY }}

@@ -12,6 +12,8 @@ function setLanguage(lang) {
         document.querySelectorAll('.btn-vi').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.btn-en').forEach(el => el.classList.add('active'));
     }
+    // Dispatch custom event so other scripts (like events.html) can update dynamically
+    window.dispatchEvent(new CustomEvent('languagechange', { detail: { lang } }));
 }
 
 // Initialize language on load

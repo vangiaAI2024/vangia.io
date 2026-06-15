@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vangia.io - Master Your AI & Computer Science Thinking</title>
-    <link rel="stylesheet" href="styles.css?v=1.0.7">
+    <link rel="stylesheet" href="styles.css?v=1.0.8">
     <style>
         body.lang-en .vi-text {
             display: none !important;
@@ -21,111 +21,94 @@
             }
         }
 
-        /* Language Dropdown Switcher Styles to prevent caching issues */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
+        /* Navigation Actions / Right Group */
+        .nav-right-group {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
             margin-left: 1.5rem;
             vertical-align: middle;
         }
-        .lang-dropbtn {
+
+        /* Language Switcher (non-hover) */
+        .lang-switcher {
+            display: flex;
+            align-items: center;
             background: rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 6px 12px;
+            padding: 3px 6px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 3px 6px;
             font-size: 1.15rem;
             cursor: pointer;
             border-radius: 12px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            line-height: 1.2;
+            transition: all 0.2s ease;
+            line-height: 1;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            filter: grayscale(80%);
+            opacity: 0.5;
         }
-        .lang-dropbtn:hover {
-            background: rgba(0, 0, 0, 0.08);
-            transform: translateY(-1px);
-        }
-        .lang-dropdown-content {
-            display: none;
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            min-width: 110px;
-            border-radius: 12px;
-            box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.08),
-                0 4px 12px rgba(0, 0, 0, 0.04),
-                0 0 0 1px rgba(0, 0, 0, 0.05);
-            z-index: 1010;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(-8px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .lang-dropdown:hover .lang-dropdown-content {
-            display: block;
+
+        .lang-btn:hover {
+            filter: grayscale(0%);
             opacity: 1;
-            transform: translateY(0);
         }
-        .lang-dropdown-item {
-            background: transparent;
-            border: none;
-            width: 100%;
-            text-align: left;
-            padding: 10px 16px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #4b5563;
-            transition: all 0.2s ease;
+
+        .lang-btn.active {
+            background: white;
+            filter: grayscale(0%);
+            opacity: 1;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
-        .lang-dropdown-item:hover {
-            background: rgba(37, 99, 235, 0.08);
-            color: #2563eb;
+
+        .lang-divider {
+            color: #ccc;
+            font-size: 0.8rem;
+            margin: 0 2px;
+            user-select: none;
         }
-        .lang-dropdown-item.active {
+
+        /* Orange Vangia Learn Button */
+        .vangia-learn-btn {
+            background: #f97316 !important; /* Premium orange */
+            color: white !important;
             font-weight: 600;
-            color: #2563eb;
-            background: rgba(37, 99, 235, 0.04);
-        }
-        
-        .vangia-learn-link {
-            color: #f97316 !important;
-            font-weight: 600;
-            margin-left: 1.5rem;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            border-radius: 50px; /* Capsule pill */
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            transition: all 0.2s ease;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
         }
-        .vangia-learn-link:hover {
-            color: #ea580c !important;
+
+        .vangia-learn-btn:hover {
+            background: #ea580c !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(249, 115, 22, 0.35);
             text-decoration: none !important;
-            opacity: 0.9;
         }
-        
+
+        .vangia-learn-btn:active {
+            transform: translateY(0);
+        }
+
         @media (max-width: 768px) {
-            .lang-dropdown {
+            .nav-right-group {
                 margin-left: 0;
                 margin-top: 0.5rem;
-            }
-            .lang-dropdown-content {
-                right: 50%;
-                transform: translate(50%, -10px);
-            }
-            .lang-dropdown:hover .lang-dropdown-content {
-                transform: translate(50%, 0);
-            }
-            .vangia-learn-link {
-                margin-left: 0;
-                margin-top: 0.5rem;
+                width: 100%;
+                justify-content: center;
+                gap: 1rem;
             }
         }
     </style>
@@ -142,17 +125,14 @@
                 <li><a href="#pricing"><span class="en-text">Pricing</span><span class="vi-text">Học Phí</span></a></li>
                 <li><a href="events.html"><span class="en-text">Engagement</span><span class="vi-text">Hoạt Động</span></a></li>
             </ul>
-            <div class="lang-dropdown">
-                <button class="lang-dropbtn" aria-label="Select Language">
-                    <span class="en-text">🇺🇸</span>
-                    <span class="vi-text">🇻🇳</span>
-                </button>
-                <div class="lang-dropdown-content">
-                    <button onclick="setLanguage('en')" class="lang-dropdown-item btn-en active">🇺🇸 US</button>
-                    <button onclick="setLanguage('vi')" class="lang-dropdown-item btn-vi">🇻🇳 VN</button>
+            <div class="nav-right-group">
+                <div class="lang-switcher">
+                    <button class="lang-btn btn-en active" onclick="setLanguage('en')">🇺🇸</button>
+                    <span class="lang-divider">|</span>
+                    <button class="lang-btn btn-vi" onclick="setLanguage('vi')">🇻🇳</button>
                 </div>
+                <a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer" class="vangia-learn-btn">Vangia Learn</a>
             </div>
-            <a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer" class="vangia-learn-link">Vangia Learn</a>
         </nav>
     </header>
 
@@ -431,6 +411,6 @@
         </ul>
     </footer>
 
-    <script src="script.js?v=1.0.7"></script>
+    <script src="script.js?v=1.0.8"></script>
 </body>
 </html>

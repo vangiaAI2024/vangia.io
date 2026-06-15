@@ -762,3 +762,61 @@ footer ul {
     padding: 0;
     margin-top: 1rem;
 }
+
+/* Language Switcher Styling */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2.5px;
+    border-radius: 20px;
+    margin-left: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.lang-btn {
+    background: transparent;
+    border: none;
+    padding: 4px 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #6b7280;
+    font-family: inherit;
+    line-height: 1;
+}
+
+.lang-btn:hover {
+    color: #1e3a8a;
+}
+
+.lang-btn.active {
+    background: white;
+    color: #1e3a8a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.lang-divider {
+    color: #d1d5db;
+    font-size: 0.8rem;
+    margin: 0 1px;
+    user-select: none;
+}
+
+/* Language Visibility Rules */
+body.lang-en .vi-text {
+    display: none !important;
+}
+
+body.lang-vi .en-text {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .lang-switcher {
+        margin-left: 0;
+        margin-top: 0.75rem;
+    }
+}

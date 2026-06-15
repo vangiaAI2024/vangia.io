@@ -6,25 +6,33 @@
     <title>Vangia.io - Master Your AI & Computer Science Thinking</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="lang-en">
     <header>
         <nav>
             <div class="logo">
                 <img src="logo.jpeg" alt="Vangia.io" style="height: 40px; width: auto;">
             </div>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Program</a></li>
-                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#home"><span class="en-text">Home</span><span class="vi-text">Trang Chủ</span></a></li>
+                <li><a href="#features"><span class="en-text">Program</span><span class="vi-text">Chương Trình</span></a></li>
+                <li><a href="#pricing"><span class="en-text">Pricing</span><span class="vi-text">Học Phí</span></a></li>
                 <li><a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer">Vangia Learn</a></li>
-                <li><a href="events.html">Engagement</a></li>
+                <li><a href="events.html"><span class="en-text">Engagement</span><span class="vi-text">Hoạt Động</span></a></li>
             </ul>
+            <div class="lang-switcher">
+                <button class="lang-btn btn-en active" onclick="setLanguage('en')">EN</button>
+                <span class="lang-divider">|</span>
+                <button class="lang-btn btn-vi" onclick="setLanguage('vi')">VI</button>
+            </div>
         </nav>
     </header>
 
     <section id="home" class="hero">
         <div class="hero-container">
-            <h1 class="hero-title">MASTER COMPUTER SCIENCE THINKING & AI SKILLS</h1>
+            <h1 class="hero-title">
+                <span class="en-text">MASTER COMPUTER SCIENCE THINKING & AI SKILLS</span>
+                <span class="vi-text">LÀM CHỦ TƯ DUY KHOA HỌC MÁY TÍNH & KỸ NĂNG AI</span>
+            </h1>
             
             <div class="hero-image-wrapper">
                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%23f8fafc'/%3E%3Cpath d='M90 220 C180 100 260 100 350 220' fill='none' stroke='%239ca3af' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='120' cy='210' r='12' fill='none' stroke='%239ca3af' stroke-width='5'/%3E%3Ccircle cx='200' cy='140' r='12' fill='none' stroke='%239ca3af' stroke-width='5'/%3E%3Ccircle cx='320' cy='180' r='12' fill='none' stroke='%239ca3af' stroke-width='5'/%3E%3Ccircle cx='420' cy='120' r='12' fill='none' stroke='%239ca3af' stroke-width='5'/%3E%3Cpath d='M200 140 L260 100 L340 140' fill='none' stroke='%239ca3af' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M320 180 L380 140 L440 180' fill='none' stroke='%239ca3af' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M90 220 L120 210' stroke='%239ca3af' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M210 150 L320 180' stroke='%239ca3af' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='500' cy='80' r='30' fill='none' stroke='%239ca3af' stroke-width='4'/%3E%3Cpath d='M500 50 L500 110 M470 80 L530 80' stroke='%239ca3af' stroke-width='4' stroke-linecap='round'/%3E%3C/svg>"
@@ -32,8 +40,11 @@
                      class="hero-image main-illustration">
             </div>
             
-            <p class="hero-description">
+            <p class="hero-description en-text">
                 Not an IT professional? No problem. Transform your career with our intensive AI-centered training program designed for ambitious individuals ready to master computational thinking and secure high-demand tech roles.
+            </p>
+            <p class="hero-description vi-text">
+                Bạn không phải dân CNTT? Đừng lo. Bứt phá sự nghiệp với chương trình đào tạo chuyên sâu về AI, thiết kế riêng để giúp bạn làm chủ tư duy máy tính và sở hữu những kỹ năng công nghệ hàng đầu.
             </p>
             
             <div class="hero-image-wrapper">
@@ -42,16 +53,25 @@
                      class="hero-image sub-illustration">
             </div>
             
-            <p class="hero-tagline">
+            <p class="hero-tagline en-text">
                 Join Dr. Hoang Van for personalized 1-on-1 mentorship in a small cohort of just 10 exceptional learners.
             </p>
+            <p class="hero-tagline vi-text">
+                Đồng hành cùng Tiến sĩ Hoàng Văn qua hình thức kèm cặp 1-kèm-1 cá nhân hóa, giới hạn tối đa 10 học viên xuất chúng mỗi khóa.
+            </p>
             
-            <a href="#pricing" class="hero-cta-button">Start Your AI Journey</a>
+            <a href="#pricing" class="hero-cta-button">
+                <span class="en-text">Start Your AI Journey</span>
+                <span class="vi-text">Bắt Đầu Hành Trình AI</span>
+            </a>
         </div>
     </section>
 
     <section id="features" class="features">
-        <h2 class="section-title">PROGRAM HIGHLIGHTS</h2>
+        <h2 class="section-title">
+            <span class="en-text">PROGRAM HIGHLIGHTS</span>
+            <span class="vi-text">ĐIỂM NỔI BẬT CỦA CHƯƠNG TRÌNH</span>
+        </h2>
         
         <div class="features-grid">
             <div class="feature-card">
@@ -59,8 +79,12 @@
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='%23f8fafc'/%3E%3Cpath d='M30 120 H170 L130 50 H70 Z' fill='none' stroke='%239ca3af' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M60 70 L80 40 L120 40 L140 70' fill='none' stroke='%239ca3af' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='100' cy='100' r='10' fill='none' stroke='%239ca3af' stroke-width='4'/%3E%3Cpath d='M60 82 L140 82' stroke='%239ca3af' stroke-width='3' stroke-linecap='round'/%3E%3C/svg>"
                          alt="Sketch mentorship illustration">
                 </div>
-                <h3 class="feature-card-title">PERSONALIZED 1-ON-1 MENTORSHIP</h3>
-                <p class="feature-card-text">Work directly with Dr. Hoang Van in intimate sessions tailored to your learning pace and career goals. Small cohorts of just 10 exceptional learners ensure focused attention.</p>
+                <h3 class="feature-card-title">
+                    <span class="en-text">PERSONALIZED 1-ON-1 MENTORSHIP</span>
+                    <span class="vi-text">MÔ HÌNH HƯỚNG DẪN 1-KÈM-1</span>
+                </h3>
+                <p class="feature-card-text en-text">Work directly with Dr. Hoang Van in intimate sessions tailored to your learning pace and career goals. Small cohorts of just 10 exceptional learners ensure focused attention.</p>
+                <p class="feature-card-text vi-text">Học tập trực tiếp với Tiến sĩ Hoàng Văn qua các buổi học cá nhân hóa được thiết kế theo tốc độ học tập và mục tiêu sự nghiệp của bạn. Quy mô lớp cực nhỏ chỉ 10 học viên để tối ưu chất lượng học tập.</p>
             </div>
             
             <div class="feature-card">
@@ -68,8 +92,12 @@
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='%23f8fafc'/%3E%3Crect x='45' y='35' width='110' height='80' rx='12' fill='none' stroke='%239ca3af' stroke-width='5'/%3E%3Cpath d='M70 55 H130' stroke='%239ca3af' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M70 75 H130' stroke='%239ca3af' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M70 95 H110' stroke='%239ca3af' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='90' cy='120' r='8' fill='none' stroke='%239ca3af' stroke-width='4'/%3E%3Cpath d='M60 120 H80' stroke='%239ca3af' stroke-width='3' stroke-linecap='round'/%3E%3C/svg>"
                          alt="Sketch computer science illustration">
                 </div>
-                <h3 class="feature-card-title">COMPUTER SCIENCE MASTERY</h3>
-                <p class="feature-card-text">Develop the algorithmic thinking and problem-solving skills that top tech companies demand. Learn to think like a computer scientist, regardless of your background.</p>
+                <h3 class="feature-card-title">
+                    <span class="en-text">COMPUTER SCIENCE MASTERY</span>
+                    <span class="vi-text">LÀM CHỦ TƯ DUY MÁY TÍNH</span>
+                </h3>
+                <p class="feature-card-text en-text">Develop the algorithmic thinking and problem-solving skills that top tech companies demand. Learn to think like a computer scientist, regardless of your background.</p>
+                <p class="feature-card-text vi-text">Phát triển tư duy thuật toán và kỹ năng giải quyết vấn đề cốt lõi mà các doanh nghiệp công nghệ lớn yêu cầu. Học cách suy nghĩ như một kỹ sư khoa học máy tính thực thụ.</p>
             </div>
             
             <div class="feature-card">
@@ -77,8 +105,12 @@
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='%23f8fafc'/%3E%3Cpath d='M100 30 L100 120' stroke='%239ca3af' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='100' cy='70' r='22' fill='none' stroke='%239ca3af' stroke-width='5'/%3E%3Ccircle cx='100' cy='70' r='10' fill='none' stroke='%239ca3af' stroke-width='4'/%3E%3Cpath d='M60 70 H40 M140 70 H160 M90 100 H110' stroke='%239ca3af' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M100 30 L120 15 M100 30 L80 15' stroke='%239ca3af' stroke-width='4' stroke-linecap='round'/%3E%3C/svg>"
                          alt="Sketch AI illustration">
                 </div>
-                <h3 class="feature-card-title">AI-CENTERED CURRICULUM</h3>
-                <p class="feature-card-text">Intensive 3-month program covering cutting-edge AI technologies, machine learning, and practical applications. From theory to real-world implementation.</p>
+                <h3 class="feature-card-title">
+                    <span class="en-text">AI-CENTERED CURRICULUM</span>
+                    <span class="vi-text">CHƯƠNG TRÌNH THỰC CHIẾN AI</span>
+                </h3>
+                <p class="feature-card-text en-text">Intensive 3-month program covering cutting-edge AI technologies, machine learning, and practical applications. From theory to real-world implementation.</p>
+                <p class="feature-card-text vi-text">Khóa học chuyên sâu 3 tháng bao gồm các công nghệ AI tiên tiến, học máy và thực hành dự án. Đi từ lý thuyết nền tảng đến triển khai mô hình vào sản phẩm thực tế.</p>
             </div>
             
             <div class="feature-card">
@@ -86,8 +118,12 @@
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='%23f8fafc'/%3E%3Cpath d='M40 110 L80 70 L110 100 L150 50' fill='none' stroke='%239ca3af' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M150 50 L150 87' stroke='%239ca3af' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='150' cy='40' r='10' fill='none' stroke='%239ca3af' stroke-width='5'/%3E%3C/svg>"
                          alt="Sketch growth illustration">
                 </div>
-                <h3 class="feature-card-title">JOB PREPARATION & PLACEMENT</h3>
-                <p class="feature-card-text">Optional job preparation package at program completion. Resume optimization, interview coaching, and direct connections to top tech employers.</p>
+                <h3 class="feature-card-title">
+                    <span class="en-text">JOB PREPARATION & PLACEMENT</span>
+                    <span class="vi-text">HỖ TRỢ VIỆC LÀM TOÀN DIỆN</span>
+                </h3>
+                <p class="feature-card-text en-text">Optional job preparation package at program completion. Resume optimization, interview coaching, and direct connections to top tech employers.</p>
+                <p class="feature-card-text vi-text">Gói hỗ trợ ứng tuyển và chuẩn bị hồ sơ chuyên nghiệp sau khóa học. Tối ưu CV, luyện tập phỏng vấn và kết nối trực tiếp với mạng lưới nhà tuyển dụng uy tín.</p>
             </div>
         </div>
     </section>
@@ -98,16 +134,25 @@
                 <img src="hoangvan.jpeg" alt="Dr. Hoang Van" class="about-company-image">
             </div>
             <div class="about-company-content">
-                <h2 class="about-company-title">Meet Dr. Hoang Van</h2>
-                <p class="about-company-text">
+                <h2 class="about-company-title">
+                    <span class="en-text">Meet Dr. Hoang Van</span>
+                    <span class="vi-text">Gặp Gỡ Tiến Sĩ Hoàng Văn</span>
+                </h2>
+                <p class="about-company-text en-text">
                     Meet Dr. Hoang Van, your instructor for this 3-month AI-intensive program. Dr. Hoang is a self-described "IT nerd" who prefers practical code over tech hype. With a PhD, just so he could qualify to teach, and years of experience navigating the complexities of computer systems, he focuses on the "how-to" rather than just the "what-is." He enjoys digging into the mechanics of technology and brings that hands-on perspective to helping students understand how AI actually works under the hood. In 2025, he founded VANGIA INNOVATIONS as part of his dedication for education and tech.
+                </p>
+                <p class="about-company-text vi-text">
+                    Hãy cùng đồng hành với Tiến sĩ Hoàng Văn trong chương trình AI chuyên sâu 3 tháng. Tự nhận mình là một "IT nerd" thực thụ, thầy luôn ưu tiên những dòng code thực tế hơn là các xu hướng thổi phồng. Đạt học vị Tiến sĩ để đủ tiêu chuẩn đứng lớp giảng dạy, cùng nhiều năm kinh nghiệm vận hành các hệ thống máy tính phức tạp, thầy tập trung vào phương pháp "làm thế nào" hơn là chỉ nói về khái niệm suông. Thầy đam mê khám phá cơ chế sâu thẳm của công nghệ và mang góc nhìn thực chiến đó giúp học viên hiểu rõ cách AI thực sự vận hành bên dưới lớp vỏ bọc. Năm 2025, thầy sáng lập VANGIA INNOVATIONS nhằm hiện thực hóa sứ mệnh cống hiến cho giáo dục và công nghệ.
                 </p>
             </div>
         </div>
     </section>
 
     <section id="pricing" class="pricing">
-        <h2 class="section-title">INVESTMENT IN YOUR FUTURE</h2>
+        <h2 class="section-title">
+            <span class="en-text">INVESTMENT IN YOUR FUTURE</span>
+            <span class="vi-text">KHOẢN ĐẦU TƯ CHO TƯƠNG LAI</span>
+        </h2>
         
         <div class="pricing-grid">
             <div class="pricing-card core-program">
@@ -118,11 +163,15 @@
                           alt="Sketch learning illustration">
                 </div>
                 
-                <h3 class="pricing-card-title text-blue">Core Program</h3>
+                <h3 class="pricing-card-title text-blue">
+                    <span class="en-text">Core Program</span>
+                    <span class="vi-text">Chương Trình Cốt Lõi</span>
+                </h3>
                 <div class="pricing-amount text-dark">10 Million VND</div>
-                <p class="pricing-card-description">Complete 3-month AI training program with personalized mentorship</p>
+                <p class="pricing-card-description en-text">Complete 3-month AI training program with personalized mentorship</p>
+                <p class="pricing-card-description vi-text">Trọn gói đào tạo 3 tháng chuyên sâu với sự hướng dẫn trực tiếp từ TS. Hoàng Văn</p>
                 
-                <ul class="pricing-features-list">
+                <ul class="pricing-features-list en-text">
                     <li>
                         <span class="pricing-check-icon check-green">✓</span>
                         1-on-1 mentorship with Dr. Hoang Van
@@ -144,17 +193,43 @@
                         Career transition support
                     </li>
                 </ul>
+                <ul class="pricing-features-list vi-text">
+                    <li>
+                        <span class="pricing-check-icon check-green">✓</span>
+                        Kèm cặp 1-1 với TS. Hoàng Văn
+                    </li>
+                    <li>
+                        <span class="pricing-check-icon check-green">✓</span>
+                        Lớp học quy mô nhỏ (tối đa 10 học viên)
+                    </li>
+                    <li>
+                        <span class="pricing-check-icon check-green">✓</span>
+                        Kiến thức Khoa học Máy tính cốt lõi
+                    </li>
+                    <li>
+                        <span class="pricing-check-icon check-green">✓</span>
+                        Học phần thực chiến về AI & Machine Learning
+                    </li>
+                    <li>
+                        <span class="pricing-check-icon check-green">✓</span>
+                        Hỗ trợ chuyển hướng sự nghiệp
+                    </li>
+                </ul>
             </div>
             
             <div class="pricing-card job-prep">
                 <div class="pricing-circle-accent accent-2"></div>
                 <div class="pricing-circle-accent accent-3"></div>
                 
-                <h3 class="pricing-card-title text-white">Optional: Job Prep Package</h3>
+                <h3 class="pricing-card-title text-white">
+                    <span class="en-text">Optional: Job Prep Package</span>
+                    <span class="vi-text">Tùy Chọn: Gói Hỗ Trợ Việc Làm</span>
+                </h3>
                 <div class="pricing-amount text-white">+5 Million VND</div>
-                <p class="pricing-card-description">Available at program completion for comprehensive career support</p>
+                <p class="pricing-card-description en-text">Available at program completion for comprehensive career support</p>
+                <p class="pricing-card-description vi-text">Đăng ký bổ sung sau khi kết thúc khóa học chính thức để được hỗ trợ đầu ra</p>
                 
-                <ul class="pricing-features-list">
+                <ul class="pricing-features-list en-text">
                     <li>
                         <span class="pricing-check-icon check-gold">★</span>
                         Resume & portfolio optimization
@@ -172,15 +247,39 @@
                         Job placement assistance
                     </li>
                 </ul>
+                <ul class="pricing-features-list vi-text">
+                    <li>
+                        <span class="pricing-check-icon check-gold">★</span>
+                        Tối ưu hóa hồ sơ & portfolio dự án cá nhân
+                    </li>
+                    <li>
+                        <span class="pricing-check-icon check-gold">★</span>
+                        Luyện phỏng vấn kỹ thuật trực tiếp
+                    </li>
+                    <li>
+                        <span class="pricing-check-icon check-gold">★</span>
+                        Kết nối mạng lưới chuyên gia công nghệ
+                    </li>
+                    <li>
+                        <span class="pricing-check-icon check-gold">★</span>
+                        Giới thiệu việc làm & đồng hành ứng tuyển
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 
     <section id="contact" class="contact-section">
         <div class="contact-container">
-            <h2 class="contact-title">Contact</h2>
-            <p class="contact-description">
+            <h2 class="contact-title">
+                <span class="en-text">Contact</span>
+                <span class="vi-text">Liên Hệ</span>
+            </h2>
+            <p class="contact-description en-text">
                 Have questions or want to join the next cohort? Reach out via email below.
+            </p>
+            <p class="contact-description vi-text">
+                Bạn có thắc mắc hoặc muốn đăng ký khóa học tiếp theo? Hãy kết nối với chúng tôi qua email bên dưới.
             </p>
             <div class="contact-methods">
                 <p class="contact-email">
@@ -194,10 +293,13 @@
     </section>
 
     <footer>
-        <p>&copy; 2026 Vangia.io. All rights reserved.</p>
+        <p>
+            <span class="en-text">&copy; 2026 Vangia.io. All rights reserved.</span>
+            <span class="vi-text">&copy; 2026 Vangia.io. Bảo lưu mọi quyền.</span>
+        </p>
         <ul>
-            <li><a href="#privacy">Privacy</a></li>
-            <li><a href="#terms">Terms</a></li>
+            <li><a href="#privacy"><span class="en-text">Privacy</span><span class="vi-text">Bảo Mật</span></a></li>
+            <li><a href="#terms"><span class="en-text">Terms</span><span class="vi-text">Điều Khoản</span></a></li>
         </ul>
     </footer>
 

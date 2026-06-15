@@ -74,55 +74,47 @@
             color: #2563eb;
         }
 
-        .dropdown::after {
-            content: "▾";
-            font-size: 0.7rem;
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px;
+            border-radius: 20px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 4px 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 15px;
+            transition: all 0.3s ease;
             color: #6b7280;
-            transition: transform 0.2s ease;
-            margin-left: 6px;
-        }
-
-        .dropdown:hover::after {
-            transform: rotate(180deg);
-        }
-
-        .submenu {
-            display: none;
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 0;
-            background: #ffffff;
-            min-width: 200px;
-            border-radius: 14px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 18px 60px rgba(15, 23, 42, 0.08);
-            padding: 12px 0;
-            z-index: 1000;
-            min-width: 220px;
-            overflow: hidden;
-        }
-
-        .dropdown:hover .submenu,
-        .submenu.show {
-            display: block;
-        }
-
-        .submenu li {
-            margin: 0;
-            padding: 0;
-        }
-
-        .submenu li a {
-            display: block;
-            padding: 12px 18px;
-            color: #111827;
-            font-size: 0.95rem;
             font-family: 'Space Mono', monospace;
         }
 
-        .submenu li a:hover {
-            background: #f8fafc;
+        .lang-btn.active {
+            background: white;
             color: #2563eb;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-divider {
+            color: #d1d5db;
+            font-size: 0.8rem;
+            margin: 0 2px;
+            user-select: none;
+        }
+
+        /* Language Visibility Rules */
+        body.lang-en .vi-text {
+            display: none !important;
+        }
+
+        body.lang-vi .en-text {
+            display: none !important;
         }
 
         .status-bar {
@@ -202,11 +194,6 @@
                 justify-content: center;
                 gap: 16px;
             }
-            .submenu {
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-                right: auto !important;
-            }
             h1 {
                 font-size: 1.5rem;
                 text-align: center;
@@ -224,41 +211,63 @@
         }
     </style>
 </head>
-<body>
+<body class="lang-en">
     <header>
         <nav>
             <a class="logo" href="index.html">
                 <img src="logo.jpeg" alt="Vangia.io">
             </a>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html"><span class="en-text">Home</span><span class="vi-text">Trang Chủ</span></a></li>
                 <li><a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer">Vangia Learn</a></li>
-                <li><a href="events.html">Engagement</a></li>
+                <li><a href="events.html"><span class="en-text">Engagement</span><span class="vi-text">Hoạt Động</span></a></li>
             </ul>
+            <div class="lang-switcher">
+                <button class="lang-btn btn-en active" onclick="setLanguage('en')">EN</button>
+                <span class="lang-divider">|</span>
+                <button class="lang-btn btn-vi" onclick="setLanguage('vi')">VI</button>
+            </div>
         </nav>
     </header>
 
-    <h1>RMIT Master of Artificial Intelligence - AI Arm Race in Digital Banking</h1>
+    <h1 class="en-text">RMIT Master of Artificial Intelligence - AI Arm Race in Digital Banking</h1>
+    <h1 class="vi-text">Thạc sĩ Trí tuệ Nhân tạo RMIT - Cuộc đua Vũ trang AI trong Ngân hàng Số</h1>
+    
     <div class="status-bar">
-        SYSTEM STATUS: <span id="conn-status" style="color:#f78166">CONNECTING...</span> | 
-        LAST UPDATE: <span id="sync-time" style="color:#58a6ff">-</span>
+        <span class="en-text">SYSTEM STATUS: <span id="conn-status" style="color:#f78166">CONNECTING...</span> | LAST UPDATE: <span id="sync-time" style="color:#58a6ff">-</span></span>
+        <span class="vi-text">TRẠNG THÁI HỆ THỐNG: <span id="conn-status-vi" style="color:#f78166">ĐANG KẾT NỐI...</span> | CẬP NHẬT LẦN CUỐI: <span id="sync-time-vi" style="color:#58a6ff">-</span></span>
     </div>
 
     <div class="table-responsive">
         <table>
             <thead>
                 <tr>
-                    <th>Unit (Pair)</th>
-                    <th>🛡️ System Health</th>
-                    <th>Status</th>
+                    <th>
+                        <span class="en-text">Unit (Pair)</span>
+                        <span class="vi-text">Nhóm (Cặp)</span>
+                    </th>
+                    <th>
+                        <span class="en-text">🛡️ System Health</span>
+                        <span class="vi-text">🛡️ Sức khỏe Hệ thống</span>
+                    </th>
+                    <th>
+                        <span class="en-text">Status</span>
+                        <span class="vi-text">Trạng thái</span>
+                    </th>
                 </tr>
             </thead>
             <tbody id="board-body">
-                <tr><td colspan="3" style="text-align:center;">📡 Establishing Secure Uplink...</td></tr>
+                <tr>
+                    <td colspan="3" style="text-align:center;">
+                        <span class="en-text">📡 Establishing Secure Uplink...</span>
+                        <span class="vi-text">📡 Đang thiết lập đường truyền bảo mật...</span>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
 
+    <script src="script.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
@@ -272,38 +281,58 @@
         const scoresRef = ref(db, 'pages/scores');
 
         const connStatusEl = document.getElementById('conn-status');
+        const connStatusViEl = document.getElementById('conn-status-vi');
         const syncTimeEl = document.getElementById('sync-time');
+        const syncTimeViEl = document.getElementById('sync-time-vi');
         const tbody = document.getElementById('board-body');
 
-        function setConnection(status, color) {
-            connStatusEl.innerText = status;
-            connStatusEl.style.color = color;
+        function setConnection(statusEn, statusVi, color) {
+            if (connStatusEl) {
+                connStatusEl.innerText = statusEn;
+                connStatusEl.style.color = color;
+            }
+            if (connStatusViEl) {
+                connStatusViEl.innerText = statusVi;
+                connStatusViEl.style.color = color;
+            }
         }
 
-        function showMessage(message) {
-            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">${message}</td></tr>`;
+        function showMessage(messageEn, messageVi) {
+            const isVi = document.body.classList.contains('lang-vi');
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">${isVi ? messageVi : messageEn}</td></tr>`;
         }
 
         onValue(scoresRef, (snapshot) => {
             const payload = snapshot.val();
-            setConnection('ONLINE', '#2ea043');
-            syncTimeEl.innerText = new Date().toLocaleTimeString();
+            setConnection('ONLINE', 'TRỰC TUYẾN', '#2ea043');
+            const timeString = new Date().toLocaleTimeString();
+            if (syncTimeEl) syncTimeEl.innerText = timeString;
+            if (syncTimeViEl) syncTimeViEl.innerText = timeString;
 
             if (!payload || !payload.scores) {
-                showMessage('⚠️ No score payload found at /pages/scores. Waiting for sync...');
+                showMessage(
+                    '⚠️ No score payload found at /pages/scores. Waiting for sync...',
+                    '⚠️ Không tìm thấy bảng điểm tại /pages/scores. Đang đợi đồng bộ...'
+                );
                 return;
             }
 
             if (!Array.isArray(payload.scores)) {
-                showMessage('⚠️ Unexpected data format: expected an array at /pages/scores/scores.');
+                showMessage(
+                    '⚠️ Unexpected data format: expected an array at /pages/scores/scores.',
+                    '⚠️ Định dạng dữ liệu không hợp lệ: yêu cầu mảng dữ liệu tại /pages/scores/scores.'
+                );
                 return;
             }
 
             updateTable(payload.scores);
         }, (error) => {
             console.error('Firebase listener error:', error);
-            setConnection('OFFLINE', '#f78166');
-            showMessage(`❌ Firebase error: ${error?.message || error}`);
+            setConnection('OFFLINE', 'NGOẠI TUYẾN', '#f78166');
+            showMessage(
+                `❌ Firebase error: ${error?.message || error}`,
+                `❌ Lỗi Firebase: ${error?.message || error}`
+            );
         });
 
         function getHealthClass(value) {
@@ -313,10 +342,11 @@
         }
 
         function getStatusLabel(value) {
-            if (value >= 75) return 'Secure';
-            if (value >= 50) return 'At Risk';
-            if (value >= 25) return 'Breached';
-            return 'Critical';
+            const isVi = document.body.classList.contains('lang-vi');
+            if (value >= 75) return isVi ? 'An Toàn' : 'Secure';
+            if (value >= 50) return isVi ? 'Rủi Ro' : 'At Risk';
+            if (value >= 25) return isVi ? 'Bị Xâm Nhập' : 'Breached';
+            return isVi ? 'Nguy Cấp' : 'Critical';
         }
 
         function updateTable(scores) {
@@ -324,7 +354,7 @@
 
             const sorted = [...scores].sort((a, b) => (a.score || 0) - (b.score || 0));
             if (sorted.length === 0) {
-                showMessage('⚠️ Score list is empty.');
+                showMessage('⚠️ Score list is empty.', '⚠️ Danh sách bảng điểm đang trống.');
                 return;
             }
 

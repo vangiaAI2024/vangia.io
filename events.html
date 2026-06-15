@@ -180,6 +180,48 @@
             color: #92400e;
             border: 1px solid #f59e0b;
         }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive style additions */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+            ul {
+                justify-content: center;
+                gap: 16px;
+            }
+            .submenu {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                right: auto !important;
+            }
+            h1 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            .status-bar {
+                font-size: 0.8rem;
+                padding: 10px;
+            }
+            table {
+                font-size: 0.9rem;
+            }
+            th, td {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -199,6 +241,7 @@
                         <li><a href="#support">FAQ</a></li>
                         <li><a href="events.html">Live Demo</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        <li><a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer">Vangia Learn Login</a></li>
                     </ul>
                 </li>
             </ul>
@@ -211,18 +254,20 @@
         LAST UPDATE: <span id="sync-time" style="color:#58a6ff">-</span>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Unit (Pair)</th>
-                <th>🛡️ System Health</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="board-body">
-            <tr><td colspan="3" style="text-align:center;">📡 Establishing Secure Uplink...</td></tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Unit (Pair)</th>
+                    <th>🛡️ System Health</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="board-body">
+                <tr><td colspan="3" style="text-align:center;">📡 Establishing Secure Uplink...</td></tr>
+            </tbody>
+        </table>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";

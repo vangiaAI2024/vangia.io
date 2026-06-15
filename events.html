@@ -148,6 +148,22 @@
             background: rgba(37, 99, 235, 0.04);
         }
         
+        .vangia-learn-link {
+            color: #f97316 !important;
+            font-weight: 600;
+            margin-left: 1.5rem;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        .vangia-learn-link:hover {
+            color: #ea580c !important;
+            text-decoration: none !important;
+            opacity: 0.9;
+        }
+        
         @media (max-width: 768px) {
             .lang-dropdown {
                 margin-left: 0;
@@ -159,6 +175,10 @@
             }
             .lang-dropdown:hover .lang-dropdown-content {
                 transform: translate(50%, 0);
+            }
+            .vangia-learn-link {
+                margin-left: 0;
+                margin-top: 0.5rem;
             }
         }
 
@@ -274,7 +294,6 @@
             <ul>
                 <li><a href="index.html"><span class="en-text">Home</span><span class="vi-text">Trang Chủ</span></a></li>
                 <li><a href="events.html"><span class="en-text">Engagement</span><span class="vi-text">Hoạt Động</span></a></li>
-                <li><a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer"><span class="en-text">Login</span><span class="vi-text">Đăng Nhập</span></a></li>
             </ul>
             <div class="lang-dropdown">
                 <button class="lang-dropbtn" aria-label="Select Language">
@@ -286,6 +305,7 @@
                     <button onclick="setLanguage('vi')" class="lang-dropdown-item btn-vi">🇻🇳 VN</button>
                 </div>
             </div>
+            <a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer" class="vangia-learn-link">Vangia Learn</a>
         </nav>
     </header>
 
@@ -326,7 +346,7 @@
         </table>
     </div>
 
-    <script src="script.js?v=1.0.5"></script>
+    <script src="script.js?v=1.0.6"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";

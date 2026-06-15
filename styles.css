@@ -854,6 +854,23 @@ footer ul {
     background: rgba(37, 99, 235, 0.04);
 }
 
+.vangia-learn-link {
+    color: #f97316 !important;
+    font-weight: 600;
+    margin-left: 1.5rem;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.vangia-learn-link:hover {
+    color: #ea580c !important;
+    text-decoration: none !important;
+    opacity: 0.9;
+}
+
 /* Language Visibility Rules */
 body.lang-en .vi-text {
     display: none !important;
@@ -874,5 +891,9 @@ body.lang-vi .en-text {
     }
     .lang-dropdown:hover .lang-dropdown-content {
         transform: translate(50%, 0);
+    }
+    .vangia-learn-link {
+        margin-left: 0;
+        margin-top: 0.5rem;
     }
 }

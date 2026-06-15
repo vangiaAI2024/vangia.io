@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vangia.io - Master Your AI & Computer Science Thinking</title>
-    <link rel="stylesheet" href="styles.css?v=1.0.5">
+    <link rel="stylesheet" href="styles.css?v=1.0.6">
     <style>
         body.lang-en .vi-text {
             display: none !important;
@@ -95,6 +95,22 @@
             background: rgba(37, 99, 235, 0.04);
         }
         
+        .vangia-learn-link {
+            color: #f97316 !important;
+            font-weight: 600;
+            margin-left: 1.5rem;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        .vangia-learn-link:hover {
+            color: #ea580c !important;
+            text-decoration: none !important;
+            opacity: 0.9;
+        }
+        
         @media (max-width: 768px) {
             .lang-dropdown {
                 margin-left: 0;
@@ -106,6 +122,10 @@
             }
             .lang-dropdown:hover .lang-dropdown-content {
                 transform: translate(50%, 0);
+            }
+            .vangia-learn-link {
+                margin-left: 0;
+                margin-top: 0.5rem;
             }
         }
     </style>
@@ -121,7 +141,6 @@
                 <li><a href="#features"><span class="en-text">Program</span><span class="vi-text">Chương Trình</span></a></li>
                 <li><a href="#pricing"><span class="en-text">Pricing</span><span class="vi-text">Học Phí</span></a></li>
                 <li><a href="events.html"><span class="en-text">Engagement</span><span class="vi-text">Hoạt Động</span></a></li>
-                <li><a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer"><span class="en-text">Login</span><span class="vi-text">Đăng Nhập</span></a></li>
             </ul>
             <div class="lang-dropdown">
                 <button class="lang-dropbtn" aria-label="Select Language">
@@ -133,6 +152,7 @@
                     <button onclick="setLanguage('vi')" class="lang-dropdown-item btn-vi">🇻🇳 VN</button>
                 </div>
             </div>
+            <a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer" class="vangia-learn-link">Vangia Learn</a>
         </nav>
     </header>
 
@@ -412,6 +432,6 @@
         </ul>
     </footer>
 
-    <script src="script.js?v=1.0.5"></script>
+    <script src="script.js?v=1.0.6"></script>
 </body>
 </html>

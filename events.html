@@ -129,35 +129,35 @@
             user-select: none;
         }
 
-        /* Orange Vangia Learn Button */
+        /* Orange Vangia Learn Button - Sleek Corporate Outline */
         .vangia-learn-btn {
-            background: linear-gradient(135deg, #f97316 0%, #ff5100 100%) !important; /* Modern premium gradient */
-            color: white !important;
+            background: transparent !important;
+            color: #ea580c !important; /* Premium orange */
             font-weight: 600;
             font-size: 0.85rem;
             letter-spacing: 0.02em;
-            padding: 8px 18px;
-            border-radius: 50px; /* Capsule pill */
+            padding: 7px 16px;
+            border-radius: 6px; /* Modern professional rounded corners */
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            box-shadow: 0 4px 14px rgba(249, 115, 22, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1.5px solid rgba(234, 88, 12, 0.6) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: inherit;
         }
 
         .vangia-learn-btn:hover {
-            background: linear-gradient(135deg, #ff5100 0%, #e04400 100%) !important;
+            background: #ea580c !important;
+            color: white !important;
+            border-color: #ea580c !important;
             transform: translateY(-1.5px);
-            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.15) !important;
             text-decoration: none !important;
         }
 
         .vangia-learn-btn:active {
             transform: translateY(-0.5px);
-            box-shadow: 0 3px 10px rgba(249, 115, 22, 0.2);
         }
 
         .vangia-learn-btn svg {
@@ -345,7 +345,7 @@
         </table>
     </div>
 
-    <script src="script.js?v=1.0.14"></script>
+    <script src="script.js?v=1.0.15"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";

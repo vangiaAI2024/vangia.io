@@ -454,16 +454,12 @@ a {
     transform: translateY(-4px);
 }
 
-.pricing-card.core-program {
+.pricing-card.core-program,
+.pricing-card.job-prep {
     background: white;
     box-shadow: 0 20px 60px rgba(0,0,0,0.06);
     border: 1px solid rgba(0, 0, 0, 0.02);
-}
-
-.pricing-card.job-prep {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+    color: #333;
 }
 
 .pricing-circle-accent {
@@ -540,7 +536,8 @@ a {
     opacity: 0.9;
 }
 
-.pricing-card.core-program .pricing-card-description {
+.pricing-card.core-program .pricing-card-description,
+.pricing-card.job-prep .pricing-card-description {
     color: #6b7280;
 }
 
@@ -562,12 +559,9 @@ a {
     margin-left: 0;
 }
 
-.pricing-card.core-program .pricing-features-list li {
-    color: #374151;
-}
-
+.pricing-card.core-program .pricing-features-list li,
 .pricing-card.job-prep .pricing-features-list li {
-    color: white;
+    color: #374151;
 }
 
 .pricing-check-icon {

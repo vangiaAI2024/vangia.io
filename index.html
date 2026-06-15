@@ -4,13 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vangia.io - Master Your AI & Computer Science Thinking</title>
-    <link rel="stylesheet" href="styles.css?v=1.0.1">
+    <link rel="stylesheet" href="styles.css?v=1.0.5">
     <style>
         body.lang-en .vi-text {
             display: none !important;
         }
         body.lang-vi .en-text {
             display: none !important;
+        }
+
+        /* Strict Grid Layout for features-grid to prevent caching issues */
+        @media (min-width: 769px) {
+            .features-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        /* Language Dropdown Switcher Styles to prevent caching issues */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: 1.5rem;
+            vertical-align: middle;
+        }
+        .lang-dropbtn {
+            background: rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 6px 12px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.2;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lang-dropbtn:hover {
+            background: rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
+        }
+        .lang-dropdown-content {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            min-width: 110px;
+            border-radius: 12px;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.08),
+                0 4px 12px rgba(0, 0, 0, 0.04),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+            z-index: 1010;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .lang-dropdown:hover .lang-dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .lang-dropdown-item {
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4b5563;
+            transition: all 0.2s ease;
+        }
+        .lang-dropdown-item:hover {
+            background: rgba(37, 99, 235, 0.08);
+            color: #2563eb;
+        }
+        .lang-dropdown-item.active {
+            font-weight: 600;
+            color: #2563eb;
+            background: rgba(37, 99, 235, 0.04);
+        }
+        
+        @media (max-width: 768px) {
+            .lang-dropdown {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+            .lang-dropdown-content {
+                right: 50%;
+                transform: translate(50%, -10px);
+            }
+            .lang-dropdown:hover .lang-dropdown-content {
+                transform: translate(50%, 0);
+            }
         }
     </style>
 </head>
@@ -27,10 +123,15 @@
                 <li><a href="events.html"><span class="en-text">Engagement</span><span class="vi-text">Hoạt Động</span></a></li>
                 <li><a href="https://learn.vangia.dev" target="_blank" rel="noopener noreferrer"><span class="en-text">Login</span><span class="vi-text">Đăng Nhập</span></a></li>
             </ul>
-            <div class="lang-switcher">
-                <button class="lang-btn btn-en active" onclick="setLanguage('en')">🇺🇸</button>
-                <span class="lang-divider">|</span>
-                <button class="lang-btn btn-vi" onclick="setLanguage('vi')">🇻🇳</button>
+            <div class="lang-dropdown">
+                <button class="lang-dropbtn" aria-label="Select Language">
+                    <span class="en-text">🇺🇸</span>
+                    <span class="vi-text">🇻🇳</span>
+                </button>
+                <div class="lang-dropdown-content">
+                    <button onclick="setLanguage('en')" class="lang-dropdown-item btn-en active">🇺🇸 US</button>
+                    <button onclick="setLanguage('vi')" class="lang-dropdown-item btn-vi">🇻🇳 VN</button>
+                </div>
             </div>
         </nav>
     </header>
@@ -311,6 +412,6 @@
         </ul>
     </footer>
 
-    <script src="script.js?v=1.0.1"></script>
+    <script src="script.js?v=1.0.5"></script>
 </body>
 </html>

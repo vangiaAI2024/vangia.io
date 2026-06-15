@@ -1,5 +1,5 @@
 /* Dashboard Styles */
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 body {
     background-color: #ffffff !important;
@@ -623,4 +623,14 @@ header nav a {
         height: 40px;
         font-size: 1.2rem;
     }
+}
+
+/* Vietnamese Font Overrides to prevent Space Mono rendering issues */
+body.lang-vi .dashboard h1,
+body.lang-vi .dashboard h2,
+body.lang-vi .dashboard h3,
+body.lang-vi .dashboard h4,
+body.lang-vi .dashboard h5,
+body.lang-vi .dashboard h6 {
+    font-family: 'Roboto Mono', 'Courier New', monospace;
 }

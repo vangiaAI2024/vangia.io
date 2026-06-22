@@ -56,6 +56,7 @@ nav {
     background: transparent;
     border: none;
     box-shadow: none;
+    mix-blend-mode: multiply;
 }
 
 ul {

@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Slide the track
-            track.style.transform = `translateX(-${index * 100}%)`;
+            track.style.transform = `translateX(-${index * (100 / slides.length)}%)`;
 
             // Update active dots
             dots.forEach((dot, idx) => {

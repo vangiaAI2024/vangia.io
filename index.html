@@ -1145,7 +1145,7 @@
             </div>
         </div>
 
-        <!-- Interactive Platform Showcase (Carousel) -->
+        <!-- Interactive Platform Showcase (Self-Contained Carousel) -->
         <div class="platform-carousel-section">
             <h3 style="text-align: center; color: #1e3a8a; margin-top: 5rem; margin-bottom: 1.5rem; font-size: 2.2rem; font-weight: 300; letter-spacing: -0.02em;">
                 <span class="en-text">Interactive Learning Platform Demo</span>
@@ -1156,9 +1156,203 @@
                 <span class="vi-text">Khám phá learn.vangia.dev, hệ thống tự học được thiết kế chuyên biệt. Sử dụng các nút mũi tên hoặc dấu chấm để xem trước giao diện nền tảng.</span>
             </p>
 
+            <!-- Inline Stylesheet for Carousel & Mockup to prevent Aggressive Browser Cache Issues -->
+            <style>
+                .platform-carousel-section {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 2rem 1.5rem;
+                }
+
+                .carousel-container {
+                    position: relative;
+                    max-width: 440px; /* Minimized by half! */
+                    margin: 0 auto;
+                }
+
+                .carousel-track-container {
+                    overflow: hidden;
+                    width: 100%;
+                    border-radius: 12px;
+                    border: 1px solid #cbd5e1;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+                    background: #ffffff;
+                }
+
+                .carousel-track {
+                    display: flex;
+                    width: 600%; /* 6 slides total */
+                    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .carousel-slide {
+                    width: 16.666%; /* Exactly 1/6 of track width */
+                    flex-shrink: 0;
+                    opacity: 0.8;
+                    transform: scale(0.98);
+                    transition: opacity 0.5s ease, transform 0.5s ease;
+                    background: #ffffff;
+                }
+
+                .carousel-slide.active {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+
+                /* Browser mockup styles */
+                .browser-mockup {
+                    background: #ffffff;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .mockup-header {
+                    background: #f1f5f9;
+                    border-bottom: 1px solid #e2e8f0;
+                    padding: 8px 12px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .mockup-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                }
+
+                .mockup-dot.red { background-color: #ef4444; }
+                .mockup-dot.yellow { background-color: #f59e0b; }
+                .mockup-dot.green { background-color: #10b981; }
+
+                .mockup-address-bar {
+                    background: #ffffff;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 4px;
+                    font-size: 0.7rem;
+                    color: #64748b;
+                    padding: 2px 8px;
+                    flex-grow: 1;
+                    margin-left: 12px;
+                    text-align: left;
+                    font-family: monospace;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .mockup-content {
+                    position: relative;
+                    overflow: hidden;
+                    height: 250px; /* Constrained image height to minimize photos */
+                    background-color: #f8fafc;
+                }
+
+                .mockup-content img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .platform-caption {
+                    padding: 1rem 1.2rem;
+                    text-align: left;
+                    border-top: 1px solid #f1f5f9;
+                }
+
+                .platform-caption h4 {
+                    font-size: 1rem;
+                    color: #1e3a8a;
+                    margin-bottom: 0.3rem;
+                    font-family: 'Space Mono', monospace;
+                }
+
+                .platform-caption p {
+                    font-size: 0.85rem;
+                    color: #4b5563;
+                    line-height: 1.4;
+                }
+
+                /* Arrow buttons */
+                .carousel-btn {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: #ffffff;
+                    border: 1px solid #cbd5e1;
+                    color: #4b5563;
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                    transition: all 0.25s ease;
+                    z-index: 10;
+                }
+
+                .carousel-btn.prev-btn {
+                    left: -54px; /* Positioned directly outside the frame */
+                }
+
+                .carousel-btn.next-btn {
+                    right: -54px; /* Positioned directly outside the frame */
+                }
+
+                .carousel-btn:hover {
+                    background: #f8fafc;
+                    color: #2563eb;
+                    border-color: #94a3b8;
+                    transform: translateY(-50%) scale(1.06);
+                }
+
+                .carousel-btn:active {
+                    transform: translateY(-50%) scale(0.94);
+                }
+
+                .carousel-dots-container {
+                    display: flex;
+                    justify-content: center;
+                    gap: 0.4rem;
+                    margin-top: 1.5rem;
+                }
+
+                .carousel-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background-color: #cbd5e1;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                .carousel-dot.active {
+                    background-color: #2563eb;
+                    width: 20px;
+                    border-radius: 10px;
+                }
+
+                @media (max-width: 580px) {
+                    .carousel-btn.prev-btn {
+                        left: 8px; /* Positioned safely inside bounds on mobile viewports */
+                    }
+                    .carousel-btn.next-btn {
+                        right: 8px; /* Positioned safely inside bounds on mobile viewports */
+                    }
+                    .carousel-btn {
+                        background: rgba(255, 255, 255, 0.92);
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+                        width: 38px;
+                        height: 38px;
+                    }
+                }
+            </style>
+
             <div class="carousel-container">
                 <button class="carousel-btn prev-btn" type="button" aria-label="Previous Slide">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
                     </svg>
                 </button>
@@ -1167,7 +1361,7 @@
                     <div class="carousel-track">
                         <!-- Slide 1 -->
                         <div class="carousel-slide active">
-                            <div class="browser-mockup" style="max-width: 800px; margin: 0 auto;">
+                            <div class="browser-mockup">
                                 <div class="mockup-header">
                                     <span class="mockup-dot red"></span>
                                     <span class="mockup-dot yellow"></span>
@@ -1192,7 +1386,7 @@
 
                         <!-- Slide 2 -->
                         <div class="carousel-slide">
-                            <div class="browser-mockup" style="max-width: 800px; margin: 0 auto;">
+                            <div class="browser-mockup">
                                 <div class="mockup-header">
                                     <span class="mockup-dot red"></span>
                                     <span class="mockup-dot yellow"></span>
@@ -1217,7 +1411,7 @@
 
                         <!-- Slide 3 -->
                         <div class="carousel-slide">
-                            <div class="browser-mockup" style="max-width: 800px; margin: 0 auto;">
+                            <div class="browser-mockup">
                                 <div class="mockup-header">
                                     <span class="mockup-dot red"></span>
                                     <span class="mockup-dot yellow"></span>
@@ -1242,7 +1436,7 @@
 
                         <!-- Slide 4 -->
                         <div class="carousel-slide">
-                            <div class="browser-mockup" style="max-width: 800px; margin: 0 auto;">
+                            <div class="browser-mockup">
                                 <div class="mockup-header">
                                     <span class="mockup-dot red"></span>
                                     <span class="mockup-dot yellow"></span>
@@ -1267,7 +1461,7 @@
 
                         <!-- Slide 5 -->
                         <div class="carousel-slide">
-                            <div class="browser-mockup" style="max-width: 800px; margin: 0 auto;">
+                            <div class="browser-mockup">
                                 <div class="mockup-header">
                                     <span class="mockup-dot red"></span>
                                     <span class="mockup-dot yellow"></span>
@@ -1292,7 +1486,7 @@
 
                         <!-- Slide 6 -->
                         <div class="carousel-slide">
-                            <div class="browser-mockup" style="max-width: 800px; margin: 0 auto;">
+                            <div class="browser-mockup">
                                 <div class="mockup-header">
                                     <span class="mockup-dot red"></span>
                                     <span class="mockup-dot yellow"></span>
@@ -1318,7 +1512,7 @@
                 </div>
 
                 <button class="carousel-btn next-btn" type="button" aria-label="Next Slide">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
                 </button>
@@ -1333,6 +1527,82 @@
                 <span class="carousel-dot" data-slide="5"></span>
             </div>
         </div>
+
+        <!-- Self-Contained Carousel JavaScript Logic to bypass CDN/Browser Cache issues on Production Server -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const track = document.querySelector('.carousel-track');
+                const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+                const nextButton = document.querySelector('.carousel-btn.next-btn');
+                const prevButton = document.querySelector('.carousel-btn.prev-btn');
+                const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+
+                if (track && slides.length > 0) {
+                    let currentIndex = 0;
+
+                    const updateCarousel = (index) => {
+                        // Update active classes on slides
+                        slides.forEach((slide, idx) => {
+                            if (idx === index) {
+                                slide.classList.add('active');
+                            } else {
+                                slide.classList.remove('active');
+                            }
+                        });
+
+                        // Slide track by: index * (100 / count)%
+                        const percent = index * (100 / slides.length);
+                        track.style.transform = `translateX(-${percent}%)`;
+
+                        // Update active indicator dots
+                        dots.forEach((dot, idx) => {
+                            if (idx === index) {
+                                dot.classList.add('active');
+                            } else {
+                                dot.classList.remove('active');
+                            }
+                        });
+
+                        currentIndex = index;
+                    };
+
+                    // Next button navigation handler
+                    if (nextButton) {
+                        nextButton.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            let nextIndex = currentIndex + 1;
+                            if (nextIndex >= slides.length) {
+                                nextIndex = 0;
+                            }
+                            updateCarousel(nextIndex);
+                        });
+                    }
+
+                    // Prev button navigation handler
+                    if (prevButton) {
+                        prevButton.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            let prevIndex = currentIndex - 1;
+                            if (prevIndex < 0) {
+                                prevIndex = slides.length - 1;
+                            }
+                            updateCarousel(prevIndex);
+                        });
+                    }
+
+                    // Dots click navigation handler
+                    dots.forEach((dot, idx) => {
+                        dot.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            updateCarousel(idx);
+                        });
+                    });
+
+                    // Initialize slide view
+                    updateCarousel(0);
+                }
+            });
+        </script>
     </section>
 
 

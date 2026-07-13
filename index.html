@@ -1145,65 +1145,46 @@
             </div>
         </div>
 
-        <!-- Interactive Platform Showcase (Self-Contained Carousel) -->
-        <div class="platform-carousel-section">
+        <!-- Interactive Platform Showcase (Grid Layout) -->
+        <div class="platform-showcase-section">
             <h3 style="text-align: center; color: #1e3a8a; margin-top: 5rem; margin-bottom: 1.5rem; font-size: 2.2rem; font-weight: 300; letter-spacing: -0.02em;">
-                <span class="en-text">Interactive Learning Platform Demo</span>
+                <span class="en-text">Interactive Learning Platform Preview</span>
                 <span class="vi-text">Trải Nghiệm Nền Tảng Học Tập Tương Tác</span>
             </h3>
             <p style="text-align: center; font-size: 1.1rem; color: #4b5563; max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.8; font-family: 'Inter', sans-serif;">
-                <span class="en-text">Explore learn.vangia.dev, our custom self-paced learning system. Use the arrows or pagination dots below to preview the platform interfaces.</span>
-                <span class="vi-text">Khám phá learn.vangia.dev, hệ thống tự học được thiết kế chuyên biệt. Sử dụng các nút mũi tên hoặc dấu chấm để xem trước giao diện nền tảng.</span>
+                <span class="en-text">Explore learn.vangia.dev, our custom self-paced learning system. Here is a preview of the main student interfaces.</span>
+                <span class="vi-text">Khám phá learn.vangia.dev, hệ thống tự học được thiết kế chuyên biệt. Dưới đây là giao diện chính dành cho học viên.</span>
             </p>
 
-            <!-- Inline Stylesheet for Carousel & Mockup to prevent Aggressive Browser Cache Issues -->
+            <!-- Inline Stylesheet for Showcase Grid & Mockup to prevent Aggressive Browser Cache Issues -->
             <style>
-                .platform-carousel-section {
-                    max-width: 800px;
+                .platform-showcase-section {
+                    max-width: 1200px;
                     margin: 0 auto;
                     padding: 2rem 1.5rem;
                 }
 
-                .carousel-container {
-                    position: relative;
-                    max-width: 440px; /* Minimized by half! */
-                    margin: 0 auto;
+                .showcase-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                    gap: 2rem;
+                    margin-top: 2rem;
                 }
 
-                .carousel-track-container {
-                    overflow: hidden;
-                    width: 100%;
-                    border-radius: 12px;
-                    border: 1px solid #cbd5e1;
-                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-                    background: #ffffff;
-                }
-
-                .carousel-track {
-                    display: flex;
-                    width: 600%; /* 6 slides total */
-                    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                }
-
-                .carousel-slide {
-                    width: 16.666%; /* Exactly 1/6 of track width */
-                    flex-shrink: 0;
-                    opacity: 0.8;
-                    transform: scale(0.98);
-                    transition: opacity 0.5s ease, transform 0.5s ease;
-                    background: #ffffff;
-                }
-
-                .carousel-slide.active {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-
-                /* Browser mockup styles */
                 .browser-mockup {
                     background: #ffffff;
                     display: flex;
                     flex-direction: column;
+                    border: 1px solid #cbd5e1;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+                    overflow: hidden;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+
+                .browser-mockup:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
                 }
 
                 .mockup-header {
@@ -1244,7 +1225,7 @@
                 .mockup-content {
                     position: relative;
                     overflow: hidden;
-                    height: 250px; /* Constrained image height to minimize photos */
+                    height: 200px; /* Minimized photo heights for best visualization */
                     background-color: #f8fafc;
                 }
 
@@ -1255,7 +1236,7 @@
                 }
 
                 .platform-caption {
-                    padding: 1rem 1.2rem;
+                    padding: 1.2rem;
                     text-align: left;
                     border-top: 1px solid #f1f5f9;
                 }
@@ -1263,346 +1244,157 @@
                 .platform-caption h4 {
                     font-size: 1rem;
                     color: #1e3a8a;
-                    margin-bottom: 0.3rem;
+                    margin-bottom: 0.4rem;
                     font-family: 'Space Mono', monospace;
                 }
 
                 .platform-caption p {
                     font-size: 0.85rem;
                     color: #4b5563;
-                    line-height: 1.4;
-                }
-
-                /* Arrow buttons */
-                .carousel-btn {
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    background: #ffffff;
-                    border: 1px solid #cbd5e1;
-                    color: #4b5563;
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-                    transition: all 0.25s ease;
-                    z-index: 10;
-                }
-
-                .carousel-btn.prev-btn {
-                    left: -54px; /* Positioned directly outside the frame */
-                }
-
-                .carousel-btn.next-btn {
-                    right: -54px; /* Positioned directly outside the frame */
-                }
-
-                .carousel-btn:hover {
-                    background: #f8fafc;
-                    color: #2563eb;
-                    border-color: #94a3b8;
-                    transform: translateY(-50%) scale(1.06);
-                }
-
-                .carousel-btn:active {
-                    transform: translateY(-50%) scale(0.94);
-                }
-
-                .carousel-dots-container {
-                    display: flex;
-                    justify-content: center;
-                    gap: 0.4rem;
-                    margin-top: 1.5rem;
-                }
-
-                .carousel-dot {
-                    width: 8px;
-                    height: 8px;
-                    border-radius: 50%;
-                    background-color: #cbd5e1;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                }
-
-                .carousel-dot.active {
-                    background-color: #2563eb;
-                    width: 20px;
-                    border-radius: 10px;
-                }
-
-                @media (max-width: 580px) {
-                    .carousel-btn.prev-btn {
-                        left: 8px; /* Positioned safely inside bounds on mobile viewports */
-                    }
-                    .carousel-btn.next-btn {
-                        right: 8px; /* Positioned safely inside bounds on mobile viewports */
-                    }
-                    .carousel-btn {
-                        background: rgba(255, 255, 255, 0.92);
-                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-                        width: 38px;
-                        height: 38px;
-                    }
+                    line-height: 1.45;
                 }
             </style>
 
-            <div class="carousel-container">
-                <button class="carousel-btn prev-btn" type="button" aria-label="Previous Slide">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-
-                <div class="carousel-track-container">
-                    <div class="carousel-track">
-                        <!-- Slide 1 -->
-                        <div class="carousel-slide active">
-                            <div class="browser-mockup">
-                                <div class="mockup-header">
-                                    <span class="mockup-dot red"></span>
-                                    <span class="mockup-dot yellow"></span>
-                                    <span class="mockup-dot green"></span>
-                                    <div class="mockup-address-bar">learn.vangia.dev/dashboard</div>
-                                </div>
-                                <div class="mockup-content">
-                                    <img src="screenshot_1.png" alt="Syllabus and study guide dashboard">
-                                </div>
-                                <div class="platform-caption">
-                                    <h4>
-                                        <span class="en-text">Syllabus & Study Guide</span>
-                                        <span class="vi-text">Khung Học Tập & Syllabus</span>
-                                    </h4>
-                                    <p>
-                                        <span class="en-text">Comprehensive dashboard detailing expected study times, one-on-one sessions, learning objectives, and flexible study methodologies.</span>
-                                        <span class="vi-text">Bảng tổng quan hiển thị thời gian học tập dự kiến, các buổi 1-kèm-1, mục tiêu bài học và phương pháp tự học linh hoạt.</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 2 -->
-                        <div class="carousel-slide">
-                            <div class="browser-mockup">
-                                <div class="mockup-header">
-                                    <span class="mockup-dot red"></span>
-                                    <span class="mockup-dot yellow"></span>
-                                    <span class="mockup-dot green"></span>
-                                    <div class="mockup-address-bar">learn.vangia.dev/courses/01</div>
-                                </div>
-                                <div class="mockup-content">
-                                    <img src="screenshot_2.png" alt="Weekly lessons list">
-                                </div>
-                                <div class="platform-caption">
-                                    <h4>
-                                        <span class="en-text">20-Week Weekly Curriculum</span>
-                                        <span class="vi-text">Lộ Trình Chi Tiết 20 Tuần</span>
-                                    </h4>
-                                    <p>
-                                        <span class="en-text">Direct access to the 20 weekly modules, spanning Machine Learning basics, Deep Learning, Transformers, Agents, and large-scale System Design.</span>
-                                        <span class="vi-text">Giao diện bài học 20 tuần trải rộng từ cơ bản Học máy, Học sâu, mô hình Transformers, tác nhân AI cho đến Thiết kế hệ thống lớn.</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 3 -->
-                        <div class="carousel-slide">
-                            <div class="browser-mockup">
-                                <div class="mockup-header">
-                                    <span class="mockup-dot red"></span>
-                                    <span class="mockup-dot yellow"></span>
-                                    <span class="mockup-dot green"></span>
-                                    <div class="mockup-address-bar">learn.vangia.dev/flashcards</div>
-                                </div>
-                                <div class="mockup-content">
-                                    <img src="screenshot_3.png" alt="Interactive Flashcards">
-                                </div>
-                                <div class="platform-caption">
-                                    <h4>
-                                        <span class="en-text">Active Recall Flashcards</span>
-                                        <span class="vi-text">Ôn Tập Bằng Flashcard</span>
-                                    </h4>
-                                    <p>
-                                        <span class="en-text">Self-paced review tool featuring interactive cards to memorize algorithms, definitions, and key trade-offs in computer science.</span>
-                                        <span class="vi-text">Hệ thống flashcard tương tác giúp ghi nhớ nhanh các thuật toán, định nghĩa và đánh đổi kỹ thuật quan trọng trong ngành.</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 4 -->
-                        <div class="carousel-slide">
-                            <div class="browser-mockup">
-                                <div class="mockup-header">
-                                    <span class="mockup-dot red"></span>
-                                    <span class="mockup-dot yellow"></span>
-                                    <span class="mockup-dot green"></span>
-                                    <div class="mockup-address-bar">learn.vangia.dev/code-labs</div>
-                                </div>
-                                <div class="mockup-content">
-                                    <img src="screenshot_4.png" alt="Coding Labs">
-                                </div>
-                                <div class="platform-caption">
-                                    <h4>
-                                        <span class="en-text">Practical Coding Assignments</span>
-                                        <span class="vi-text">Thực Hành Lập Trình</span>
-                                    </h4>
-                                    <p>
-                                        <span class="en-text">Hands-on programming modules designed to build pipelines, optimize loss functions, and evaluate real-world machine learning models.</span>
-                                        <span class="vi-text">Các bài tập thực hành gõ code trực tiếp, xây dựng đường ống dữ liệu, tối ưu hàm tổn thất và đánh giá mô hình thực tế.</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 5 -->
-                        <div class="carousel-slide">
-                            <div class="browser-mockup">
-                                <div class="mockup-header">
-                                    <span class="mockup-dot red"></span>
-                                    <span class="mockup-dot yellow"></span>
-                                    <span class="mockup-dot green"></span>
-                                    <div class="mockup-address-bar">learn.vangia.dev/scheduler</div>
-                                </div>
-                                <div class="mockup-content">
-                                    <img src="screenshot_5.png" alt="1-on-1 Sessions Scheduler">
-                                </div>
-                                <div class="platform-caption">
-                                    <h4>
-                                        <span class="en-text">Weekly 1-on-1 Booking</span>
-                                        <span class="vi-text">Đặt Lịch Học 1-Kèm-1</span>
-                                    </h4>
-                                    <p>
-                                        <span class="en-text">Integrated scheduling system to select time slots for weekly personalized reviews and mock technical interviews with Dr. Hoang Van.</span>
-                                        <span class="vi-text">Hệ thống đặt lịch tích hợp giúp học viên chủ động chọn thời gian học kèm 1-1 và phỏng vấn giả định cùng TS. Hoàng Văn.</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 6 -->
-                        <div class="carousel-slide">
-                            <div class="browser-mockup">
-                                <div class="mockup-header">
-                                    <span class="mockup-dot red"></span>
-                                    <span class="mockup-dot yellow"></span>
-                                    <span class="mockup-dot green"></span>
-                                    <div class="mockup-address-bar">learn.vangia.dev/profile</div>
-                                </div>
-                                <div class="mockup-content">
-                                    <img src="screenshot_6.png" alt="Progress Tracker & Projects">
-                                </div>
-                                <div class="platform-caption">
-                                    <h4>
-                                        <span class="en-text">Progress & Final Project</span>
-                                        <span class="vi-text">Tiến Độ & Dự Án Tốt Nghiệp</span>
-                                    </h4>
-                                    <p>
-                                        <span class="en-text">Track your learning journey, view comments on your code, and work on your selected final project from day one.</span>
-                                        <span class="vi-text">Theo dõi tiến trình cá nhân, xem phản hồi chi tiết về source code và triển khai dự án tốt nghiệp được chọn ngay từ tuần đầu.</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="showcase-grid">
+                <!-- Card 1 -->
+                <div class="browser-mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                        <div class="mockup-address-bar">learn.vangia.dev/dashboard</div>
+                    </div>
+                    <div class="mockup-content">
+                        <img src="screenshot_1.png" alt="Syllabus and study guide dashboard">
+                    </div>
+                    <div class="platform-caption">
+                        <h4>
+                            <span class="en-text">Syllabus & Study Guide</span>
+                            <span class="vi-text">Khung Học Tập & Syllabus</span>
+                        </h4>
+                        <p>
+                            <span class="en-text">Comprehensive dashboard detailing expected study times, one-on-one sessions, learning objectives, and flexible study methodologies.</span>
+                            <span class="vi-text">Bảng tổng quan hiển thị thời gian học tập dự kiến, các buổi 1-kèm-1, mục tiêu bài học và phương pháp tự học linh hoạt.</span>
+                        </p>
                     </div>
                 </div>
 
-                <button class="carousel-btn next-btn" type="button" aria-label="Next Slide">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </button>
-            </div>
+                <!-- Card 2 -->
+                <div class="browser-mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                        <div class="mockup-address-bar">learn.vangia.dev/courses/01</div>
+                    </div>
+                    <div class="mockup-content">
+                        <img src="screenshot_2.png" alt="Weekly lessons list">
+                    </div>
+                    <div class="platform-caption">
+                        <h4>
+                            <span class="en-text">20-Week Weekly Curriculum</span>
+                            <span class="vi-text">Lộ Trình Chi Tiết 20 Tuần</span>
+                        </h4>
+                        <p>
+                            <span class="en-text">Direct access to the 20 weekly modules, spanning Machine Learning basics, Deep Learning, Transformers, Agents, and large-scale System Design.</span>
+                            <span class="vi-text">Giao diện bài học 20 tuần trải rộng từ cơ bản Học máy, Học sâu, mô hình Transformers, tác nhân AI cho đến Thiết kế hệ thống lớn.</span>
+                        </p>
+                    </div>
+                </div>
 
-            <div class="carousel-dots-container">
-                <span class="carousel-dot active" data-slide="0"></span>
-                <span class="carousel-dot" data-slide="1"></span>
-                <span class="carousel-dot" data-slide="2"></span>
-                <span class="carousel-dot" data-slide="3"></span>
-                <span class="carousel-dot" data-slide="4"></span>
-                <span class="carousel-dot" data-slide="5"></span>
+                <!-- Card 3 -->
+                <div class="browser-mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                        <div class="mockup-address-bar">learn.vangia.dev/flashcards</div>
+                    </div>
+                    <div class="mockup-content">
+                        <img src="screenshot_3.png" alt="Interactive Flashcards">
+                    </div>
+                    <div class="platform-caption">
+                        <h4>
+                            <span class="en-text">Active Recall Flashcards</span>
+                            <span class="vi-text">Ôn Tập Bằng Flashcard</span>
+                        </h4>
+                        <p>
+                            <span class="en-text">Self-paced review tool featuring interactive cards to memorize algorithms, definitions, and key trade-offs in computer science.</span>
+                            <span class="vi-text">Hệ thống flashcard tương tác giúp ghi nhớ nhanh các thuật toán, định nghĩa và đánh đổi kỹ thuật quan trọng trong ngành.</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="browser-mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                        <div class="mockup-address-bar">learn.vangia.dev/code-labs</div>
+                    </div>
+                    <div class="mockup-content">
+                        <img src="screenshot_4.png" alt="Coding Labs">
+                    </div>
+                    <div class="platform-caption">
+                        <h4>
+                            <span class="en-text">Practical Coding Assignments</span>
+                            <span class="vi-text">Thực Hành Lập Trình</span>
+                        </h4>
+                        <p>
+                            <span class="en-text">Hands-on programming modules designed to build pipelines, optimize loss functions, and evaluate real-world machine learning models.</span>
+                            <span class="vi-text">Các bài tập thực hành gõ code trực tiếp, xây dựng đường ống dữ liệu, tối ưu hàm tổn thất và đánh giá mô hình thực tế.</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="browser-mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                        <div class="mockup-address-bar">learn.vangia.dev/scheduler</div>
+                    </div>
+                    <div class="mockup-content">
+                        <img src="screenshot_5.png" alt="1-on-1 Sessions Scheduler">
+                    </div>
+                    <div class="platform-caption">
+                        <h4>
+                            <span class="en-text">Weekly 1-on-1 Booking</span>
+                            <span class="vi-text">Đặt Lịch Học 1-Kèm-1</span>
+                        </h4>
+                        <p>
+                            <span class="en-text">Integrated scheduling system to select time slots for weekly personalized reviews and mock technical interviews with Dr. Hoang Van.</span>
+                            <span class="vi-text">Hệ thống đặt lịch tích hợp giúp học viên chủ động chọn thời gian học kèm 1-1 và phỏng vấn giả định cùng TS. Hoàng Văn.</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="browser-mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                        <div class="mockup-address-bar">learn.vangia.dev/profile</div>
+                    </div>
+                    <div class="mockup-content">
+                        <img src="screenshot_6.png" alt="Progress Tracker & Projects">
+                    </div>
+                    <div class="platform-caption">
+                        <h4>
+                            <span class="en-text">Progress & Final Project</span>
+                            <span class="vi-text">Tiến Độ & Dự Án Tốt Nghiệp</span>
+                        </h4>
+                        <p>
+                            <span class="en-text">Track your learning journey, view comments on your code, and work on your selected final project from day one.</span>
+                            <span class="vi-text">Theo dõi tiến trình cá nhân, xem phản hồi chi tiết về source code và triển khai dự án tốt nghiệp được chọn ngay từ tuần đầu.</span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- Self-Contained Carousel JavaScript Logic to bypass CDN/Browser Cache issues on Production Server -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const track = document.querySelector('.carousel-track');
-                const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-                const nextButton = document.querySelector('.carousel-btn.next-btn');
-                const prevButton = document.querySelector('.carousel-btn.prev-btn');
-                const dots = Array.from(document.querySelectorAll('.carousel-dot'));
-
-                if (track && slides.length > 0) {
-                    let currentIndex = 0;
-
-                    const updateCarousel = (index) => {
-                        // Update active classes on slides
-                        slides.forEach((slide, idx) => {
-                            if (idx === index) {
-                                slide.classList.add('active');
-                            } else {
-                                slide.classList.remove('active');
-                            }
-                        });
-
-                        // Slide track by: index * (100 / count)%
-                        const percent = index * (100 / slides.length);
-                        track.style.transform = `translateX(-${percent}%)`;
-
-                        // Update active indicator dots
-                        dots.forEach((dot, idx) => {
-                            if (idx === index) {
-                                dot.classList.add('active');
-                            } else {
-                                dot.classList.remove('active');
-                            }
-                        });
-
-                        currentIndex = index;
-                    };
-
-                    // Next button navigation handler
-                    if (nextButton) {
-                        nextButton.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            let nextIndex = currentIndex + 1;
-                            if (nextIndex >= slides.length) {
-                                nextIndex = 0;
-                            }
-                            updateCarousel(nextIndex);
-                        });
-                    }
-
-                    // Prev button navigation handler
-                    if (prevButton) {
-                        prevButton.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            let prevIndex = currentIndex - 1;
-                            if (prevIndex < 0) {
-                                prevIndex = slides.length - 1;
-                            }
-                            updateCarousel(prevIndex);
-                        });
-                    }
-
-                    // Dots click navigation handler
-                    dots.forEach((dot, idx) => {
-                        dot.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            updateCarousel(idx);
-                        });
-                    });
-
-                    // Initialize slide view
-                    updateCarousel(0);
-                }
-            });
-        </script>
     </section>
 
 

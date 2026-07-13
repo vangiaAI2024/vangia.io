@@ -74,4 +74,72 @@ document.addEventListener('DOMContentLoaded', () => {
     // Language switcher setup
     const savedLang = localStorage.getItem('preferred-language') || 'en';
     setLanguage(savedLang);
+
+    // Platform Screenshots Carousel Logic
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+    const nextButton = document.querySelector('.carousel-btn.next-btn');
+    const prevButton = document.querySelector('.carousel-btn.prev-btn');
+    const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+
+    if (track && slides.length > 0) {
+        let currentIndex = 0;
+
+        const updateCarousel = (index) => {
+            // Update active classes on slides
+            slides.forEach((slide, idx) => {
+                if (idx === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Slide the track
+            track.style.transform = `translateX(-${index * 100}%)`;
+
+            // Update active dots
+            dots.forEach((dot, idx) => {
+                if (idx === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+
+            currentIndex = index;
+        };
+
+        // Next Button Click
+        if (nextButton) {
+            nextButton.addEventListener('click', () => {
+                let nextIndex = currentIndex + 1;
+                if (nextIndex >= slides.length) {
+                    nextIndex = 0; // Wrap around to first slide
+                }
+                updateCarousel(nextIndex);
+            });
+        }
+
+        // Prev Button Click
+        if (prevButton) {
+            prevButton.addEventListener('click', () => {
+                let prevIndex = currentIndex - 1;
+                if (prevIndex < 0) {
+                    prevIndex = slides.length - 1; // Wrap around to last slide
+                }
+                updateCarousel(prevIndex);
+            });
+        }
+
+        // Dots click
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                updateCarousel(idx);
+            });
+        });
+
+        // Initialize state
+        updateCarousel(0);
+    }
 });

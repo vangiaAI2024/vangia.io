@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Vangia Innovations Personalized Program</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom styles for FAQ page */
+        .faq-hero {
+            padding: 6rem 1.5rem 4rem 1.5rem;
+            text-align: center;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .faq-title {
+            font-size: 2.8rem;
+            color: #1e3a8a;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .faq-subtitle {
+            font-size: 1.15rem;
+            color: #4b5563;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .faq-item {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            padding: 2rem;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            border-color: #94a3b8;
+        }
+
+        .faq-question {
+            font-size: 1.25rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-family: 'Space Mono', monospace;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .faq-question::before {
+            content: "Q.";
+            color: #ea580c;
+            font-weight: 700;
+        }
+
+        .faq-answer {
+            font-size: 0.95rem;
+            color: #4b5563;
+            line-height: 1.7;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .faq-answer p {
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-answer ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.5rem;
+        }
+
+        .faq-answer li {
+            position: relative;
+            padding-left: 1.2rem;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        .faq-answer li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #ea580c;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #ea580c;
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1rem;
+            font-size: 0.92rem;
+            color: #334155;
+        }
+
+        @media (max-width: 768px) {
+            .faq-title {
+                font-size: 2.2rem;
+            }
+            .faq-item {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="lang-en">
+    <header>
+        <nav>
+            <a class="logo" href="index.html">
+                <img src="logo.jpeg" alt="Vangia.io" style="height: 40px; width: auto;">
+            </a>
+            <ul>
+                <li><a href="index.html#home"><span class="en-text">Home</span><span class="vi-text">Trang Chủ</span></a></li>
+                <li><a href="index.html#features"><span class="en-text">Program</span><span class="vi-text">Chương Trình</span></a></li>
+                <li><a href="index.html#pricing"><span class="en-text">Pricing</span><span class="vi-text">Học Phí</span></a></li>
+                <li><a href="faq.html" class="active"><span class="en-text">FAQ</span><span class="vi-text">FAQ</span></a></li>
+                <li><a href="tutorial.html"><span class="en-text">Tutorial</span><span class="vi-text">Hướng Dẫn</span></a></li>
+            </ul>
+            <div class="nav-right-group">
+                <div class="lang-switcher">
+                    <button class="lang-btn btn-en active" onclick="setLanguage('en')">🇺🇸</button>
+                    <span class="lang-divider">|</span>
+                    <button class="lang-btn btn-vi" onclick="setLanguage('vi')">🇻🇳</button>
+                </div>
+                <a href="https://learn.vangia.dev/login" target="_blank" rel="noopener noreferrer" class="vangia-learn-btn">
+                    Vangia Learn
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="faq-hero">
+            <h1 class="faq-title">
+                <span class="en-text">Frequently Asked Questions</span>
+                <span class="vi-text">Câu Hỏi Thường Gặp</span>
+            </h1>
+            <p class="faq-subtitle">
+                <span class="en-text">Find answers to common questions about our fully personalized, self-paced Artificial Intelligence and Computer Science program.</span>
+                <span class="vi-text">Giải đáp các thắc mắc phổ biến về chương trình đào tạo Khoa học Máy tính & Trí tuệ Nhân tạo cá nhân hóa và tự chọn tốc độ học.</span>
+            </p>
+        </section>
+
+        <section class="faq-container">
+            <div class="faq-list">
+                <!-- Question 1 -->
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <span class="en-text">Who should join?</span>
+                        <span class="vi-text">Ai nên tham gia chương trình?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p class="en-text">
+                            This program is <strong>fully personalized</strong> and designed to accommodate learners with different goals and backgrounds. You have the total freedom to choose your own difficulty levels and learn at a self-paced speed.
+                        </p>
+                        <p class="vi-text">
+                            Chương trình này được <strong>thiết kế cá nhân hóa hoàn toàn</strong> và phù hợp với học viên có mục tiêu cũng như nền tảng khác nhau. Bạn có toàn quyền tự do lựa chọn mức độ thử thách và tốc độ học tập của riêng mình.
+                        </p>
+
+                        <div class="highlight-box">
+                            <span class="en-text">
+                                <strong>Personalized Fit:</strong> Whether you need a dedicated coach to support your PhD application, want to build an actual product from your ideas, or seek to transition into advanced AI engineering, we customize the roadmap to fit your specific needs.
+                            </span>
+                            <span class="vi-text">
+                                <strong>Khả năng tương thích:</strong> Cho dù bạn đang tìm kiếm một người hướng dẫn đồng hành hỗ trợ ứng tuyển học Tiến sĩ (PhD), muốn xây dựng sản phẩm thực tế từ ý tưởng của mình, hay chuyển hướng sang kỹ nghệ AI chuyên sâu, lộ trình học tập sẽ được điều chỉnh chính xác theo nhu cầu của bạn.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <span class="en-text">What can I do after the program?</span>
+                        <span class="vi-text">Tôi có thể làm gì sau khi hoàn thành chương trình?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p class="en-text">
+                            Since the program is completely tailored to your individual path, your outcomes will match your personalized goals:
+                        </p>
+                        <p class="vi-text">
+                            Vì chương trình được thiết kế may đo hoàn toàn cho từng cá nhân, kết quả đầu ra sẽ tương thích chính xác với mục tiêu ban đầu của bạn:
+                        </p>
+                        <ul>
+                            <li>
+                                <span class="en-text">Submit high-quality research proposals and secure PhD opportunities in AI & CS.</span>
+                                <span class="vi-text">Nộp đề cương nghiên cứu chất lượng cao và ứng tuyển thành công học bổng PhD ngành AI & CS.</span>
+                            </li>
+                            <li>
+                                <span class="en-text">Deploy working production-grade products, SaaS tools, or local AI applications.</span>
+                                <span class="vi-text">Triển khai các sản phẩm hoàn chỉnh, công cụ SaaS hoặc ứng dụng AI thực tế.</span>
+                            </li>
+                            <li>
+                                <span class="en-text">Transition into Senior AI Engineers, Machine Learning Engineers, or AI Researchers.</span>
+                                <span class="vi-text">Chuyển mình thành Kỹ sư AI cấp cao, Kỹ sư Machine Learning hoặc Nhà nghiên cứu AI.</span>
+                            </li>
+                            <li>
+                                <span class="en-text">Master rigorous system design and computer science thinking for tech leadership roles.</span>
+                                <span class="vi-text">Làm chủ tư duy hệ thống và khoa học máy tính phục vụ các vai trò dẫn dắt kỹ thuật.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <span class="en-text">What tools can I learn and use effectively?</span>
+                        <span class="vi-text">Tôi sẽ được học và sử dụng thành thạo những công cụ gì?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p class="en-text">
+                            Depending on your personalized roadmap, you will gain hands-on expertise with industry-leading tools and frameworks:
+                        </p>
+                        <p class="vi-text">
+                            Tùy thuộc vào lộ trình cá nhân của bạn, bạn sẽ được thực hành và làm chủ các công cụ và thư viện hàng đầu hiện nay:
+                        </p>
+                        <ul>
+                            <li><span class="en-text">Core AI & ML: Python, PyTorch, NumPy, Pandas</span><span class="vi-text">AI & ML Cốt Lõi: Python, PyTorch, NumPy, Pandas</span></li>
+                            <li><span class="en-text">Large Language Models: OpenAI / Anthropic APIs, LangChain, LlamaIndex</span><span class="vi-text">Mô Hình Ngôn Ngữ Lớn: OpenAI / Anthropic APIs, LangChain, LlamaIndex</span></li>
+                            <li><span class="en-text">Vector Databases & Search: Qdrant, Milvus, ChromaDB</span><span class="vi-text">Cơ sở dữ liệu Vector: Qdrant, Milvus, ChromaDB</span></li>
+                            <li><span class="en-text">DevOps & MLOps: Git, Docker, Kubernetes, GitOps pipelines</span><span class="vi-text">DevOps & MLOps: Git, Docker, Kubernetes, GitOps pipelines</span></li>
+                            <li><span class="en-text">Frontend & Deployment: Streamlit, Next.js, Railway, Vercel</span><span class="vi-text">Giao diện & Triển khai: Streamlit, Next.js, Railway, Vercel</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <span class="en-text">Do I have to attend classes on a strict schedule?</span>
+                        <span class="vi-text">Tôi có phải tham gia lớp học theo lịch cố định không?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p class="en-text">
+                            <strong>No.</strong> The curriculum is fully self-paced, allowing you to study whenever and wherever you want. 
+                        </p>
+                        <p class="vi-text">
+                            <strong>Không.</strong> Chương trình học hoàn toàn tự chọn tốc độ, cho phép bạn tự nghiên cứu bất kỳ lúc nào và ở đâu.
+                        </p>
+                        <div class="highlight-box" style="border-left-color: #2563eb;">
+                            <span class="en-text">
+                                You can book your weekly 2-hour 1-on-1 mentorship session with <strong>Dr. Hoang Van</strong> on your own flexible schedule using our integrated scheduler.
+                            </span>
+                            <span class="vi-text">
+                                Bạn có thể linh hoạt đặt lịch hẹn cho các buổi hướng dẫn 1-kèm-1 (2 giờ/tuần) trực tiếp với <strong>Tiến sĩ Hoàng Văn</strong> vào khung giờ phù hợp nhất thông qua hệ thống đặt lịch tự động.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="contact-section" style="border-top: 1px solid #cbd5e1; background: #ffffff;">
+        <div class="contact-container" style="padding-top: 2rem;">
+            <h2 class="contact-title" style="margin-top: 0;">
+                <span class="en-text">Contact</span>
+                <span class="vi-text">Liên Hệ</span>
+            </h2>
+            <p class="contact-description en-text">
+                Have questions or want to start your personalized journey? Reach out via email below.
+            </p>
+            <p class="contact-description vi-text">
+                Bạn có thắc mắc hoặc muốn bắt đầu hành trình học tập được thiết kế riêng của mình? Hãy kết nối với chúng tôi qua email bên dưới.
+            </p>
+            <div class="contact-methods">
+                <p class="contact-email">
+                    <a id="contact-email-link" href="mailto:contact.vangiainnovations@gmail.com">📧 contact.vangiainnovations@gmail.com</a>
+                </p>
+            </div>
+            <div class="contact-social" style="margin-top: 1.5rem;">
+                <a href="https://scholar.google.com/citations?user=-ipwYRsAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="social-btn scholar-btn" title="Google Scholar">
+                    Google Scholar
+                </a>
+                <a href="https://www.linkedin.com/in/van-hoang-hoang-wun-nguyen-06a6b820a/" target="_blank" rel="noopener noreferrer" class="social-btn linkedin-btn" title="LinkedIn">
+                    LinkedIn
+                </a>
+            </div>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 3rem; text-align: center; font-family: 'Space Mono', monospace;">
+                © 2026 Vangia Innovations. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

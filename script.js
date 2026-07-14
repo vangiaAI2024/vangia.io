@@ -28,22 +28,22 @@ function updateContactEmailLink(lang) {
     if (lang === 'vi') {
         subject = 'Đăng ký học tại Vangia Innovations';
         body = 'Kính gửi Ban tuyển sinh Vangia Innovations,\r\n\r\n' +
-               'Tôi muốn đăng ký tham gia khóa học tiếp theo. Dưới đây là thông tin đăng ký của tôi:\r\n\r\n' +
+               'Tôi muốn đăng ký tham gia chương trình học tập được thiết kế riêng. Dưới đây là thông tin đăng ký của tôi:\r\n\r\n' +
                '- Họ và tên: \r\n' +
                '- Số điện thoại: \r\n' +
                '- Nền tảng học vấn / nghề nghiệp: \r\n' +
-               '- Mục tiêu khi tham gia khóa học: \r\n' +
+               '- Mục tiêu và nhu cầu học tập: \r\n' +
                '- Câu hỏi hoặc ý kiến khác (nếu có): \r\n\r\n' +
                'Tôi xin chân thành cảm ơn và mong sớm nhận được phản hồi từ Vangia Learn.\r\n\r\n' +
                'Trân trọng,';
     } else {
         subject = 'Application for Vangia Innovations Program';
         body = 'Dear Vangia Innovations Team,\r\n\r\n' +
-               'I am interested in joining the upcoming cohort. Please find my signup details below:\r\n\r\n' +
+               'I am interested in joining the personalized learning program. Please find my details below:\r\n\r\n' +
                '- Full Name: \r\n' +
                '- Phone Number: \r\n' +
                '- Educational / Professional Background: \r\n' +
-               '- Goals for joining the cohort: \r\n' +
+               '- Personalized goals and study needs: \r\n' +
                '- Questions or comments (if any): \r\n\r\n' +
                'Thank you, and I look forward to your response.\r\n\r\n' +
                'Best regards,';

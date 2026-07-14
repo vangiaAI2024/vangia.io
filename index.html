@@ -1166,9 +1166,15 @@
 
                 .showcase-grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                    grid-template-columns: repeat(2, 1fr);
                     gap: 2rem;
                     margin-top: 2rem;
+                }
+
+                @media (max-width: 768px) {
+                    .showcase-grid {
+                        grid-template-columns: 1fr;
+                    }
                 }
 
                 .browser-mockup {
@@ -1248,19 +1254,19 @@
                 <!-- Card 1 -->
                 <div class="browser-mockup">
                     <div class="mockup-header">
-                        <div class="mockup-address-bar">learn.vangia.dev/dashboard</div>
+                        <div class="mockup-address-bar">learn.vangia.dev/curriculum</div>
                     </div>
                     <div class="mockup-content">
-                        <img src="screenshot_1.png" alt="Syllabus and study guide dashboard">
+                        <img src="curriculum_view.png" alt="Syllabus & Study Guide">
                     </div>
                     <div class="platform-caption">
                         <h4>
-                            <span class="en-text">Dashboard & Study Guide</span>
-                            <span class="vi-text">Dashboard & Tài Liệu Hướng Dẫn</span>
+                            <span class="en-text">Syllabus & Study Guide</span>
+                            <span class="vi-text">Syllabus & Hướng Dẫn Học</span>
                         </h4>
                         <p>
-                            <span class="en-text">Weekly goals, expected learning hours, and lesson objectives tracker.</span>
-                            <span class="vi-text">Theo dõi mục tiêu tuần, thời gian học dự kiến và mục tiêu từng bài.</span>
+                            <span class="en-text">Weekly study plan, expected study hours, and key learning milestones tracker.</span>
+                            <span class="vi-text">Kế hoạch học tập tuần, thời gian học dự kiến và các cột mốc quan trọng.</span>
                         </p>
                     </div>
                 </div>
@@ -1268,10 +1274,10 @@
                 <!-- Card 2 -->
                 <div class="browser-mockup">
                     <div class="mockup-header">
-                        <div class="mockup-address-bar">learn.vangia.dev/courses/01</div>
+                        <div class="mockup-address-bar">learn.vangia.dev/weekly-content</div>
                     </div>
                     <div class="mockup-content">
-                        <img src="screenshot_2.png" alt="Weekly lessons list">
+                        <img src="weekly_content.png" alt="Weekly Lessons">
                     </div>
                     <div class="platform-caption">
                         <h4>
@@ -1279,8 +1285,8 @@
                             <span class="vi-text">Danh Sách Bài Học</span>
                         </h4>
                         <p>
-                            <span class="en-text">Quick access to study materials, coding labs, and reference links for all 20 modules.</span>
-                            <span class="vi-text">Truy cập bài học, tài liệu lập trình và tài liệu tham khảo cho 20 tuần.</span>
+                            <span class="en-text">Access code repositories, reference links, and learning resources for all 20 modules.</span>
+                            <span class="vi-text">Truy cập kho lưu trữ code, liên kết tham khảo và tài nguyên học tập của 20 tuần.</span>
                         </p>
                     </div>
                 </div>
@@ -1288,19 +1294,19 @@
                 <!-- Card 3 -->
                 <div class="browser-mockup">
                     <div class="mockup-header">
-                        <div class="mockup-address-bar">learn.vangia.dev/flashcards</div>
+                        <div class="mockup-address-bar">learn.vangia.dev/code-labs</div>
                     </div>
                     <div class="mockup-content">
-                        <img src="screenshot_3.png" alt="Interactive Flashcards">
+                        <img src="code_view.png" alt="Practical Coding">
                     </div>
                     <div class="platform-caption">
                         <h4>
-                            <span class="en-text">Interactive Flashcards</span>
-                            <span class="vi-text">Học Qua Flashcard</span>
+                            <span class="en-text">Practical Coding</span>
+                            <span class="vi-text">Thực Hành Lập Trình</span>
                         </h4>
                         <p>
-                            <span class="en-text">Review tool for key algorithms, data structures, and computer science concepts.</span>
-                            <span class="vi-text">Công cụ ôn tập thuật toán, cấu trúc dữ liệu và khái niệm khoa học máy tính.</span>
+                            <span class="en-text">Hands-on programming assignments, system design challenges, and codebase review.</span>
+                            <span class="vi-text">Bài tập lập trình thực tế, thử thách thiết kế hệ thống và đánh giá cấu trúc codebase.</span>
                         </p>
                     </div>
                 </div>
@@ -1308,59 +1314,19 @@
                 <!-- Card 4 -->
                 <div class="browser-mockup">
                     <div class="mockup-header">
-                        <div class="mockup-address-bar">learn.vangia.dev/code-labs</div>
-                    </div>
-                    <div class="mockup-content">
-                        <img src="screenshot_4.png" alt="Coding Labs">
-                    </div>
-                    <div class="platform-caption">
-                        <h4>
-                            <span class="en-text">Coding Assignments</span>
-                            <span class="vi-text">Bài Tập Lập Trình</span>
-                        </h4>
-                        <p>
-                            <span class="en-text">Hands-on labs to build pipelines, train models, and optimize implementations.</span>
-                            <span class="vi-text">Thực hành xây dựng pipeline, huấn luyện mô hình và tối ưu hóa code.</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="browser-mockup">
-                    <div class="mockup-header">
                         <div class="mockup-address-bar">learn.vangia.dev/scheduler</div>
                     </div>
                     <div class="mockup-content">
-                        <img src="screenshot_5.png" alt="1-on-1 Sessions Scheduler">
+                        <img src="booking_one_on_one.png" alt="1-on-1 Sessions">
                     </div>
                     <div class="platform-caption">
                         <h4>
-                            <span class="en-text">1-on-1 Scheduler</span>
+                            <span class="en-text">1-on-1 Sessions</span>
                             <span class="vi-text">Đặt Lịch Học Kèm</span>
                         </h4>
                         <p>
-                            <span class="en-text">Book weekly review slots and mock interviews directly with Dr. Hoang Van.</span>
-                            <span class="vi-text">Đặt lịch hẹn review bài tập và phỏng vấn thử cùng TS. Hoàng Văn.</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="browser-mockup">
-                    <div class="mockup-header">
-                        <div class="mockup-address-bar">learn.vangia.dev/profile</div>
-                    </div>
-                    <div class="mockup-content">
-                        <img src="screenshot_6.png" alt="Progress Tracker & Projects">
-                    </div>
-                    <div class="platform-caption">
-                        <h4>
-                            <span class="en-text">Progress & Project Tracker</span>
-                            <span class="vi-text">Theo Dõi Tiến Độ & Dự Án</span>
-                        </h4>
-                        <p>
-                            <span class="en-text">Track program milestones and review code feedback for the final project.</span>
-                            <span class="vi-text">Theo dõi tiến độ học tập và phản hồi code của dự án tốt nghiệp.</span>
+                            <span class="en-text">Schedule weekly personalized project reviews and mock interviews directly.</span>
+                            <span class="vi-text">Đặt lịch hẹn review bài tập cá nhân và phỏng vấn thử định kỳ.</span>
                         </p>
                     </div>
                 </div>

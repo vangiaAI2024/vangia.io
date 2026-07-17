@@ -35,7 +35,7 @@ jobs:
               print('📡 Fetching scores from JSONBin.io...')
 
               # add direct binID here because this one doesnt need to be encrypted
-              jsonbin_url = 'https://api.jsonbin.io/v3/b/69e1d354856a68218942b374'
+              jsonbin_url = 'https://api.jsonbin.io/v3/b/69fb4c8f10716a4d5de62385'
               jsonbin_headers = {
                   'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
                   'Content-Type': 'application/json'

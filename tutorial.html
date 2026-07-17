@@ -530,10 +530,10 @@
                 showMessage('⚠️ Score list is empty.', '⚠️ Danh sách bảng điểm đang trống.');
                 return;
             }
-            let pair_id = 1
+        
             sorted.forEach(item => {
                 const row = document.createElement('tr');
-                const name = item.name || `Pair ${pair_id ?? '?'}`;
+                const name = item.name || `Pair ${item.pair_id ?? '?'}`;
                 const score = Number.isFinite(item.score) ? item.score : 0;
                 const status = getStatusLabel(score);
                 row.innerHTML = `
@@ -542,7 +542,6 @@
                     <td>${status}</td>
                 `;
                 tbody.appendChild(row);
-                pair_id = pair_id + 1;
             });
         }
 

@@ -61,7 +61,7 @@ jobs:
               
               # 🔥 THE FIX: Separated by a clear question mark mapped into the string
               # This tells the server that the domain path has officially ended and a variable is starting
-              db_url = f'https://https://neo-rmit-2026-ai-banking-default-rtdb.asia-southeast1.firebasedatabase.app/pages/scores.json?auth={db_secret}'
+              db_url = f'https://neo-rmit-2026-ai-banking-default-rtdb.asia-southeast1.firebasedatabase.app/pages/scores.json?auth={db_secret}'
               
               put_res = requests.put(db_url, json=payload_data)
               

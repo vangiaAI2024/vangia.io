@@ -38,7 +38,7 @@ jobs:
               print('📡 Fetching scores from JSONBin.io...')
 
               # add direct binID here because this one doesnt need to be encrypted
-              jsonbin_url = 'https://api.jsonbin.io/v3/b/69fb4c8f10716a4d5de62385'
+              jsonbin_url = 'https://api.jsonbin.io/v3/b/6a5a64eef5f4af5e299d7523'
               jsonbin_headers = {
                   'X-Access-Key': os.environ.get('JSONBIN_KEY').strip(),
                   'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ jobs:
               
               # 🔥 THE FIX: Separated by a clear question mark mapped into the string
               # This tells the server that the domain path has officially ended and a variable is starting
-              db_url = f'https://neo-rmit-2026-ai-banking-default-rtdb.asia-southeast1.firebasedatabase.app/pages/scores.json?auth={db_secret}'
+              db_url = f'https://https://neo-rmit-2026-ai-banking-default-rtdb.asia-southeast1.firebasedatabase.app/pages/scores.json?auth={db_secret}'
               
               put_res = requests.put(db_url, json=payload_data)
               

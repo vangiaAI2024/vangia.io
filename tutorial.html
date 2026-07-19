@@ -443,7 +443,7 @@
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
 
         const firebaseConfig = {
-            databaseURL: "https://mai-workshop-rmit2026-default-rtdb.asia-southeast1.firebasedatabase.app"
+            databaseURL: "https://neo-rmit-2026-ai-banking-default-rtdb.asia-southeast1.firebasedatabase.app"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -530,7 +530,7 @@
                 showMessage('⚠️ Score list is empty.', '⚠️ Danh sách bảng điểm đang trống.');
                 return;
             }
-
+        
             sorted.forEach(item => {
                 const row = document.createElement('tr');
                 const name = item.name || `Pair ${item.pair_id ?? '?'}`;

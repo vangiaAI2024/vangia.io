@@ -425,6 +425,14 @@ a {
     margin-bottom: 1rem;
 }
 
+.about-company-social {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
 /* Pricing section styles */
 .pricing {
     padding: 6rem 1.5rem;
@@ -744,6 +752,9 @@ a {
     .about-company-text {
         font-size: 1rem;
         line-height: 1.7;
+    }
+    .about-company-social {
+        justify-content: center;
     }
 
     /* Pricing responsive */

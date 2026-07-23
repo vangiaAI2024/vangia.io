@@ -17,7 +17,7 @@
     <meta property="og:title" content="Engagement & Connection - Vangia.io">
     <meta property="og:description"
         content="Community activities, future camps, and connection stories at Vangia Innovations.">
-    <meta property="og:image" content="https://vangia.io/logo.jpeg">
+    <meta property="og:image" content="https://vangia.io/img/logo.jpeg">
 
     <link rel="stylesheet" href="styles.css?v=1.0.16">
     <style>
@@ -85,13 +85,18 @@
             right: 0;
             height: 4px;
             background: linear-gradient(90deg, #2563eb, #ea580c);
-            opacity: 0.8;
+            opacity: 0;
+            transition: opacity 0.25s ease;
         }
 
         .story-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
             border-color: #94a3b8;
+        }
+
+        .story-card:hover::before {
+            opacity: 0.8;
         }
 
         .story-header-num {
@@ -197,7 +202,7 @@
     <header>
         <nav>
             <a class="logo" href="index.html">
-                <img src="logo.jpeg" alt="Vangia.io" style="height: 40px; width: auto;">
+                <img src="img/logo.jpeg" alt="Vangia.io" style="height: 40px; width: auto;">
             </a>
             <ul>
                 <li><a href="index.html#home"><span class="en-text">Home</span><span class="vi-text">Trang
@@ -266,13 +271,13 @@
                 </p>
                 <div class="story-gallery">
                     <div class="gallery-item">
-                        <img src="750_2707.jpg" alt="Mid-Autumn Future Tech Camp - Photo 1">
+                        <img src="img/750_2707.jpg" alt="Mid-Autumn Future Tech Camp - Photo 1">
                     </div>
                     <div class="gallery-item">
-                        <img src="750_2710.jpg" alt="Mid-Autumn Future Tech Camp - Photo 2">
+                        <img src="img/750_2710.jpg" alt="Mid-Autumn Future Tech Camp - Photo 2">
                     </div>
                     <div class="gallery-item">
-                        <img src="750_2714.jpg" alt="Mid-Autumn Future Tech Camp - Photo 3">
+                        <img src="img/750_2714.jpg" alt="Mid-Autumn Future Tech Camp - Photo 3">
                     </div>
                 </div>
             </div>
@@ -299,13 +304,13 @@
                 </p>
                 <div class="story-gallery">
                     <div class="gallery-item">
-                        <img src="dsc06575.jpg" alt="Master of AI Guest Workshop - Photo 1">
+                        <img src="img/dsc06575.jpg" alt="Master of AI Guest Workshop - Photo 1">
                     </div>
                     <div class="gallery-item">
-                        <img src="dsc06594.jpg" alt="Master of AI Guest Workshop - Photo 2">
+                        <img src="img/dsc06594.jpg" alt="Master of AI Guest Workshop - Photo 2">
                     </div>
                     <div class="gallery-item">
-                        <img src="dsc06598.jpg" alt="Master of AI Guest Workshop - Photo 3">
+                        <img src="img/dsc06598.jpg" alt="Master of AI Guest Workshop - Photo 3">
                     </div>
                 </div>
             </div>
@@ -336,13 +341,13 @@
                 </p>
                 <div class="story-gallery">
                     <div class="gallery-item">
-                        <img src="seminar_01.jpg" alt="University Tech Seminar - Photo 1">
+                        <img src="img/seminar_01.jpg" alt="University Tech Seminar - Photo 1">
                     </div>
                     <div class="gallery-item">
-                        <img src="seminar_02.jpg" alt="University Tech Seminar - Photo 2">
+                        <img src="img/seminar_02.jpg" alt="University Tech Seminar - Photo 2">
                     </div>
                     <div class="gallery-item">
-                        <img src="seminar_03.jpg" alt="University Tech Seminar - Photo 3">
+                        <img src="img/seminar_03.jpg" alt="University Tech Seminar - Photo 3">
                     </div>
                 </div>
             </div>

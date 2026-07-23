@@ -1570,9 +1570,28 @@
                 </div>
                 <div class="card-graph">
                     <svg viewBox="0 0 200 100" class="sketch-svg">
-                        <path d="M 30 80 H 170 M 30 80 V 20 M 170 80 V 20" stroke="#9ca3af" stroke-width="2.5" stroke-linecap="round" />
-                        <rect x="55" y="30" width="90" height="40" rx="6" fill="none" stroke="#2563eb" stroke-width="3" class="animated-pulse" />
-                        <path d="M 75 50 L 95 65 L 125 35" fill="none" stroke="#ea580c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                        <!-- Browser window (Product/Showcase) -->
+                        <rect x="25" y="35" width="60" height="45" rx="5" fill="none" stroke="#9ca3af" stroke-width="2.5" />
+                        <!-- Browser Header Line -->
+                        <line x1="25" y1="47" x2="85" y2="47" stroke="#9ca3af" stroke-width="1.5" />
+                        <!-- Browser Dots -->
+                        <circle cx="32" cy="41" r="2" fill="#9ca3af" />
+                        <circle cx="38" cy="41" r="2" fill="#9ca3af" />
+                        <!-- Showcase Content: A bar graph rising up -->
+                        <rect x="35" y="60" width="8" height="15" fill="#9ca3af" />
+                        <rect x="47" y="55" width="8" height="20" fill="#9ca3af" />
+                        <rect x="59" y="50" width="8" height="25" fill="#2563eb" />
+                        <circle cx="63" cy="50" r="3" fill="#ea580c" />
+
+                        <!-- Deployment Arrow -->
+                        <path d="M 95 60 H 125" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="3,3" stroke-linecap="round" />
+                        <path d="M 120 54 L 127 60 L 120 66" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" />
+
+                        <!-- Cloud (Production Deployment) -->
+                        <path d="M 140 62 A 10 10 0 0 1 142 42 A 14 14 0 0 1 168 40 A 10 10 0 0 1 176 54 A 10 10 0 0 1 170 62 Z" fill="none" stroke="#9ca3af" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        
+                        <!-- Sparkles/Showcase indicators -->
+                        <path d="M 152 22 L 154 26 L 158 27 L 154 28 L 152 32 L 150 28 L 146 27 L 150 26 Z" fill="#ea580c" />
                     </svg>
                 </div>
                 <ul class="card-details">

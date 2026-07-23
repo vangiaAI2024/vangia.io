@@ -1354,3 +1354,105 @@ body.lang-vi h6 {
         transform: translateY(-50%) scale(0.95);
     }
 }
+
+/* Program Snapshot & Tech Badges Styles for Optimal SEO & UX */
+.program-snapshot-section {
+    max-width: 1100px;
+    margin: 3rem auto 1rem auto;
+    padding: 0 1.5rem;
+}
+
+.snapshot-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.snapshot-header h2 {
+    font-size: 1.8rem;
+    color: #1e3a8a;
+    font-weight: 400;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.snapshot-header p {
+    font-size: 1.05rem;
+    color: #4b5563;
+    font-family: 'Inter', sans-serif;
+}
+
+.snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.snapshot-card {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.snapshot-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #ea580c);
+    opacity: 0.8;
+}
+
+.snapshot-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border-color: #94a3b8;
+}
+
+.snapshot-card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+}
+
+.snapshot-card-title {
+    font-size: 1.15rem;
+    color: #1e3a8a;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.snapshot-card-desc {
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
+}
+
+.tech-tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+}
+
+.tech-tag {
+    background: #f1f5f9;
+    color: #1e293b;
+    border: 1px solid #e2e8f0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: 'Space Mono', monospace;
+}

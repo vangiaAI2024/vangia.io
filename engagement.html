@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engagement & Connection - Vangia.io</title>
+    
+    <!-- Primary SEO Meta Tags -->
+    <meta name="description" content="Engagement and Connection events at Vangia Innovations. Read about our Mid-Autumn Future Tech Camp for Kids and tech outreach stories.">
+    <link rel="canonical" href="https://vangia.io/engagement.html">
+    
+    <!-- Open Graph Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vangia.io/engagement.html">
+    <meta property="og:title" content="Engagement & Connection - Vangia.io">
+    <meta property="og:description" content="Community activities, future camps, and connection stories at Vangia Innovations.">
+    <meta property="og:image" content="https://vangia.io/logo.jpeg">
+
+    <link rel="stylesheet" href="styles.css?v=1.0.16">
+    <style>
+        body.lang-en .vi-text {
+            display: none !important;
+        }
+
+        body.lang-vi .en-text {
+            display: none !important;
+        }
+
+        .engagement-hero {
+            padding: 6rem 1.5rem 4rem 1.5rem;
+            text-align: center;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .engagement-title {
+            font-size: 2.8rem;
+            color: #1e3a8a;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .engagement-subtitle {
+            font-size: 1.15rem;
+            color: #4b5563;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .engagement-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        .stories-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .story-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            padding: 2.5rem;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #ea580c);
+            opacity: 0.8;
+        }
+
+        .story-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            border-color: #94a3b8;
+        }
+
+        .story-header-num {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ea580c;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: rgba(234, 88, 12, 0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .story-title {
+            font-size: 1.8rem;
+            color: #1e3a8a;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            color: #4b5563;
+            line-height: 1.8;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 2rem;
+        }
+
+        /* Image Gallery Layout */
+        .story-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+            aspect-ratio: 4/3;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Placeholder state styling */
+        .story-card.placeholder-card {
+            border-style: dashed;
+            border-width: 2px;
+            background: #f8fafc;
+            opacity: 0.8;
+        }
+
+        .story-card.placeholder-card::before {
+            background: #94a3b8;
+        }
+
+        .story-card.placeholder-card .story-header-num {
+            color: #64748b;
+            background: rgba(100, 116, 139, 0.08);
+        }
+
+        .story-card.placeholder-card .story-title {
+            color: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            .engagement-title {
+                font-size: 2.2rem;
+            }
+
+            .story-title {
+                font-size: 1.45rem;
+            }
+
+            .story-gallery {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .story-card {
+                padding: 1.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="lang-en">
+    <header>
+        <nav>
+            <a class="logo" href="index.html">
+                <img src="logo.jpeg" alt="Vangia.io" style="height: 40px; width: auto;">
+            </a>
+            <ul>
+                <li><a href="index.html#home"><span class="en-text">Home</span><span class="vi-text">Trang Chủ</span></a></li>
+                <li><a href="index.html#features"><span class="en-text">Program</span><span class="vi-text">Chương Trình</span></a></li>
+                <li><a href="index.html#pricing"><span class="en-text">Pricing</span><span class="vi-text">Học Phí</span></a></li>
+                <li><a href="faq.html"><span class="en-text">FAQ</span><span class="vi-text">FAQ</span></a></li>
+                <li><a href="tutorial.html"><span class="en-text">Tutorial</span><span class="vi-text">Hướng Dẫn</span></a></li>
+                <li><a href="engagement.html" class="active"><span class="en-text">Engagement</span><span class="vi-text">Kết Nối</span></a></li>
+            </ul>
+            <div class="nav-right-group">
+                <div class="lang-switcher">
+                    <button class="lang-btn btn-en active" onclick="setLanguage('en')">🇺🇸</button>
+                    <span class="lang-divider">|</span>
+                    <button class="lang-btn btn-vi" onclick="setLanguage('vi')">🇻🇳</button>
+                </div>
+                <a href="https://learn.vangia.dev/login" target="_blank" rel="noopener noreferrer"
+                    class="vangia-learn-btn">
+                    Vangia Learn
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="engagement-hero">
+        <h1 class="engagement-title">
+            <span class="en-text">Engagement & Connection</span>
+            <span class="vi-text">Kết Nối & Lan Tỏa</span>
+        </h1>
+        <p class="engagement-subtitle">
+            <span class="en-text">Discover how we share computer science thinking and modern AI technologies with kids, students, and community builders.</span>
+            <span class="vi-text">Khám phá cách chúng tôi lan tỏa tư duy khoa học máy tính và công nghệ AI hiện đại tới các em nhỏ, học sinh và cộng đồng.</span>
+        </p>
+    </section>
+
+    <main class="engagement-container">
+        <div class="stories-list">
+            <!-- Story 1 -->
+            <div class="story-card">
+                <span class="story-header-num">STORY 01</span>
+                <h2 class="story-title">
+                    <span class="en-text">Mid-Autumn Future Tech Camp for Kids</span>
+                    <span class="vi-text">Trung Thu Công Nghệ Cho Bé</span>
+                </h2>
+                <p class="story-text en-text">
+                    Our Mid-Autumn Future Tech Camp for Kids was a delightful hands-on experience where children explored computational thinking through interactive tech games, micro-robot assemblies, and digital storytelling. Driven by Dr. Hoang Van's passion for childhood tech education, the event successfully blended traditional Mid-Autumn festival activities with modern coding challenges, inspiring the next generation of software engineers and computational thinkers.
+                </p>
+                <p class="story-text vi-text">
+                    Trại hè Công nghệ Tương lai Trung thu dành cho trẻ em mang lại trải nghiệm thực hành thú vị, nơi các bé được khám phá tư duy máy tính thông qua các trò chơi công nghệ tương tác, lắp ráp rô-bốt mini và kể chuyện kỹ thuật số. Được truyền cảm hứng từ tâm huyết giáo dục công nghệ cho trẻ em của Tiến sĩ Hoàng Văn, sự kiện đã kết hợp hài hòa giữa không khí lễ hội truyền thống với các thử thách lập trình hiện đại, khơi dậy niềm đam mê công nghệ cho thế hệ tương lai.
+                </p>
+                <div class="story-gallery">
+                    <div class="gallery-item">
+                        <img src="750_2707.jpg" alt="Mid-Autumn Future Tech Camp - Photo 1">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="750_2710.jpg" alt="Mid-Autumn Future Tech Camp - Photo 2">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="750_2714.jpg" alt="Mid-Autumn Future Tech Camp - Photo 3">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 2 -->
+            <div class="story-card">
+                <span class="story-header-num">STORY 02</span>
+                <h2 class="story-title">
+                    <span class="en-text">Invited Guest Workshop for Master of AI Students</span>
+                    <span class="vi-text">Hội Thảo Khách Mời Cho Học Viên Thạc Sĩ AI</span>
+                </h2>
+                <p class="story-text en-text">
+                    Dr. Hoang Van hosted an invited guest workshop tailored for Master of AI students, focusing on generative AI scaling, system resilience under high concurrency, and production-grade model fine-tuning. The interactive session bridged theory with core systems practices, giving students hands-on insights into modern software engineering principles and architectural designs required by top tech firms.
+                </p>
+                <p class="story-text vi-text">
+                    Tiến sĩ Hoàng Văn đã tổ chức một buổi hội thảo chuyên đề dành riêng cho học viên Thạc sĩ Trí tuệ Nhân tạo (Master of AI), tập trung vào các chủ đề tối ưu quy mô AI tạo sinh, khả năng chịu lỗi của hệ thống khi tải cao và thực hành tinh chỉnh mô hình cấp độ sản xuất. Buổi chia sẻ đã thu hẹp khoảng cách giữa lý thuyết và thực tiễn vận hành hệ thống, mang lại cho học viên góc nhìn thực tế về thiết kế kiến trúc chuẩn doanh nghiệp.
+                </p>
+                <div class="story-gallery">
+                    <div class="gallery-item">
+                        <img src="dsc06575.jpg" alt="Master of AI Guest Workshop - Photo 1">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="dsc06594.jpg" alt="Master of AI Guest Workshop - Photo 2">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="dsc06598.jpg" alt="Master of AI Guest Workshop - Photo 3">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 3 -->
+            <div class="story-card placeholder-card">
+                <span class="story-header-num">STORY 03</span>
+                <h2 class="story-title">
+                    <span class="en-text">University Tech Seminars</span>
+                    <span class="vi-text">Seminars Công Nghệ Tại Đại Học</span>
+                </h2>
+                <p class="story-text en-text">
+                    Connecting with tech departments across universities to share practical insights into LLM fine-tuning methodologies and real-world system resilience challenges.
+                </p>
+                <p class="story-text vi-text">
+                    Kết nối với các khoa công nghệ tại các trường đại học hàng đầu để chia sẻ kinh nghiệm thực chiến về phương pháp tinh chỉnh LLM và vận hành hệ thống thực tế.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <h2 class="contact-title">
+                <span class="en-text">Contact</span>
+                <span class="vi-text">Liên Hệ</span>
+            </h2>
+            <p class="contact-description en-text">
+                Have questions or want to start your personalized journey? Register Now 👇.
+            </p>
+            <p class="contact-description vi-text">
+                Bạn có thắc mắc hoặc muốn bắt đầu hành trình học tập được thiết kế riêng của mình? Đăng ký ngay hôm nay 👇.
+            </p>
+            <div class="contact-methods">
+                <p class="contact-email">
+                    <a id="contact-email-link" href="mailto:contact.vangiainnovations@gmail.com">📧
+                        contact.vangiainnovations@gmail.com</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            <span class="en-text">&copy; 2026 Vangia Innovations. All rights reserved.</span>
+            <span class="vi-text">&copy; 2026 Vangia Innovations. Bảo lưu mọi quyền.</span>
+        </p>
+        <ul>
+            <li><a href="#privacy"><span class="en-text">Privacy</span><span class="vi-text">Bảo Mật</span></a></li>
+            <li><a href="#terms"><span class="en-text">Terms</span><span class="vi-text">Điều Khoản</span></a></li>
+        </ul>
+    </footer>
+
+    <script src="script.js?v=1.0.16"></script>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /img/
+Allow: /favicon.ico
+
+Sitemap: https://vangia.io/sitemap.xml

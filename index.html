@@ -42,7 +42,7 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "EducationalOrganization",
+          "@type": ["Organization", "EducationalOrganization"],
           "@id": "https://vangia.io/#organization",
           "name": "Vangia Innovations",
           "url": "https://vangia.io/",
@@ -61,15 +61,23 @@
           ]
         },
         {
+          "@type": "WebSite",
+          "@id": "https://vangia.io/#website",
+          "url": "https://vangia.io/",
+          "name": "Vangia.io",
+          "alternateName": ["Vangia Innovations", "Vangia"],
+          "publisher": {
+            "@id": "https://vangia.io/#organization"
+          }
+        },
+        {
           "@type": "Course",
           "@id": "https://vangia.io/#course",
           "name": "1-on-1 AI & Computer Science Mentorship Program",
           "alternateName": "Chương Trình Đào Tạo Khoa Học Máy Tính & AI 1-Kèm-1",
           "description": "Intensive 6-month AI and Computer Science training program with weekly 2-hour 1-on-1 sessions by Dr. Hoang Van (PhD). 5 months of roadmap learning plus Month 6 dedicated to project completion & showcase. Students gain full access to the project list or can build their own custom product from Day 1. Covering ML, Neural Networks, Transformers from scratch, LLM Fine-Tuning (PEFT/LoRA), RLHF/DPO, RAG, Agentic AI, and System Design.",
           "provider": {
-            "@type": "Organization",
-            "name": "Vangia Innovations",
-            "url": "https://vangia.io/"
+            "@id": "https://vangia.io/#organization"
           },
           "educationalCredentialAwarded": "AI & Computer Science Certificate of Completion",
           "hasCourseInstance": {
@@ -94,6 +102,15 @@
       ]
     }
     </script>
+
+    <!-- Favicon & Device Icons for Google Bot & Browsers -->
+    <link rel="shortcut icon" href="https://vangia.io/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://vangia.io/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://vangia.io/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="https://vangia.io/img/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://vangia.io/img/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://vangia.io/img/android-chrome-512x512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://vangia.io/img/apple-touch-icon.png">
 
     <link rel="stylesheet" href="styles.css?v=1.0.16">
     <style>

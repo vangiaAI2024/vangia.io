@@ -69,21 +69,6 @@ li {
     position: relative;
 }
 
-/* Enhanced dropdown arrow */
-.dropdown::after {
-    content: "▾";
-    font-size: 0.7rem;
-    margin-left: 6px;
-    color: #6b7280;
-    transition: all 0.3s ease;
-    font-weight: bold;
-}
-
-.dropdown:hover::after {
-    color: #2563eb;
-    transform: translateY(2px) rotate(180deg);
-}
-
 .submenu {
     display: none;
     position: absolute;
@@ -184,13 +169,6 @@ li {
     color: #2563eb;
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 197, 253, 0.05) 100%);
     transform: translateX(4px);
-}
-
-/* Smooth hover transitions */
-.dropdown:hover::after {
-    color: #007bff;
-    transform: rotate(180deg);
-    transition: all 0.2s ease;
 }
 
 .submenu li:hover {

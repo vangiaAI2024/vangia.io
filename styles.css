@@ -50,6 +50,9 @@ nav {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .logo img {
@@ -1018,10 +1021,11 @@ footer ul {
 
 /* Navigation Actions / Right Group */
 .nav-right-group {
+    flex: 1;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 1.25rem;
-    margin-left: 1.5rem;
     vertical-align: middle;
 }
 
